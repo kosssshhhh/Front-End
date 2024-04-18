@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
-import { routes } from '@/constants/routes';
+import { ROUTES } from '@/constants/routes';
 
 import MainLayout from '@/layout/MainLayout';
 import Home from '@/pages/home/page';
@@ -12,14 +12,14 @@ const mainRoutes = {
 	children: [
 		{
 			path: '/',
-			element: <Navigate replace to={routes.home.path} />,
+			element: <Navigate replace to={ROUTES.HOME} />,
 		},
 		{
-			path: routes.home.path,
+			path: ROUTES.HOME,
 			element: <Home />,
 		},
 		{
-			path: routes.imageSearch.path,
+			path: ROUTES.IMAGE_SEARCH,
 			element: <ImageSearch />,
 		},
 	],

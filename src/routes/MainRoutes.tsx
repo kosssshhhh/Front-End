@@ -1,10 +1,13 @@
+import { Suspense, lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { ROUTES } from '@/constants/routes';
+import { ROUTES } from '@/routes/routes';
 
 import MainLayout from '@/layout/MainLayout';
-import Home from '@/pages/home/page';
-import ImageSearch from '@/pages/imageSearch/page';
+
+const HomePage = lazy(async () => import('@/pages/home/page'));
+const ImageSearchPage = lazy(async () => import('@/pages/imageSearch/page'));
+const NotFoundPage = lazy(async () => import('@/pages/notFound/page'));
 
 const mainRoutes = {
 	path: '/',
@@ -16,11 +19,27 @@ const mainRoutes = {
 		},
 		{
 			path: ROUTES.HOME,
-			element: <Home />,
+			element: (
+				<Suspense fallback="loading...">
+					<HomePage />
+				</Suspense>
+			),
 		},
 		{
 			path: ROUTES.IMAGE_SEARCH,
-			element: <ImageSearch />,
+			element: (
+				<Suspense fallback="loading...">
+					<ImageSearchPage />
+				</Suspense>
+			),
+		},
+		{
+			path: '*',
+			element: (
+				<Suspense fallback="loading...">
+					<NotFoundPage />
+				</Suspense>
+			),
 		},
 	],
 };

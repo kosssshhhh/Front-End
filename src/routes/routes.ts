@@ -3,4 +3,5 @@
 export const ROUTES = {
 	HOME: '/home',
 	IMAGE_SEARCH: '/imageSearch',
+	NOT_FOUND: '/notFound',
 };

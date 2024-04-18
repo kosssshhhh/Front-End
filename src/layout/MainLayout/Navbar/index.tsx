@@ -1,3 +1,5 @@
+import logo from '@/assets/images/logo.png';
+
 export default function Navbar() {
 	return (
 		<nav className="bg-white border-b border-gray-200 fixed z-30 w-full">
@@ -33,8 +35,8 @@ export default function Navbar() {
 							</svg>
 						</button>
 						<a href="#" className="text-xl font-bold flex items-center lg:ml-2.5">
-							<img src="/images/logo.svg" className="h-6 mr-2" alt="Windster Logo" />
-							<span className="self-center whitespace-nowrap">400CC</span>
+							<img src={logo} className="h-6 mr-2" alt="400cc Logo" />
+							<span className="self-center whitespace-nowrap">400cc</span>
 						</a>
 						<form action="#" method="GET" className="hidden lg:block lg:pl-32">
 							<label className="sr-only">Search</label>
@@ -76,7 +78,7 @@ export default function Navbar() {
 							</svg>
 						</button>
 						<div className="hidden lg:flex items-center">
-							<span className="text-base font-normal text-gray-500 mr-5">Open source ❤️</span>
+							{/* <span className="text-base font-normal text-gray-500 mr-5">Open source ❤️</span>
 							<div className="-mb-1">
 								<a
 									className="github-button"
@@ -87,7 +89,7 @@ export default function Navbar() {
 									aria-label="Star themesberg/windster-tailwind-css-dashboard on GitHub">
 									Star
 								</a>
-							</div>
+							</div> */}
 						</div>
 						<a
 							href="#"
@@ -105,7 +107,7 @@ export default function Navbar() {
 									fill="currentColor"
 									d="M378.7 32H133.3L256 182.7L378.7 32zM512 192l-107.4-141.3L289.6 192H512zM107.4 50.67L0 192h222.4L107.4 50.67zM244.3 474.9C247.3 478.2 251.6 480 256 480s8.653-1.828 11.67-5.062L510.6 224H1.365L244.3 474.9z"></path>
 							</svg>
-							Upgrade to Pro
+							Test
 						</a>
 					</div>
 				</div>

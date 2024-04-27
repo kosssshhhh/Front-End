@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import styles from '@/layout/MainLayout/_styles/sidebar.module.css';
 
-export default function Sidebar() {
+export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
+	console.log(isSidebarOpen);
+
 	return (
 		<>
 			<aside
 				id="sidebar"
-				className="sm:hidden flex fixed z-20 h-full top-0 left-0 pt-16  lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
+				className={`flex fixed z-20 h-full top-0 left-0 pt-16 transition-width lg:flex w-64 flex-shrink-0 flex-col transition-width duration-100 ${
+					isSidebarOpen ? '' : 'hidden w-0'
+					// TODO: 좌우 애니메이션 구현하기
+					// isSidebarOpen ? styles['sidebar-transition'] : 'hidden'
+					// isSidebarOpen ? 'translate-x-0' : '-translate-x-full '
+				}`}
 				aria-label="Sidebar">
 				<div className="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
 					<div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">

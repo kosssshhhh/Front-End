@@ -1,4 +1,12 @@
+import useNetwork from '@/stores/networkStore';
+
 export default function Home() {
+	const httpInterface = useNetwork((state) => state.httpInterface);
+
+	httpInterface.getMockData().then((res) => {
+		console.log(res);
+	});
+
 	return (
 		<>
 			<div className="p-4 sm:ml-0 md:ml-0 lg:ml-64">

@@ -17,4 +17,7 @@ export class HttpInterface {
 	// async checkAuthentication(data: CheckAuthData) {
 	// 	return this.apiClient.post('/users/session', data);
 	// }
+	async getMockData() {
+		return this.apiClient.get('/example');
+	}
 }

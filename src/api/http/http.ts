@@ -15,8 +15,8 @@ export class Http implements ICommunication {
 
 	constructor() {
 		const axiosConfig = {
-			baseURL: 'https://kwhcclab.com:20122',
-			// withCredentials: true,
+			baseURL: 'http://localhost:3000',
+			withCredentials: true,
 		};
 		this.httpClient = axios.create(axiosConfig);
 	}

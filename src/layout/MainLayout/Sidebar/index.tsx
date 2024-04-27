@@ -1,4 +1,4 @@
-import styles from '@/layout/MainLayout/_styles/sidebar.module.css';
+// import styles from '@/layout/MainLayout/_styles/sidebar.module.css';
 
 export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 	console.log(isSidebarOpen);

@@ -1,13 +1,12 @@
 import logo from '@/assets/images/logo.png';
 import { useWindowSize } from '@/layout/MainLayout/_hooks/useWindowSize';
 
-export default function Navbar({
-	onToggleSidebar,
-	isSidebarOpen,
-}: {
+interface Props {
 	onToggleSidebar: () => void;
 	isSidebarOpen: boolean;
-}) {
+}
+
+export default function Navbar({ onToggleSidebar, isSidebarOpen }: Props) {
 	return (
 		<nav className="bg-white border-b border-gray-200 fixed z-30 w-full">
 			<div className="px-3 py-3 lg:px-5 lg:pl-3">

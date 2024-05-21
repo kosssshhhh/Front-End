@@ -21,7 +21,6 @@ export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 					{SIDEBAR_ITEMS.map((item, index) => {
 						return <SidebarList key={index} title={item.title} href={item.href} svgName={item.svgName} />;
 					})}
-					<SidebarList title="name" href="#" svgName="kanban" />
 				</SidebarContainer>
 				{/* <div className="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
 					<div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">

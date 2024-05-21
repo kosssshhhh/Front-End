@@ -1,4 +1,7 @@
-// import styles from '@/layout/MainLayout/_styles/sidebar.module.css';
+import SidebarContainer from '@/layout/MainLayout/Sidebar/_components/SidebarContainer';
+import SidebarList from '@/layout/MainLayout/Sidebar/_components/SidebarList';
+
+import { SIDEBAR_ITEMS } from '@/layout/MainLayout/_constants/constant';
 
 export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 	console.log(isSidebarOpen);
@@ -14,7 +17,12 @@ export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 					// isSidebarOpen ? 'translate-x-0' : '-translate-x-full '
 				}`}
 				aria-label="Sidebar">
-				<div className="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
+				<SidebarContainer>
+					{SIDEBAR_ITEMS.map((item, index) => {
+						return <SidebarList key={index} title={item.title} href={item.href} svgName={item.svgName} />;
+					})}
+				</SidebarContainer>
+				{/* <div className="relative flex-1 flex flex-col min-h-0 border-r border-gray-200 bg-white pt-0">
 					<div className="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
 						<div className="flex-1 px-3 bg-white divide-y space-y-1">
 							<ul className="space-y-2 pb-2">
@@ -45,14 +53,7 @@ export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 									<a
 										href="#"
 										className="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group">
-										<svg
-											className="w-6 h-6 text-gray-500 group-hover:text-gray-900 transition duration-75"
-											fill="currentColor"
-											viewBox="0 0 20 20"
-											xmlns="http://www.w3.org/2000/svg">
-											<path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path>
-											<path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path>
-										</svg>
+										{svgObj.pieChart()}
 										<span className="ml-3">Dashboard</span>
 									</a>
 								</li>
@@ -61,13 +62,7 @@ export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 										href="https://demo.themesberg.com/windster-pro/kanban/"
 										target="_blank"
 										className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group  bg-gray-100 {{ end }}">
-										<svg
-											className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-											fill="currentColor"
-											viewBox="0 0 20 20"
-											xmlns="http://www.w3.org/2000/svg">
-											<path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-										</svg>
+										{svgObj.kanban()}
 										<span className="ml-3 flex-1 whitespace-nowrap">Test</span>
 										<span className="bg-gray-200 text-gray-800 ml-3 text-sm font-medium inline-flex items-center justify-center px-2 rounded-full">
 											Pro
@@ -212,7 +207,7 @@ export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</aside>
 		</>
 	);

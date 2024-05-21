@@ -2,6 +2,8 @@
 
 export const ROUTES = {
 	HOME: '/home',
+	PRODUCTS: '/products',
+	PRODUCT_DETAIL: '/productDetail/:productId',
 	IMAGE_SEARCH: '/imageSearch',
 	NOT_FOUND: '/notFound',
 };

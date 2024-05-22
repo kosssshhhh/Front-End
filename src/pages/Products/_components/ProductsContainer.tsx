@@ -1,4 +1,12 @@
+import { useState } from 'react';
+
+import FilterSidebar from '@/pages/Products/_components/SidebarFilter';
+import { svgObj } from '@/assets/svg';
+import { useSidebarFilter } from '@/pages/Products/_utils/useSidebarFilter';
+
 export default function ProductsContainer({ children }: { children: React.ReactNode }) {
+	const [isOpen, onClose, sidebarToggle] = useSidebarFilter();
+
 	return (
 		<div>
 			<div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
@@ -24,34 +32,21 @@ export default function ProductsContainer({ children }: { children: React.ReactN
 								</div>
 							</form>
 							<div className="flex space-x-1 pl-0 sm:pl-2 mt-3 sm:mt-0">
-								<a
-									href="#"
-									className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center">
+								<button
+									className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center"
+									onClick={() => {
+										sidebarToggle();
+									}}>
 									필터 &nbsp;
-									<svg
-										fill="currentColor"
-										viewBox="0 0 24 24"
-										xmlns="http://www.w3.org/2000/svg"
-										id="filter-alt"
-										className="w-6 h-6">
-										<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-										<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-										<g id="SVGRepo_iconCarrier">
-											<path d="M12,9a3.66,3.66,0,0,0,1-.13V21a1,1,0,0,1-2,0V8.87A3.66,3.66,0,0,0,12,9Z"></path>
-											<path d="M19,16a3.66,3.66,0,0,0,1-.13V21a1,1,0,0,1-2,0V15.87A3.66,3.66,0,0,0,19,16Z"></path>
-											<path d="M20,3V8.13a3.91,3.91,0,0,0-2,0V3a1,1,0,0,1,2,0Z"></path>
-											<path d="M6,3V15.13A3.66,3.66,0,0,0,5,15a3.66,3.66,0,0,0-1,.13V3A1,1,0,0,1,6,3Z"></path>
-											<path d="M8,19a3,3,0,1,1-4-2.82,2.87,2.87,0,0,1,2,0A3,3,0,0,1,8,19Z"></path>
-											<path d="M15,5a3,3,0,0,1-2,2.82,2.87,2.87,0,0,1-2,0A3,3,0,1,1,15,5Z"></path>
-											<path d="M22,12a3,3,0,0,1-2,2.82,2.87,2.87,0,0,1-2,0,3,3,0,0,1,0-5.64,2.87,2.87,0,0,1,2,0A3,3,0,0,1,22,12Z"></path>
-										</g>
-									</svg>
-								</a>
+									{svgObj.filter()}
+								</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<FilterSidebar isOpen={isOpen} onClose={onClose} />
+			{isOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={onClose}></div>}
 			{children}
 		</div>
 	);

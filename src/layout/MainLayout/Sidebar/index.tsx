@@ -10,7 +10,7 @@ export default function Sidebar({ isSidebarOpen }: { isSidebarOpen: boolean }) {
 		<>
 			<aside
 				id="sidebar"
-				className={`flex fixed h-full top-0 left-0 pt-16 transition-width lg:flex w-64 flex-shrink-0 flex-col transform transition-width duration-100 ${
+				className={`flex fixed z-10 h-full top-0 left-0 pt-16 transition-width lg:flex w-64 flex-shrink-0 flex-col transform transition-width duration-100 ${
 					isSidebarOpen ? '' : 'hidden w-0'
 
 					// TODO: 좌우 애니메이션 구현하기

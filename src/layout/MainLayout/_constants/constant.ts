@@ -8,7 +8,7 @@ export const SIDEBAR_ITEMS: sidebarListType[] = [
 	},
 	{
 		title: 'Products',
-		href: '/products',
+		href: '/products?page=1',
 		svgName: 'user',
 	},
 	{

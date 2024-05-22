@@ -20,4 +20,8 @@ export class HttpInterface {
 	async getMockData() {
 		return this.apiClient.get('/example');
 	}
+
+	async getProducts() {
+		return this.apiClient.get('/products');
+	}
 }

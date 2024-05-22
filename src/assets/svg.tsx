@@ -7,8 +7,8 @@ export const svgObj = {
 			fill="currentColor"
 			viewBox="0 0 24 24"
 			xmlns="http://www.w3.org/2000/svg">
-			<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-			<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+			<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+			<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
 			<g id="SVGRepo_iconCarrier">
 				<path d="M3.012,10.981,3,11H5v9a1,1,0,0,0,1,1H18a1,1,0,0,0,1-1V11h2a1,1,0,0,0,.555-1.832l-9-6a1,1,0,0,0-1.11,0l-9,6a1,1,0,0,0-.277,1.387A.98.98,0,0,0,3.012,10.981ZM10,14a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1v5H10Z"></path>
 			</g>
@@ -20,8 +20,8 @@ export const svgObj = {
 			viewBox="-20 0 190 190"
 			fill="none"
 			xmlns="http://www.w3.org/2000/svg">
-			<g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-			<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+			<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+			<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
 			<g id="SVGRepo_iconCarrier">
 				{' '}
 				<path
@@ -62,7 +62,7 @@ export const svgObj = {
 	),
 
 	filter: () => (
-		<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="filter-alt" className="w-6 h-6">
+		<svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" className="w-6 h-6">
 			<g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
 			<g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
 			<g id="SVGRepo_iconCarrier">
@@ -118,17 +118,17 @@ export const svgObj = {
 	previous: () => (
 		<svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 			<path
-				fill-rule="evenodd"
+				fillRule="evenodd"
 				d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-				clip-rule="evenodd"></path>
+				clipRule="evenodd"></path>
 		</svg>
 	),
 	next: () => (
 		<svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 			<path
-				fill-rule="evenodd"
+				fillRule="evenodd"
 				d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-				clip-rule="evenodd"></path>
+				clipRule="evenodd"></path>
 		</svg>
 	),
 };

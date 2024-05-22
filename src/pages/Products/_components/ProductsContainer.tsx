@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import FilterSidebar from '@/pages/Products/_components/SidebarFilter';
 import { svgObj } from '@/assets/svg';
 import { useSidebarFilter } from '@/pages/Products/_utils/useSidebarFilter';
+import { usePageNumber } from '../_utils/usePageNumber';
 
 export default function ProductsContainer({ children }: { children: React.ReactNode }) {
 	const [isOpen, onClose, sidebarToggle] = useSidebarFilter();
+	usePageNumber();
 
 	return (
 		<div>

@@ -5,7 +5,7 @@ function ProductDetail() {
 
 	console.log(productId);
 
-	return <div>product Datail Page</div>;
+	return <div>product {productId} Datail Page</div>;
 }
 
 export default ProductDetail;

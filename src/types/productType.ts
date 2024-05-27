@@ -5,6 +5,7 @@ export interface ProductType {
 			productId: string;
 			mallType: 'WCONCEPT' | 'MUSINSA' | 'MUSINSA';
 		};
+		image: string;
 	};
 	brand: string;
 	rankScore: number;

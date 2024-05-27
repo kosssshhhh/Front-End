@@ -10,7 +10,7 @@ export default function ProductTableRow({ product }: ProductTableRowProps) {
 	const navigate = useNavigate();
 
 	const handleNavigate = () => {
-		navigate(`/products/${product.product.id.productId}`);
+		navigate(`/productDetail/${product.product.id.productId}`);
 	};
 
 	return (

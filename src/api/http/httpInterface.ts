@@ -21,7 +21,15 @@ export class HttpInterface {
 		return this.apiClient.get('/example');
 	}
 
-	async getProducts() {
-		return this.apiClient.get('/products');
+	async getStyles(params: any) {
+		return this.apiClient.get('/style', { params: params });
+	}
+
+	async getCategory(mallType: string) {
+		return this.apiClient.get(`style/filter/category/${mallType}`);
+	}
+
+	async getBrand(mallType: string) {
+		return this.apiClient.get(`/style/filter/brand/${mallType}`);
 	}
 }

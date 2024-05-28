@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 const productsHandler = [
-	http.get('/products', () => {
+	http.get('/style', () => {
 		return HttpResponse.json([
 			{
 				product: {

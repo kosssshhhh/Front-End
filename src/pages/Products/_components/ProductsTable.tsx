@@ -1,6 +1,6 @@
 import { ProductType } from '@/types/index';
-import { useFetchProducts } from '../_utils/useFetchProducts';
-import ProductTableRow from './ProductTableRow';
+import { useFetchProducts } from '@/pages/Products/_hooks/useFetchProducts';
+import ProductTableRow from '@/pages/Products/_components/ProductTableRow';
 // import { useEffect } from 'react';
 
 export default function ProductsTable() {

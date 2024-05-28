@@ -1,17 +1,42 @@
-// FilterSidebar.tsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SidebarFilterProps } from '@/pages/Products/_types/sidebarFilter.type';
 import { svgObj } from '@/assets/svg';
-import { useState } from 'react';
+import useNetwork from '@/stores/networkStore';
+import { useSearchParams } from 'react-router-dom';
+
+interface FilterType {
+	mallType: string;
+	date: string;
+	startDate: string;
+	endDate: string;
+	category: CategoryType[];
+	brand: string[];
+}
+
+interface CategoryType {
+	categoryId: number;
+	name: string;
+}
 
 function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
-	const [filters, setFilters] = useState({
+	const [searchParams, setSearchParams] = useSearchParams();
+
+	const [filters, setFilters] = useState<FilterType>({
 		mallType: '',
 		startDate: '',
 		endDate: '',
+		date: '',
+		category: [],
+		brand: [],
 	});
 
 	const [dateOption, setDateOption] = useState(false);
+	const [subSidebar, setSubSidebar] = useState<string>('');
+	const [subSidebarCategory, setSubSidebarCategory] = useState<CategoryType[]>([]);
+	const [subSidebarBrand, setSubSidebarBrand] = useState<string[]>([]);
+	const [expandedCategories, setExpandedCategories] = useState<Set<number>>(new Set());
+
+	const httpInterface = useNetwork((state) => state.httpInterface);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 		const { name, value } = e.target;
@@ -21,61 +46,302 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 		}));
 
 		// 날짜 옵션 변경 시 상태 업데이트
-		if (value === 'select') {
+		if (name === 'date' && value === 'select') {
 			setDateOption(true);
-		} else {
+		} else if (name === 'date') {
 			setDateOption(false);
 		}
 	};
 
-	const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+	const handleCategoryChange = (category: CategoryType) => {
+		setFilters((prev) => {
+			const existingCategoryIndex = prev.category.findIndex((cat) => cat.categoryId === category.categoryId);
+			if (existingCategoryIndex >= 0) {
+				return {
+					...prev,
+					category: prev.category.filter((cat) => cat.categoryId !== category.categoryId),
+				};
+			} else {
+				return {
+					...prev,
+					category: [...prev.category, { categoryId: category.categoryId, name: category.name }],
+				};
+			}
+		});
+	};
+
+	const handleBrandChange = (brand: string) => {
+		if (typeof brand !== 'string') return;
+
+		setFilters((prev) => {
+			const existingBrandIndex = prev.brand.findIndex((b) => b === brand);
+			if (existingBrandIndex >= 0) {
+				return {
+					...prev,
+					brand: prev.brand.filter((b) => b !== brand),
+				};
+			} else {
+				return {
+					...prev,
+					brand: [...prev.brand, brand],
+				};
+			}
+		});
+	};
+
+	useEffect(() => {
+		if (subSidebar === 'category') {
+			httpInterface.getCategory(filters.mallType).then((data) => {
+				if (data?.data && Array.isArray(data.data)) {
+					setSubSidebarCategory(data.data);
+				}
+			});
+		} else if (subSidebar === 'brand') {
+			httpInterface.getBrand(filters.mallType).then((data) => {
+				console.log(data);
+
+				if (data?.data && Array.isArray(data.data.brand)) {
+					setSubSidebarBrand(data.data.brand);
+				}
+			});
+		}
+	}, [subSidebar]);
+
+	const handleRemoveCategory = (category: CategoryType) => {
+		setFilters((prev) => ({
+			...prev,
+			category: prev.category.filter((cat) => cat.categoryId !== category.categoryId),
+		}));
+	};
+
+	const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setFilters((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+	};
+
+	const handleSubSidebar = (type: string) => {
+		if (subSidebar === type) return setSubSidebar('');
+		setSubSidebar(type);
+	};
+
+	const toggleCategory = (categoryId: number) => {
+		setExpandedCategories((prev) => {
+			const newExpandedCategories = new Set(prev);
+			if (newExpandedCategories.has(categoryId)) {
+				newExpandedCategories.delete(categoryId);
+			} else {
+				newExpandedCategories.add(categoryId);
+			}
+			return newExpandedCategories;
+		});
+	};
+
+	const handleReset = () => {
+		setFilters({
+			mallType: '',
+			startDate: '',
+			endDate: '',
+			date: '',
+			category: [],
+			brand: [],
+		});
+		setDateOption(false);
+		setSubSidebar('');
+		setSubSidebarCategory([]);
+		setSubSidebarBrand([]);
+		setExpandedCategories(new Set());
+	};
+
+	const handleSubmit = () => {
+		const params = new URLSearchParams();
+
+		params.append('mallType', filters.mallType);
+		params.set('page', '1');
+		params.set('date', filters.date);
+		params.set('startDate', filters.startDate);
+		params.set('endDate', filters.endDate);
+
+		filters.category.forEach((cat) => {
+			params.append('category', `${cat.categoryId}`);
+		});
+
+		filters.brand.forEach((brand) => {
+			params.append('brand', brand);
+		});
+
+		setSearchParams(params);
+
+		onClose();
+	};
+
+	useEffect(() => {
+		console.log(filters);
+	}, [filters]);
+	const renderCategories = (categories: any[]) => {
+		return (
+			<ul className="pl-4">
+				{categories.map((category) => (
+					<li key={category.categoryId}>
+						<div className="flex items-center">
+							<input
+								type="checkbox"
+								checked={filters.category.some((cat) => cat.categoryId === category.categoryId)}
+								onChange={() => handleCategoryChange(category)}
+							/>
+							<span className="ml-2 cursor-pointer" onClick={() => toggleCategory(category.categoryId)}>
+								{category.name}
+							</span>
+							{category.children.length > 0 && (
+								<button onClick={() => toggleCategory(category.categoryId)}>
+									{expandedCategories.has(category.categoryId) ? '-' : '+'}
+								</button>
+							)}
+						</div>
+						{expandedCategories.has(category.categoryId) && renderCategories(category.children)}
+					</li>
+				))}
+			</ul>
+		);
+	};
 
 	return (
-		<div
-			className={`fixed z-50 inset-y-0 left-0 w-[33%] bg-white shadow-lg transform ${
-				isOpen ? 'translate-x-0' : '-translate-x-full'
-			} transition-transform duration-300 ease-in-out`}>
-			<div className="p-4 relative">
-				<h2 className="text-xl font-bold mb-4">필터</h2>
-				<button onClick={onClose} className="absolute top-4 right-4 p-2 bg-gray-200 hover:bg-gray-300 rounded">
-					{svgObj.close()}
-				</button>
-				<div className="mb-5">
-					<label className="block mb-2">쇼핑몰</label>
-					<select className="w-full p-2 border rounded" name="mallType">
-						<option value="all">모든 쇼핑몰</option>
-						<option value="MUSINSA">무신사</option>
-						<option value="WCONCEPT">W 컨셉</option>
-						<option value="HANDSOME">한섬</option>
-					</select>
-				</div>
+		<>
+			<div
+				className={`fixed z-50 inset-y-0 left-0 w-[33%] bg-white shadow-lg transform ${
+					isOpen ? 'translate-x-0' : '-translate-x-full'
+				} transition-transform duration-300 ease-in-out`}>
+				<div className="p-4 relative">
+					<button onClick={onClose} className="absolute top-4 right-4 p-2 bg-gray-200 hover:bg-gray-300 rounded">
+						{svgObj.close()}
+					</button>
+					<h2 className="text-xl font-bold mb-4">필터</h2>
+					<div className="space-y-4">
+						<div className="border-t border-gray-200 pt-4">
+							<label className="text-lg font-semibold">도메인</label>
+							<select
+								value={filters.mallType}
+								onChange={handleChange}
+								className="w-full p-2 border rounded"
+								name="mallType">
+								<option defaultChecked value="">
+									모든 쇼핑몰
+								</option>
+								<option value="MUSINSA">무신사</option>
+								<option value="WCONCEPT">W 컨셉</option>
+								<option value="HANDSOME">한섬</option>
+							</select>
+						</div>
 
-				<div className="mb-5">
-					<label className="block mb-2">기간 선택</label>
-					<select className="w-full p-2 border rounded" name="date" onChange={handleChange}>
-						<option defaultChecked value="week">
-							최근 1주
-						</option>
-						<option value="month">최근 1개월</option>
-						<option value="months">최근 3개월</option>
-						<option value="year">최근 1년</option>
-						<option value="select">임의 선택</option>
-					</select>
-				</div>
+						<div className="mb-5">
+							<label className="text-lg font-semibold">기간</label>
+							<select className="w-full p-2 border rounded" name="date" value={filters.date} onChange={handleChange}>
+								<option defaultChecked value="">
+									선택
+								</option>
+								<option value="week">최근 1주</option>
+								<option value="month">최근 1개월</option>
+								<option value="months">최근 3개월</option>
+								<option value="year">최근 1년</option>
+								<option value="select">임의 선택</option>
+							</select>
+						</div>
 
-				<div className={`mb-5 ${dateOption ? 'block' : 'hidden'} flex items-center space-x-4`}>
-					<div className="flex flex-col">
-						<label className="block mb-2">시작</label>
-						<input type="date" name="minDate" onChange={handleChange} className="p-2 border rounded" />
+						<div className={`mb-5 ${dateOption ? '' : 'hidden'} flex items-center justify-between`}>
+							<div className="flex flex-col w-1/2 p-2">
+								<label className="mb-2">시작</label>
+								<input type="date" name="startDate" onChange={handleDateChange} className="p-2 border rounded" />
+							</div>
+							<div className="flex flex-col w-1/2 p-2">
+								<label className="block mb-2">끝</label>
+								<input type="date" name="endDate" onChange={handleDateChange} className="p-2 border rounded" />
+							</div>
+						</div>
+
+						{filters.mallType && filters.mallType !== 'all' && (
+							<>
+								<div className="mt-2 flex flex-wrap">
+									{filters.category.map((cat) => (
+										<div
+											key={cat.categoryId}
+											className="flex items-center bg-cyan-600 text-white p-2 m-1 rounded-lg shadow">
+											<span>{cat.name}</span>
+											<button
+												className="ml-2 bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-200 text-white rounded-full w-5 h-5 flex items-center justify-center"
+												onClick={() => handleRemoveCategory(cat)}>
+												&times;
+											</button>
+										</div>
+									))}
+									{filters.brand.map((brand, index) => (
+										<div key={index} className="flex items-center bg-cyan-600 text-white p-2 m-1 rounded-lg shadow">
+											<span>{brand}</span>
+											<button
+												className="ml-2 bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-200 text-white rounded-full w-5 h-5 flex items-center justify-center"
+												onClick={() => handleBrandChange(brand)}>
+												&times;
+											</button>
+										</div>
+									))}
+								</div>
+								<div
+									onClick={() => handleSubSidebar('category')}
+									className="flex items-center cursor-pointer justify-between border-t border-gray-200 pt-4">
+									<h3 className=" text-lg font-semibold">카테고리</h3>
+									{svgObj.nextsm()}
+								</div>
+								<div
+									onClick={() => handleSubSidebar('brand')}
+									className="flex items-center cursor-pointer justify-between border-t border-gray-200 pt-4">
+									<h3 className="text-lg font-semibold">브랜드</h3>
+									{svgObj.nextsm()}
+								</div>
+							</>
+						)}
 					</div>
 
-					<div className="flex flex-col">
-						<label className="block mb-2">끝</label>
-						<input type="date" name="maxDate" onChange={handleChange} className="p-2 border rounded" />
+					<div className="mt-6 flex justify-between">
+						<button onClick={handleReset} className="p-2 bg-gray-200 hover:bg-gray-300 rounded w-1/2">
+							초기화
+						</button>
+						<button onClick={handleSubmit} className="p-2 bg-black text-white hover:bg-gray-800 rounded w-1/2 ml-2">
+							적용
+						</button>
 					</div>
 				</div>
 			</div>
-		</div>
+			{isOpen && subSidebar === 'category' && filters.mallType != 'all' && (
+				<div className={`fixed z-50 inset-y-0 left-[33%] w-[33%] bg-white shadow-lg overflow-auto`}>
+					<div className="p-4 relative">
+						<h2 className="text-xl font-bold mb-4">카테고리 선택</h2>
+						{subSidebarCategory && renderCategories(subSidebarCategory)}
+					</div>
+				</div>
+			)}
+			{isOpen && subSidebar === 'brand' && filters.mallType != 'all' && (
+				<div className={`fixed z-50 inset-y-0 left-[33%] w-[33%] bg-white shadow-lg overflow-auto`}>
+					<div className="p-4 relative">
+						<h2 className="text-xl font-bold mb-4">브랜드 선택</h2>
+						{subSidebarCategory && (
+							<ul className="space-y-2">
+								{subSidebarBrand.map((brand, index) => (
+									<li key={index} className="flex items-center">
+										<input
+											type="checkbox"
+											checked={filters.brand.includes(brand)}
+											onChange={() => handleBrandChange(brand)}
+										/>
+										<span className="ml-2">{brand}</span>
+									</li>
+								))}
+							</ul>
+						)}
+					</div>
+				</div>
+			)}
+		</>
 	);
 }
 

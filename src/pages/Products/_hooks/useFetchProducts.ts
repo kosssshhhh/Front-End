@@ -14,23 +14,19 @@ export const useFetchProducts = () => {
 		const params = new URLSearchParams(searchParams);
 		console.log(params);
 
-		// const query = Object.fromEntries(searchParams.entries());
 		return params;
 	};
 
-	useEffect(() => {
-		// 모든 쿼리 파라미터를 객체로 변환
-		const queryParams = Object.fromEntries(searchParams.entries());
+	// useEffect(() => {
+	// 	// 개별 쿼리 파라미터 값 가져오기
+	// 	const mallType = searchParams.get('mallType') || '';
+	// 	const startDate = searchParams.get('startDate') || '';
+	// 	const endDate = searchParams.get('endDate') || '';
+	// 	const category = searchParams.getAll('category');
+	// 	const brand = searchParams.getAll('brand');
 
-		// 개별 쿼리 파라미터 값 가져오기
-		const mallType = searchParams.get('mallType') || '';
-		const startDate = searchParams.get('startDate') || '';
-		const endDate = searchParams.get('endDate') || '';
-		const category = searchParams.getAll('category');
-		const brand = searchParams.getAll('brand');
-
-		console.log({ mallType, startDate, endDate, category, brand });
-	}, [searchParams]);
+	// 	console.log({ mallType, startDate, endDate, category, brand });
+	// }, [searchParams]);
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['styles', searchParams.toString()],

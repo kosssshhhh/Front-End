@@ -3,6 +3,7 @@ import { SidebarFilterProps } from '@/pages/Products/_types/sidebarFilter.type';
 import { svgObj } from '@/assets/svg';
 import useNetwork from '@/stores/networkStore';
 import { useSearchParams } from 'react-router-dom';
+import { convertDate } from '@/pages/Products/_utils/converDate';
 
 interface FilterType {
 	mallType: string;
@@ -160,7 +161,6 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 
 		params.append('mallType', filters.mallType);
 		params.set('page', '1');
-		params.set('date', filters.date);
 		params.set('startDate', filters.startDate);
 		params.set('endDate', filters.endDate);
 
@@ -176,6 +176,19 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 
 		onClose();
 	};
+
+	useEffect(() => {
+		if (filters.date === 'select') return;
+
+		const startDate = convertDate(filters.date);
+
+		if (startDate) {
+			setFilters((prev) => ({
+				...prev,
+				startDate: startDate,
+			}));
+		}
+	}, [filters.date]);
 
 	useEffect(() => {
 		console.log(filters);

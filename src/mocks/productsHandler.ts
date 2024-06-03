@@ -1,7 +1,8 @@
-import { http, HttpResponse } from 'msw';
+import { http, delay, HttpResponse } from 'msw';
 
 const productsHandler = [
-	http.get('/products', () => {
+	http.get('/style', async () => {
+		await delay(1000);
 		return HttpResponse.json([
 			{
 				product: {

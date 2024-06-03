@@ -1,5 +1,5 @@
 import { svgObj } from '@/assets/svg';
-import { useControlPageNumber } from '../_utils/usePageNumber';
+import { useControlPageNumber } from '@/pages/Products/_hooks/usePageNumber';
 
 export default function ProductsTableFooter() {
 	const [increasePage, decreasePage] = useControlPageNumber();

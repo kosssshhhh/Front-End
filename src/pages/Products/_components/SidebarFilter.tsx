@@ -1,26 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import { SidebarFilterProps } from '@/pages/Products/_types/sidebarFilter.type';
 import { svgObj } from '@/assets/svg';
 import useNetwork from '@/stores/networkStore';
-import { useSearchParams } from 'react-router-dom';
 import { convertDate } from '@/pages/Products/_utils/converDate';
 
-interface FilterType {
-	mallType: string;
-	date: string;
-	startDate: string;
-	endDate: string;
-	category: CategoryType[];
-	brand: string[];
-}
+import { CategoryType, FilterType } from '@/pages/Products/_types/sidebarFilter.type';
 
-interface CategoryType {
-	categoryId: number;
-	name: string;
-}
+import {
+	handleChange,
+	handleCategoryChange,
+	handleBrandChange,
+	handleRemoveCategory,
+	handleDateChange,
+	toggleCategory,
+	handleSubSidebar,
+} from '@/pages/Products/_utils/handleFilters';
 
 function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
-	const [searchParams, setSearchParams] = useSearchParams();
+	const httpInterface = useNetwork((state) => state.httpInterface);
+
+	const [_, setSearchParams] = useSearchParams();
 
 	const [filters, setFilters] = useState<FilterType>({
 		mallType: '',
@@ -37,59 +38,6 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	const [subSidebarBrand, setSubSidebarBrand] = useState<string[]>([]);
 	const [expandedCategories, setExpandedCategories] = useState<Set<number>>(new Set());
 
-	const httpInterface = useNetwork((state) => state.httpInterface);
-
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-		const { name, value } = e.target;
-		setFilters((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-
-		// 날짜 옵션 변경 시 상태 업데이트
-		if (name === 'date' && value === 'select') {
-			setDateOption(true);
-		} else if (name === 'date') {
-			setDateOption(false);
-		}
-	};
-
-	const handleCategoryChange = (category: CategoryType) => {
-		setFilters((prev) => {
-			const existingCategoryIndex = prev.category.findIndex((cat) => cat.categoryId === category.categoryId);
-			if (existingCategoryIndex >= 0) {
-				return {
-					...prev,
-					category: prev.category.filter((cat) => cat.categoryId !== category.categoryId),
-				};
-			} else {
-				return {
-					...prev,
-					category: [...prev.category, { categoryId: category.categoryId, name: category.name }],
-				};
-			}
-		});
-	};
-
-	const handleBrandChange = (brand: string) => {
-		if (typeof brand !== 'string') return;
-
-		setFilters((prev) => {
-			const existingBrandIndex = prev.brand.findIndex((b) => b === brand);
-			if (existingBrandIndex >= 0) {
-				return {
-					...prev,
-					brand: prev.brand.filter((b) => b !== brand),
-				};
-			} else {
-				return {
-					...prev,
-					brand: [...prev.brand, brand],
-				};
-			}
-		});
-	};
-
 	useEffect(() => {
 		if (subSidebar === 'category') {
 			httpInterface.getCategory(filters.mallType).then((data) => {
@@ -99,46 +47,12 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 			});
 		} else if (subSidebar === 'brand') {
 			httpInterface.getBrand(filters.mallType).then((data) => {
-				console.log(data);
-
 				if (data?.data && Array.isArray(data.data.brand)) {
 					setSubSidebarBrand(data.data.brand);
 				}
 			});
 		}
 	}, [subSidebar]);
-
-	const handleRemoveCategory = (category: CategoryType) => {
-		setFilters((prev) => ({
-			...prev,
-			category: prev.category.filter((cat) => cat.categoryId !== category.categoryId),
-		}));
-	};
-
-	const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setFilters((prev) => ({
-			...prev,
-			[name]: value,
-		}));
-	};
-
-	const handleSubSidebar = (type: string) => {
-		if (subSidebar === type) return setSubSidebar('');
-		setSubSidebar(type);
-	};
-
-	const toggleCategory = (categoryId: number) => {
-		setExpandedCategories((prev) => {
-			const newExpandedCategories = new Set(prev);
-			if (newExpandedCategories.has(categoryId)) {
-				newExpandedCategories.delete(categoryId);
-			} else {
-				newExpandedCategories.add(categoryId);
-			}
-			return newExpandedCategories;
-		});
-	};
 
 	const handleReset = () => {
 		setFilters({
@@ -193,6 +107,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	useEffect(() => {
 		console.log(filters);
 	}, [filters]);
+
 	const renderCategories = (categories: any[]) => {
 		return (
 			<ul className="pl-4">
@@ -202,13 +117,15 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							<input
 								type="checkbox"
 								checked={filters.category.some((cat) => cat.categoryId === category.categoryId)}
-								onChange={() => handleCategoryChange(category)}
+								onChange={() => handleCategoryChange(category, setFilters)}
 							/>
-							<span className="ml-2 cursor-pointer" onClick={() => toggleCategory(category.categoryId)}>
+							<span
+								className="ml-2 cursor-pointer"
+								onClick={() => toggleCategory(category.categoryId, setExpandedCategories)}>
 								{category.name}
 							</span>
 							{category.children.length > 0 && (
-								<button onClick={() => toggleCategory(category.categoryId)}>
+								<button onClick={() => toggleCategory(category.categoryId, setExpandedCategories)}>
 									{expandedCategories.has(category.categoryId) ? '-' : '+'}
 								</button>
 							)}
@@ -236,7 +153,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							<label className="text-lg font-semibold">도메인</label>
 							<select
 								value={filters.mallType}
-								onChange={handleChange}
+								onChange={(e) => handleChange(e, setFilters, setDateOption)}
 								className="w-full p-2 border rounded"
 								name="mallType">
 								<option defaultChecked value="">
@@ -250,7 +167,11 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 
 						<div className="mb-5">
 							<label className="text-lg font-semibold">기간</label>
-							<select className="w-full p-2 border rounded" name="date" value={filters.date} onChange={handleChange}>
+							<select
+								className="w-full p-2 border rounded"
+								name="date"
+								value={filters.date}
+								onChange={(e) => handleChange(e, setFilters, setDateOption)}>
 								<option defaultChecked value="">
 									선택
 								</option>
@@ -265,11 +186,21 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 						<div className={`mb-5 ${dateOption ? '' : 'hidden'} flex items-center justify-between`}>
 							<div className="flex flex-col w-1/2 p-2">
 								<label className="mb-2">시작</label>
-								<input type="date" name="startDate" onChange={handleDateChange} className="p-2 border rounded" />
+								<input
+									type="date"
+									name="startDate"
+									onChange={(e) => handleDateChange(e, setFilters)}
+									className="p-2 border rounded"
+								/>
 							</div>
 							<div className="flex flex-col w-1/2 p-2">
 								<label className="block mb-2">끝</label>
-								<input type="date" name="endDate" onChange={handleDateChange} className="p-2 border rounded" />
+								<input
+									type="date"
+									name="endDate"
+									onChange={(e) => handleDateChange(e, setFilters)}
+									className="p-2 border rounded"
+								/>
 							</div>
 						</div>
 
@@ -283,7 +214,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 											<span>{cat.name}</span>
 											<button
 												className="ml-2 bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-200 text-white rounded-full w-5 h-5 flex items-center justify-center"
-												onClick={() => handleRemoveCategory(cat)}>
+												onClick={() => handleRemoveCategory(cat, setFilters)}>
 												&times;
 											</button>
 										</div>
@@ -293,20 +224,20 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 											<span>{brand}</span>
 											<button
 												className="ml-2 bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-200 text-white rounded-full w-5 h-5 flex items-center justify-center"
-												onClick={() => handleBrandChange(brand)}>
+												onClick={() => handleBrandChange(brand, setFilters)}>
 												&times;
 											</button>
 										</div>
 									))}
 								</div>
 								<div
-									onClick={() => handleSubSidebar('category')}
+									onClick={() => handleSubSidebar('category', subSidebar, setSubSidebar)}
 									className="flex items-center cursor-pointer justify-between border-t border-gray-200 pt-4">
 									<h3 className=" text-lg font-semibold">카테고리</h3>
 									{svgObj.nextsm()}
 								</div>
 								<div
-									onClick={() => handleSubSidebar('brand')}
+									onClick={() => handleSubSidebar('category', subSidebar, setSubSidebar)}
 									className="flex items-center cursor-pointer justify-between border-t border-gray-200 pt-4">
 									<h3 className="text-lg font-semibold">브랜드</h3>
 									{svgObj.nextsm()}
@@ -344,7 +275,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 										<input
 											type="checkbox"
 											checked={filters.brand.includes(brand)}
-											onChange={() => handleBrandChange(brand)}
+											onChange={() => handleBrandChange(brand, setFilters)}
 										/>
 										<span className="ml-2">{brand}</span>
 									</li>

@@ -237,7 +237,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 									{svgObj.nextsm()}
 								</div>
 								<div
-									onClick={() => handleSubSidebar('category', subSidebar, setSubSidebar)}
+									onClick={() => handleSubSidebar('brand', subSidebar, setSubSidebar)}
 									className="flex items-center cursor-pointer justify-between border-t border-gray-200 pt-4">
 									<h3 className="text-lg font-semibold">브랜드</h3>
 									{svgObj.nextsm()}

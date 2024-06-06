@@ -8,8 +8,9 @@ import MainLayout from '@/layout/MainLayout';
 const HomePage = lazy(async () => import('@/pages/home/page'));
 const ImageSearchPage = lazy(async () => import('@/pages/imageSearch/page'));
 const NotFoundPage = lazy(async () => import('@/pages/notFound/page'));
-const ProductDetail = lazy(async () => import('@/pages/productDetail/page'));
-import Products from '../pages/Products/page';
+const ProductDetail = lazy(async () => import('@/pages/styleDetail/page'));
+
+import Styles from '@/pages/Products/page';
 
 const mainRoutes = {
 	path: '/',
@@ -28,15 +29,15 @@ const mainRoutes = {
 			),
 		},
 		{
-			path: ROUTES.PRODUCTS,
+			path: ROUTES.STYLES,
 			element: (
 				<Suspense fallback="loading...">
-					<Products />
+					<Styles />
 				</Suspense>
 			),
 		},
 		{
-			path: ROUTES.PRODUCT_DETAIL,
+			path: ROUTES.STYLE_DETAIL,
 			element: (
 				<Suspense fallback="loading...">
 					<ProductDetail />

@@ -1,16 +1,16 @@
 // ProductTableRow.tsx
-import { ProductType } from '@/types/index';
+import { StyleType } from '@/types/index';
 import { Link, useNavigate } from 'react-router-dom';
 
 interface ProductTableRowProps {
-	product: ProductType;
+	product: StyleType;
 }
 
 export default function ProductTableRow({ product }: ProductTableRowProps) {
 	const navigate = useNavigate();
 
 	const handleNavigate = () => {
-		navigate(`/productDetail/${product.product.id.productId}`);
+		navigate(`/style/detail/${product.product.id.mallType}/${product.product.id.productId}`);
 	};
 
 	return (

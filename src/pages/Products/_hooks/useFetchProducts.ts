@@ -1,13 +1,13 @@
 import useNetwork from '@/stores/networkStore';
-import { ProductType } from '@/types';
+import { StyleType } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export const useFetchProducts = () => {
+export const useFetchstyles = () => {
 	const [searchParams] = useSearchParams();
 
-	const [products, setProducts] = useState<ProductType[]>([]);
+	const [styles, setStyles] = useState<StyleType[]>([]);
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
 	const fetchQuery = () => {
@@ -24,9 +24,9 @@ export const useFetchProducts = () => {
 
 	useEffect(() => {
 		if (data?.data && Array.isArray(data.data)) {
-			setProducts(data.data);
+			setStyles(data.data);
 		}
 	}, [data]);
 
-	return { products, isLoading, isError };
+	return { styles, isLoading, isError };
 };

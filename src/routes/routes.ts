@@ -2,8 +2,8 @@
 
 export const ROUTES = {
 	HOME: '/home',
-	PRODUCTS: '/products',
-	PRODUCT_DETAIL: '/productDetail/:productId',
+	STYLES: '/style',
+	STYLE_DETAIL: '/style/detail/:mallType/:productId',
 	IMAGE_SEARCH: '/imageSearch',
 	NOT_FOUND: '/notFound',
 };

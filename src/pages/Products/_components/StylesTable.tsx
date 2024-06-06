@@ -1,11 +1,11 @@
-import { ProductType } from '@/types/index';
-import { useFetchProducts } from '@/pages/Products/_hooks/useFetchProducts';
-import ProductTableRow from '@/pages/Products/_components/ProductTableRow';
+import { StyleType } from '@/types/index';
+import { useFetchstyles } from '@/pages/Products/_hooks/useFetchProducts';
+import StylesTableRow from '@/pages/Products/_components/StylesTableRow';
 import StyleTableRowSkeleton from '@/components/skeleton/StyleTableRowSkeleton';
 // import { useEffect } from 'react';
 
 export default function ProductsTable() {
-	const { products, isLoading, isError } = useFetchProducts();
+	const { styles, isLoading, isError } = useFetchstyles();
 
 	return (
 		<div className="flex flex-col">
@@ -47,7 +47,7 @@ export default function ProductsTable() {
 							<tbody className="bg-white divide-y divide-gray-200">
 								{isLoading
 									? Array.from({ length: 10 }).map((_, index) => <StyleTableRowSkeleton key={index} />)
-									: products.map((product) => <ProductTableRow key={product.product.id.productId} product={product} />)}
+									: styles.map((style) => <StylesTableRow key={style.product.id.productId} product={style} />)}
 							</tbody>
 						</table>
 					</div>

@@ -19,8 +19,8 @@ export default function ImageContainer({ imageList }: ImageContainerProps) {
 	}
 
 	return (
-		<div className="p-12 xl:border-r-2">
-			<img src={mainImage} alt="Main" className="w-full h-auto" />
+		<div className="flex flex-col items-center p-12 xl:border-r-2">
+			<img src={mainImage} alt="Main" className="max-w-[85%] h-auto" />
 			<div className="flex mt-4 overflow-x-scroll">
 				{imageList.map((image) => (
 					<img

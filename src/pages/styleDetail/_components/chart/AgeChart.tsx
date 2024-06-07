@@ -23,6 +23,14 @@ export default function AgeChart({ ageUnder18, age19To23, age24To28, age29To33, 
 		chart: {
 			type: 'bar' as const,
 		},
+		title: {
+			text: '연령별 조회 비율',
+			align: 'center' as const,
+			style: {
+				fontSize: '12px',
+				color: '#6B7280',
+			},
+		},
 		plotOptions: {
 			bar: {
 				horizontal: false,

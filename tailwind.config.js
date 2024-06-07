@@ -52,6 +52,9 @@ module.exports = {
 					'monospace',
 				],
 			},
+			scale: {
+				200: '2',
+			},
 		},
 		screens: {
 			'sm': '640px',

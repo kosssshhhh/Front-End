@@ -2,6 +2,8 @@ import usePageStore from '@/stores/pageStore';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+// TODO: 상위 hooks 디렉토리로 이동
+
 export const usePageNumber = () => {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const setPage = usePageStore((state) => state.setPageNumber);
@@ -15,7 +17,7 @@ export const usePageNumber = () => {
 			setPage(Number(searchParams.get('page')));
 		}
 		setSearchParams(searchParams);
-	}, []);
+	}, [searchParams.get('page')]);
 
 	useEffect(() => {
 		console.log(`page`, page);

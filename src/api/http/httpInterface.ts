@@ -36,4 +36,8 @@ export class HttpInterface {
 	async getStyleDetail(mallType: string, productId: string) {
 		return this.apiClient.get(`/style/detail/${mallType}/${productId}`);
 	}
+
+	async getStyleReview(mallType: string, productId: string, page: number) {
+		return this.apiClient.get(`/style/detail/${mallType}/review/${productId}`, { params: { page: page } });
+	}
 }

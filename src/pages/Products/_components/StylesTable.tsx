@@ -47,7 +47,7 @@ export default function ProductsTable() {
 							<tbody className="bg-white divide-y divide-gray-200">
 								{isLoading
 									? Array.from({ length: 10 }).map((_, index) => <StyleTableRowSkeleton key={index} />)
-									: styles.map((style) => <StylesTableRow key={style.product.id.productId} product={style} />)}
+									: styles.map((style) => <StylesTableRow key={style.product.id.productId} style={style} />)}
 							</tbody>
 						</table>
 					</div>

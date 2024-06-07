@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom';
 import StyleDetailContainer from '@/pages/styleDetail/_components/StyleDetailContainer';
 import ImageContainer from '@/pages/styleDetail/_components/ImageContainer';
 import StyleDetailInfoBasic from '@/pages/styleDetail/_components/StyleDetailInfoBasic';
 import StyledDetailInfoVariable from '@/pages/styleDetail/_components/StyleDetailInfoVariable';
+import StyleReviewContainer from '@/pages/styleDetail/_components/StyleReviewContainer';
+
 import { useFetchStyleDetail } from '@/pages/styleDetail/hooks/useFetchStyleDetail';
 
 function ProductDetail() {
@@ -28,7 +29,7 @@ function ProductDetail() {
 			<StyleDetailInfoBasic basicDetail={basicDetail}>
 				<StyledDetailInfoVariable variable={variable} mallType={basicDetail.mallType} />
 			</StyleDetailInfoBasic>
-			<div>Review 보여주기</div>
+			<StyleReviewContainer mallType={basicDetail.mallType} />
 		</StyleDetailContainer>
 	);
 }

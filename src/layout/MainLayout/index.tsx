@@ -10,7 +10,7 @@ export default function MainLayout() {
 	return (
 		<main>
 			<Navbar onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
-			<Sidebar isSidebarOpen={isSidebarOpen} />
+			<Sidebar onToggleSidebar={toggleSidebar} isSidebarOpen={isSidebarOpen} />
 			<MainContainer>
 				<Outlet />
 			</MainContainer>

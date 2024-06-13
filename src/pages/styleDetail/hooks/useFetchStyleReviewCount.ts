@@ -17,7 +17,7 @@ export const useFetchStyleReviewCount = () => {
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['styleReviewCount'],
-		queryFn: () => httpInterface.getReviewCount(mallType, productId),
+		queryFn: () => httpInterface.getStyleReviewCount(mallType, productId),
 	});
 
 	return { data, isLoading, isError };

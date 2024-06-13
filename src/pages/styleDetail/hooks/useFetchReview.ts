@@ -5,13 +5,13 @@ import { useSearchParams } from 'react-router-dom';
 // TODO: Style 별 Review fetch 과정 (page 포함해서)
 //       API response data 확정되면
 
-export const useFetchReview = (mallType: string, styleId: string, page: number) => {
+export const useFetchReview = (mallType: string, styleId: string, page: string) => {
 	const [searchParams] = useSearchParams();
 
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['styles-review', page.toString()],
+		queryKey: ['styleReview', searchParams.toString()],
 		queryFn: () => httpInterface.getStyleReview(mallType, styleId, page),
 	});
 

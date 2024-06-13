@@ -25,14 +25,16 @@ function ProductDetail() {
 	const { basicDetail, variable } = data.data;
 
 	return (
-		<StyleDetailContainer>
-			<ImageContainer imageList={basicDetail.imageList} />
-			<StyleDetailInfoBasic basicDetail={basicDetail}>
-				<StyledDetailInfoVariable variable={variable} mallType={basicDetail.mallType} />
-			</StyleDetailInfoBasic>
-			<ReviewCountGraphContainer />
+		<>
+			<StyleDetailContainer>
+				<ImageContainer imageList={basicDetail.imageList} />
+				<StyleDetailInfoBasic basicDetail={basicDetail}>
+					<StyledDetailInfoVariable variable={variable} mallType={basicDetail.mallType} />
+				</StyleDetailInfoBasic>
+				<ReviewCountGraphContainer />
+			</StyleDetailContainer>
 			<StyleReviewContainer mallType={basicDetail.mallType} />
-		</StyleDetailContainer>
+		</>
 	);
 }
 

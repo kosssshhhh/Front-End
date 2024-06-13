@@ -40,4 +40,8 @@ export class HttpInterface {
 	async getStyleReview(mallType: string, productId: string, page: number) {
 		return this.apiClient.get(`/style/detail/${mallType}/review/${productId}`, { params: { page: page } });
 	}
+
+	async getReviewCount(mallType: string, productId: string) {
+		return this.apiClient.get(`/style/detail/review/${mallType}/trend`, { params: { productId: productId } });
+	}
 }

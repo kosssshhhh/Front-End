@@ -22,37 +22,37 @@ const styleDetailHandler = [
 				imageList: [
 					{
 						imageId: 780,
-						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/TH2E3NPC588N/0.webp',
+						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
 						sequence: 0,
 					},
 					{
 						imageId: 781,
-						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/TH2E3NPC588N/1.webp',
+						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
 						sequence: 1,
 					},
 					{
 						imageId: 782,
-						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/TH2E3NPC588N/2.webp',
+						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
 						sequence: 2,
 					},
 					{
 						imageId: 783,
-						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/TH2E3NPC588N/3.webp',
+						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
 						sequence: 3,
 					},
 					{
 						imageId: 784,
-						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/TH2E3NPC588N/4.webp',
+						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
 						sequence: 4,
 					},
 					{
 						imageId: 785,
-						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/TH2E3NPC588N/5.webp',
+						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
 						sequence: 5,
 					},
 					{
 						imageId: 786,
-						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/TH2E3NPC588N/6.webp',
+						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
 						sequence: 6,
 					},
 				],

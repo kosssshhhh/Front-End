@@ -32,7 +32,7 @@ export default function StyleReviewContainer({ mallType }: StyleReviewContainerP
 		<div className="flex flex-col xl:col-span-2">
 			<div className="overflow-x-auto">
 				<div className="align-middle inline-block min-w-full">
-					<div className="shodow overflow-hidden">{content}</div>
+					<div className="shadow overflow-hidden">{content}</div>
 				</div>
 			</div>
 			<div className="bg-white sm:flex items-center w-full sm:justify-between bottom-0 right-0 border-t border-gray-200 p-4">

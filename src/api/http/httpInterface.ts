@@ -32,4 +32,19 @@ export class HttpInterface {
 	async getBrand(mallType: string) {
 		return this.apiClient.get(`/style/filter/brand/${mallType}`);
 	}
+
+	async getStyleDetail(mallType: string, styleId: string) {
+		return this.apiClient.get(`/style/detail/${mallType}/${styleId}`);
+	}
+
+	// TODO: params 수정 필요, URL 수정 필요
+	async getStyleReview(mallType: string, styleId: string, page: string, startDate?: string, rate?: string[]) {
+		return this.apiClient.get(`/style/details/review/${mallType}`, {
+			params: { page: page, productId: styleId, startDate: startDate, rate: rate },
+		});
+	}
+
+	async getStyleReviewCount(mallType: string, styleId: string) {
+		return this.apiClient.get(`/style/detail/review/${mallType}/trend`, { params: { styleId: styleId } });
+	}
 }

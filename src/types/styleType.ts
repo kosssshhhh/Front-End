@@ -1,5 +1,5 @@
 // TODO: 백엔드와 협의 후 변경
-export interface ProductType {
+export interface StyleType {
 	product: {
 		id: {
 			productId: string;

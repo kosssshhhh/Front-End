@@ -1,1 +1,1 @@
-export * from '@/types/productType';
+export * from '@/types/styleType';

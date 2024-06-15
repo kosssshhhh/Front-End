@@ -1,16 +1,14 @@
-import useNetwork from '@/stores/networkStore';
-import ProductsContainer from './_components/ProductsContainer';
-import ProductsTable from './_components/ProductsTable';
-import ProductsTableFooter from './_components/ProductsTableFooter';
-import { useSearchParams } from 'react-router-dom';
+import StylesContainer from './_components/StylesContainer';
+import StylesTable from './_components/StylesTable';
+import StylesTableFooter from './_components/StylesTableFooter';
 
 export default function Products() {
 	return (
 		<>
-			<ProductsContainer>
-				<ProductsTable />
-				<ProductsTableFooter />
-			</ProductsContainer>
+			<StylesContainer>
+				<StylesTable />
+				<StylesTableFooter />
+			</StylesContainer>
 		</>
 	);
 }

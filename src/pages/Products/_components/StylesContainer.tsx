@@ -5,21 +5,21 @@ import { svgObj } from '@/assets/svg';
 import { useSidebarFilter } from '@/pages/Products/_hooks/useSidebarFilter';
 import { usePageNumber } from '@/pages/Products/_hooks/usePageNumber';
 
-export default function ProductsContainer({ children }: { children: React.ReactNode }) {
+export default function StylesContainer({ children }: { children: React.ReactNode }) {
 	const [isOpen, onClose, sidebarToggle] = useSidebarFilter();
 	usePageNumber();
 
 	return (
 		<div>
-			<div className="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5">
+			<div className="p-4 bg-white block sm:flex items-center justify-between border-b rounded-t-xl border-gray-200 lg:mt-1.5">
 				<div className="mb-1 w-full">
 					<div className="mb-4">
-						<nav className="flex mb-5"></nav>
+						{/* <nav className="flex mb-5"></nav> */}
 						<h1 className="text-xl sm:text-2xl font-semibold text-gray-900">모든 상품</h1>
 					</div>
 					<div className="sm:flex">
-						<div className="hidden sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
-							<form className="lg:pr-3" action="#" method="GET">
+						<div className="sm:flex items-center sm:divide-x sm:divide-gray-100 mb-3 sm:mb-0">
+							<form className="hidden sm:flex lg:pr-3" action="#" method="GET">
 								<label htmlFor="users-search" className="sr-only">
 									Search
 								</label>

@@ -3,7 +3,7 @@
 export const ROUTES = {
 	HOME: '/home',
 	STYLES: '/style',
-	STYLE_DETAIL: '/style/detail/:mallType/:productId',
+	STYLE_DETAIL: '/style/detail/:mallType/:styleId',
 	IMAGE_SEARCH: '/imageSearch',
 	NOT_FOUND: '/notFound',
 };

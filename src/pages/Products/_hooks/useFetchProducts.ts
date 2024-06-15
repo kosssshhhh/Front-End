@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-export const useFetchstyles = () => {
+export const useFetchStyles = () => {
 	const [searchParams] = useSearchParams();
 
 	const [styles, setStyles] = useState<StyleType[]>([]);

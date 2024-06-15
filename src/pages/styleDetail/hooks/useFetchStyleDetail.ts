@@ -6,9 +6,9 @@ import { useParams } from 'react-router-dom';
 export const useFetchStyleDetail = () => {
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
-	const { productId, mallType } = useParams();
+	const { styleId, mallType } = useParams();
 
-	if (!productId || !mallType) {
+	if (!styleId || !mallType) {
 		return {
 			data: null,
 			isLoading: false,
@@ -20,7 +20,7 @@ export const useFetchStyleDetail = () => {
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['styleDetail'],
-		queryFn: () => httpInterface.getStyleDetail(mallType, productId),
+		queryFn: () => httpInterface.getStyleDetail(mallType, styleId),
 	});
 
 	return { data, isLoading, isError };

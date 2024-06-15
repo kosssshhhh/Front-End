@@ -12,24 +12,14 @@ import ReviewFilter from './review/ReviewFilter';
 export default function StyleReviewContainer() {
 	usePageNumber();
 
-	const [searchParams, setSearchParams] = useSearchParams();
-
-	const page = searchParams.get('page');
-
-	const { mallType, productId } = useParams();
-
-	if (!mallType || !productId || !page) {
-		return null;
-	}
-
-	const { data, isLoading, isError } = useFetchReview(mallType, productId, page);
+	const { data, isLoading, isError } = useFetchReview();
 
 	if (data) {
 		console.log(data.data);
 	}
 
 	return (
-		<div className="p-4 bg-white block sm:flex items-center justify-between rounded-lg border-b border-gray-200 lg:mt-1.5">
+		<div className="p-4 mt-10 bg-white block sm:flex items-center justify-between rounded-lg border-b border-gray-200">
 			<div className="w-full grid grid-cols-1 xl:grid-cols-2 gap-4">
 				<div className="flex flex-col xl:col-span-2">
 					<div className="overflow-x-auto">

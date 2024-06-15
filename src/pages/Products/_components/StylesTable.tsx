@@ -1,11 +1,11 @@
 import { StyleType } from '@/types/index';
-import { useFetchstyles } from '@/pages/Products/_hooks/useFetchProducts';
+import { useFetchStyles } from '@/pages/Products/_hooks/useFetchProducts';
 import StylesTableRow from '@/pages/Products/_components/StylesTableRow';
 import StyleTableRowSkeleton from '@/components/skeleton/StyleTableRowSkeleton';
 // import { useEffect } from 'react';
 
 export default function ProductsTable() {
-	const { styles, isLoading, isError } = useFetchstyles();
+	const { styles, isLoading, isError } = useFetchStyles();
 
 	return (
 		<div className="flex flex-col">

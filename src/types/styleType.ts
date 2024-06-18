@@ -1,15 +1,30 @@
 // TODO: 백엔드와 협의 후 변경
 export interface StyleType {
-	product: {
-		id: {
-			productId: string;
-			mallType: 'WCONCEPT' | 'MUSINSA' | 'MUSINSA';
-		};
-		image: string;
-	};
+	styleId: string;
+	mallTypeId: string;
 	brand: string;
-	rankScore: number;
-	fixedPrice: number;
 	discountedPrice: number;
-	monetaryUnit: 'KRW' | 'USD';
+	fixedPrice: number;
+	styleName: string;
+	exposureIndex: number;
+	monetaryUnit: string;
+	image: ImageType;
+	category: CategoryType;
+	dupeExposureIndexList: [];
+}
+
+export interface ImageType {
+	imageId: number;
+	url: string;
+	sequence: number;
+}
+
+export interface CategoryType {
+	categoryId: number;
+	orgCategoryId: string;
+	mallType: {
+		mallTypeId: string;
+		mallTypeName: string;
+	};
+	name: string;
 }

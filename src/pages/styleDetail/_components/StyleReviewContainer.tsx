@@ -1,7 +1,7 @@
 import StyleReview from '@/pages/styleDetail/_components/review/StyleReview';
 import ReviewFooter from '@/pages/styleDetail/_components/review/ReviewFooter';
 
-import { useControlPageNumber, usePageNumber } from '@/pages/Products/_hooks/usePageNumber';
+import { useControlPageNumber, usePageNumber } from '@/pages/styles/_hooks/usePageNumber';
 
 import { useFetchReview } from '@/pages/styleDetail/hooks/useFetchReview';
 import { useSearchParams, useParams } from 'react-router-dom';

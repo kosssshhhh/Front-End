@@ -9,7 +9,7 @@ export interface CategoryType {
 }
 
 export interface FilterType {
-	mallType: string;
+	mallTypeId: string;
 	date: string;
 	startDate: string;
 	endDate: string;

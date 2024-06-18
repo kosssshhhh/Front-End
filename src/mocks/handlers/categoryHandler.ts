@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 const categoryHandler = [
-	http.get('/style/filter/category/:mallType', () => {
+	http.get('/style/filter/category/:mallTypeId', () => {
 		return HttpResponse.json([
 			{
 				categoryId: 1075,

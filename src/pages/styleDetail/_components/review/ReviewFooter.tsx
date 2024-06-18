@@ -1,5 +1,5 @@
 import { svgObj } from '@/assets/svg';
-import { useControlPageNumber } from '@/pages/Products/_hooks/usePageNumber';
+import { useControlPageNumber } from '@/pages/styles/_hooks/usePageNumber';
 
 export default function ReviewFooter() {
 	const [increasePage, decreasePage] = useControlPageNumber();

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { SidebarFilterProps } from '@/pages/Products/_types/sidebarFilter.type';
 import { svgObj } from '@/assets/svg';
 import useNetwork from '@/stores/networkStore';
-import { convertDate } from '@/pages/Products/_utils/converDate';
 
-import { CategoryType, FilterType } from '@/pages/Products/_types/sidebarFilter.type';
+import { SidebarFilterProps } from '@/pages/styles/_types/sidebarFilter.type';
+import { CategoryType, FilterType } from '@/pages/styles/_types/sidebarFilter.type';
+
+import { convertDate } from '@/pages/styles/_utils/converDate';
+
+import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 
 import {
 	handleChange,
@@ -16,7 +19,7 @@ import {
 	handleDateChange,
 	toggleCategory,
 	handleSubSidebar,
-} from '@/pages/Products/_utils/handleFilters';
+} from '@/pages/styles/_utils/handleFilters';
 
 function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	const httpInterface = useNetwork((state) => state.httpInterface);
@@ -24,7 +27,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	const [_, setSearchParams] = useSearchParams();
 
 	const [filters, setFilters] = useState<FilterType>({
-		mallType: '',
+		mallTypeId: '',
 		startDate: '',
 		endDate: '',
 		date: '',
@@ -40,13 +43,13 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 
 	useEffect(() => {
 		if (subSidebar === 'category') {
-			httpInterface.getCategory(filters.mallType).then((data) => {
+			httpInterface.getCategory(filters.mallTypeId).then((data) => {
 				if (data?.data && Array.isArray(data.data)) {
 					setSubSidebarCategory(data.data);
 				}
 			});
 		} else if (subSidebar === 'brand') {
-			httpInterface.getBrand(filters.mallType).then((data) => {
+			httpInterface.getBrand(filters.mallTypeId).then((data) => {
 				if (data?.data && Array.isArray(data.data.brand)) {
 					setSubSidebarBrand(data.data.brand);
 				}
@@ -56,7 +59,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 
 	const handleReset = () => {
 		setFilters({
-			mallType: '',
+			mallTypeId: '',
 			startDate: '',
 			endDate: '',
 			date: '',
@@ -73,7 +76,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	const handleSubmit = () => {
 		const params = new URLSearchParams();
 
-		params.append('mallType', filters.mallType);
+		params.append('mallTypeId', filters.mallTypeId);
 		params.set('page', '1');
 		params.set('startDate', filters.startDate);
 		params.set('endDate', filters.endDate);
@@ -152,16 +155,16 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 						<div className="border-t border-gray-200 pt-4">
 							<label className="text-lg font-semibold">도메인</label>
 							<select
-								value={filters.mallType}
+								value={filters.mallTypeId}
 								onChange={(e) => handleChange(e, setFilters, setDateOption)}
 								className="w-full p-2 border rounded"
-								name="mallType">
+								name="mallTypeId">
 								<option defaultChecked value="">
 									모든 쇼핑몰
 								</option>
-								<option value="MUSINSA">무신사</option>
-								<option value="WCONCEPT">W 컨셉</option>
-								<option value="HANDSOME">한섬</option>
+								<option value={MALL_TYPE_ID.MUSINSA}>무신사</option>
+								<option value={MALL_TYPE_ID.WCONCEPT}>W 컨셉</option>
+								<option value={MALL_TYPE_ID.HANDSOME}>한섬</option>
 							</select>
 						</div>
 
@@ -204,7 +207,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							</div>
 						</div>
 
-						{filters.mallType && filters.mallType !== 'all' && (
+						{filters.mallTypeId && filters.mallTypeId !== 'all' && (
 							<>
 								<div className="mt-2 flex flex-wrap">
 									{filters.category.map((cat) => (
@@ -256,7 +259,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 					</div>
 				</div>
 			</div>
-			{isOpen && subSidebar === 'category' && filters.mallType != 'all' && (
+			{isOpen && subSidebar === 'category' && filters.mallTypeId != 'all' && (
 				<div className={`fixed z-50 inset-y-0 left-[33%] w-[33%] bg-white shadow-lg overflow-auto`}>
 					<div className="p-4 relative">
 						<h2 className="text-xl font-bold mb-4">카테고리 선택</h2>
@@ -264,7 +267,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 					</div>
 				</div>
 			)}
-			{isOpen && subSidebar === 'brand' && filters.mallType != 'all' && (
+			{isOpen && subSidebar === 'brand' && filters.mallTypeId != 'all' && (
 				<div className={`fixed z-50 inset-y-0 left-[33%] w-[33%] bg-white shadow-lg overflow-auto`}>
 					<div className="p-4 relative">
 						<h2 className="text-xl font-bold mb-4">브랜드 선택</h2>

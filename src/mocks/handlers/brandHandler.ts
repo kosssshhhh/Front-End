@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 
 const brandHandler = [
-	http.get('/style/filter/brand/:mallType', () => {
+	http.get('/style/filter/brand/:mallTypeId', () => {
 		return HttpResponse.json({
 			brand: [
 				'insilence',

@@ -25,26 +25,26 @@ export class HttpInterface {
 		return this.apiClient.get('/style', { params: params });
 	}
 
-	async getCategory(mallType: string) {
-		return this.apiClient.get(`style/filter/category/${mallType}`);
+	async getCategory(mallTypeId: string) {
+		return this.apiClient.get(`style/filter/category/${mallTypeId}`);
 	}
 
-	async getBrand(mallType: string) {
-		return this.apiClient.get(`/style/filter/brand/${mallType}`);
+	async getBrand(mallTypeId: string) {
+		return this.apiClient.get(`/style/filter/brand/${mallTypeId}`);
 	}
 
-	async getStyleDetail(mallType: string, styleId: string) {
-		return this.apiClient.get(`/style/detail/${mallType}/${styleId}`);
+	async getStyleDetail(mallTypeId: string, styleId: string) {
+		return this.apiClient.get(`/style/detail/${mallTypeId}/${styleId}`);
 	}
 
 	// TODO: params 수정 필요, URL 수정 필요
-	async getStyleReview(mallType: string, styleId: string, page: string, startDate?: string, rate?: string[]) {
-		return this.apiClient.get(`/style/details/review/${mallType}`, {
+	async getStyleReview(mallTypeId: string, styleId: string, page: string, startDate?: string, rate?: string[]) {
+		return this.apiClient.get(`/style/details/review/${mallTypeId}`, {
 			params: { page: page, productId: styleId, startDate: startDate, rate: rate },
 		});
 	}
 
-	async getStyleReviewCount(mallType: string, styleId: string) {
-		return this.apiClient.get(`/style/detail/review/${mallType}/trend`, { params: { styleId: styleId } });
+	async getStyleReviewCount(mallTypeId: string, styleId: string) {
+		return this.apiClient.get(`/style/detail/review/${mallTypeId}/trend`, { params: { styleId: styleId } });
 	}
 }

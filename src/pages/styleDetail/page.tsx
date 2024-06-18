@@ -29,11 +29,11 @@ function ProductDetail() {
 			<StyleDetailContainer>
 				<ImageContainer imageList={basicDetail.imageList} />
 				<StyleDetailInfoBasic basicDetail={basicDetail}>
-					<StyledDetailInfoVariable variable={variable} mallType={basicDetail.mallType} />
+					<StyledDetailInfoVariable variable={variable} mallTypeId={basicDetail.mallTypeId} />
 				</StyleDetailInfoBasic>
 				<ReviewCountGraphContainer />
 			</StyleDetailContainer>
-			<StyleReviewContainer mallType={basicDetail.mallType} />
+			<StyleReviewContainer />
 		</>
 	);
 }

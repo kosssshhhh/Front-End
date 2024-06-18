@@ -5,8 +5,8 @@ export interface Image {
 }
 
 export interface ExposureIndex {
-	productId: string;
-	mallType: string;
+	styleId: string;
+	mallTypeId: string;
 	exposureIndex: number;
 	category: {
 		categoryId: number;
@@ -17,8 +17,9 @@ export interface ExposureIndex {
 }
 
 export interface StyleDetailBasic {
-	productId: string;
-	mallType: string;
+	styleId: string;
+	styleName: string;
+	mallTypeId: string;
 	brand: string;
 	discountedPrice: number;
 	fixedPrice: number;
@@ -34,7 +35,7 @@ export interface StyleDetailBasic {
 
 export interface StyleDetailVariable {
 	variableId: number;
-	productInfo?: string;
+	styleInfo?: string;
 	fittingInfo?: string;
 	additionalInfo?: string;
 	productName?: string;

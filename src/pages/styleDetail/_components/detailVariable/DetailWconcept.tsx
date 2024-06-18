@@ -10,10 +10,6 @@ export default function DetailWconcept({ variable }: { variable: StyleDetailVari
 				<span className="text-lg text-black mr-5">{variable.soldOut ? '품절' : '판매중'}</span>
 			</div>
 			<div className="flex mb-2 items-center">
-				<span className="text-sm text-gray-500 mr-5">스타일 이름</span>
-				<span className="text-l font-medium">{variable.productName}</span>
-			</div>
-			<div className="flex mb-2 items-center">
 				{svgObj.like()} &nbsp;
 				<span className="text-sm text-gray-500 mr-5">좋아요</span>
 				<span className="text-l font-medium">{variable.likes}</span>

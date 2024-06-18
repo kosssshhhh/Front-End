@@ -4,24 +4,26 @@ import DetailWconcept from '@/pages/styleDetail/_components/detailVariable/Detai
 
 import { StyleDetailVariable } from '@/pages/styleDetail/_types/styles.type';
 
+import { MALL_TYPE_ID } from '@/constants/mallTypeId';
+
 interface StyleDetailInfoVariableProps {
 	variable: StyleDetailVariable;
-	mallType: string;
+	mallTypeId: string;
 }
 
-export default function StyledDetailInfoVariable({ variable, mallType }: StyleDetailInfoVariableProps) {
+export default function StyledDetailInfoVariable({ variable, mallTypeId }: StyleDetailInfoVariableProps) {
 	console.log(variable);
 
 	let content = null;
 
-	switch (mallType) {
-		case 'MUSINSA':
+	switch (mallTypeId) {
+		case MALL_TYPE_ID.MUSINSA:
 			content = <DetailMusinsa variable={variable} />;
 			break;
-		case 'HANDSOME':
+		case MALL_TYPE_ID.HANDSOME:
 			content = <DetailHandsome variable={variable} />;
 			break;
-		case 'WCONCEPT':
+		case MALL_TYPE_ID.WCONCEPT:
 			content = <DetailWconcept variable={variable} />;
 			break;
 		default:

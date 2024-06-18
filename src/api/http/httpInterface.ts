@@ -19,7 +19,7 @@ export class HttpInterface {
 	// }
 
 	async getStyles(params: any) {
-		return this.apiClient.get('/style', { params: params });
+		return this.apiClient.get('/style/filter', { params: params });
 	}
 
 	async getCategory(mallTypeId: string) {
@@ -39,10 +39,15 @@ export class HttpInterface {
 		// 페이지 번호를 1 빼서 설정
 		const adjustedPage = (parseInt(page, 10) - 1).toString();
 
-		const params: { [key: string]: any } = { page: adjustedPage, styleId, startDate };
+		const params = new URLSearchParams();
+		params.append('page', adjustedPage);
+		params.append('styleId', styleId);
+		if (startDate) {
+			params.append('startDate', startDate);
+		}
 
 		if (rate) {
-			params.rate = rate;
+			rate.forEach((r) => params.append('rate', r));
 		}
 
 		return this.apiClient.get(`/style/detail/review/${mallTypeId}`, { params });

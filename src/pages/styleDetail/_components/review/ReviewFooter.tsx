@@ -2,10 +2,13 @@ import { svgObj } from '@/assets/svg';
 import { useControlPageNumber } from '@/pages/styles/_hooks/usePageNumber';
 
 interface ReviewFooterProps {
+	start: number;
+	end: number;
+	total: number;
 	toScroll: () => void;
 }
 
-export default function ReviewFooter({ toScroll }: ReviewFooterProps) {
+export default function ReviewFooter({ toScroll, start, end, total }: ReviewFooterProps) {
 	const [increasePage, decreasePage] = useControlPageNumber();
 
 	return (
@@ -32,10 +35,15 @@ export default function ReviewFooter({ toScroll }: ReviewFooterProps) {
 							clipRule="evenodd"></path>
 					</svg>
 				</button>
-				<span className="text-sm font-normal text-gray-500">
-					Showing <span className="text-gray-900 font-semibold">1-20</span> of{' '}
-					<span className="text-gray-900 font-semibold">2290</span>
-				</span>
+				{!isNaN(start) && (
+					<span className="text-sm font-normal text-gray-500">
+						Showing{' '}
+						<span className="text-gray-900 font-semibold">
+							{start}-{end}
+						</span>{' '}
+						of <span className="text-gray-900 font-semibold">{total}</span>
+					</span>
+				)}
 			</div>
 			<div className="flex items-center space-x-3">
 				<button

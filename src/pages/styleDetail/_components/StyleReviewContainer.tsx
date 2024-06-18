@@ -9,6 +9,7 @@ import { Content } from '@/pages/styleDetail/_types/stylesReview.type';
 import StyleReviewSkeleton from '@/components/skeleton/StyleReviewSkeletion';
 import ReviewFilter from './review/ReviewFilter';
 import { useRef } from 'react';
+import { calcPaging } from '@/utils/calcPaging';
 
 export default function StyleReviewContainer() {
 	usePageNumber();
@@ -24,6 +25,12 @@ export default function StyleReviewContainer() {
 	if (data) {
 		console.log(data.data);
 	}
+
+	const { start, end, total } = calcPaging(
+		data?.data.review.pageable.pageNumber,
+		data?.data.review.pageable.pageSize,
+		data?.data.review.totalElements,
+	);
 
 	return (
 		<div
@@ -42,7 +49,7 @@ export default function StyleReviewContainer() {
 							</div>
 						</div>
 					</div>
-					<ReviewFooter toScroll={toScroll} />
+					<ReviewFooter toScroll={toScroll} start={start} end={end} total={total} />
 				</div>
 			</div>
 		</div>

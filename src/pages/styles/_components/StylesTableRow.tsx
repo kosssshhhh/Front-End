@@ -13,8 +13,6 @@ export default function ProductTableRow({ style }: ProductTableRowProps) {
 		navigate(`/style/detail/${style.mallTypeId}/${style.styleId}?page=1`);
 	};
 
-	console.log(style);
-
 	return (
 		<tr onClick={handleNavigate} className="hover:bg-gray-100 cursor-pointer">
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900 relative">

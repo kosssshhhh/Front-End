@@ -17,9 +17,6 @@ export class HttpInterface {
 	// async checkAuthentication(data: CheckAuthData) {
 	// 	return this.apiClient.post('/users/session', data);
 	// }
-	async getMockData() {
-		return this.apiClient.get('/example');
-	}
 
 	async getStyles(params: any) {
 		return this.apiClient.get('/style', { params: params });
@@ -39,9 +36,16 @@ export class HttpInterface {
 
 	// TODO: params 수정 필요, URL 수정 필요
 	async getStyleReview(mallTypeId: string, styleId: string, page: string, startDate?: string, rate?: string[]) {
-		return this.apiClient.get(`/style/details/review/${mallTypeId}`, {
-			params: { page: page, productId: styleId, startDate: startDate, rate: rate },
-		});
+		// 페이지 번호를 1 빼서 설정
+		const adjustedPage = (parseInt(page, 10) - 1).toString();
+
+		const params: { [key: string]: any } = { page: adjustedPage, styleId, startDate };
+
+		if (rate) {
+			params.rate = rate;
+		}
+
+		return this.apiClient.get(`/style/detail/review/${mallTypeId}`, { params });
 	}
 
 	async getStyleReviewCount(mallTypeId: string, styleId: string) {

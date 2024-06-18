@@ -143,7 +143,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	return (
 		<>
 			<div
-				className={`fixed z-50 inset-y-0 left-0 w-[33%] bg-white shadow-lg transform ${
+				className={`fixed z-50 inset-y-0 left-0 w-[33%] overflow-y-auto bg-white shadow-lg transform ${
 					isOpen ? 'translate-x-0' : '-translate-x-full'
 				} transition-transform duration-300 ease-in-out`}>
 				<div className="p-4 relative">

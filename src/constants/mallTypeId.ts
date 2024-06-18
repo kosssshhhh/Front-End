@@ -1,0 +1,5 @@
+export const MALL_TYPE_ID = {
+	MUSINSA: 'JN1qnDZA',
+	WCONCEPT: 'l8WAu4fP',
+	HANDSOME: 'FHyETFQN',
+};

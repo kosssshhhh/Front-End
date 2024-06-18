@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import { ROUTES } from '@/routes/routes';
+import { ROUTES } from '@/constants/routes';
 
 import MainLayout from '@/layout/MainLayout';
 
@@ -9,8 +9,7 @@ const HomePage = lazy(async () => import('@/pages/home/page'));
 const ImageSearchPage = lazy(async () => import('@/pages/imageSearch/page'));
 const NotFoundPage = lazy(async () => import('@/pages/notFound/page'));
 const ProductDetail = lazy(async () => import('@/pages/styleDetail/page'));
-
-import Styles from '@/pages/Products/page';
+const Styles = lazy(async () => import('@/pages/styles/page'));
 
 const mainRoutes = {
 	path: '/',

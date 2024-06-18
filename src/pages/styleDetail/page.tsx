@@ -3,12 +3,14 @@ import ImageContainer from '@/pages/styleDetail/_components/ImageContainer';
 import StyleDetailInfoBasic from '@/pages/styleDetail/_components/StyleDetailInfoBasic';
 import StyledDetailInfoVariable from '@/pages/styleDetail/_components/StyleDetailInfoVariable';
 import StyleReviewContainer from '@/pages/styleDetail/_components/StyleReviewContainer';
-import ReviewCountGraphContainer from '@/pages/styleDetail/_components/review/ReaviewCountGraphContainer';
+import ReviewCountGraphContainer from '@/pages/styleDetail/_components/review/ReviewCountGraphContainer';
 
 import { useFetchStyleDetail } from '@/pages/styleDetail/hooks/useFetchStyleDetail';
+import { useScrollTop } from '@/hooks/useScrollTop';
 
 function ProductDetail() {
 	const { data, isLoading, isError } = useFetchStyleDetail();
+	useScrollTop();
 
 	if (isLoading) {
 		return <div>로딩중</div>;
@@ -29,11 +31,11 @@ function ProductDetail() {
 			<StyleDetailContainer>
 				<ImageContainer imageList={basicDetail.imageList} />
 				<StyleDetailInfoBasic basicDetail={basicDetail}>
-					<StyledDetailInfoVariable variable={variable} mallType={basicDetail.mallType} />
+					<StyledDetailInfoVariable variable={variable} mallTypeId={basicDetail.mallTypeId} />
 				</StyleDetailInfoBasic>
 				<ReviewCountGraphContainer />
 			</StyleDetailContainer>
-			<StyleReviewContainer mallType={basicDetail.mallType} />
+			<StyleReviewContainer />
 		</>
 	);
 }

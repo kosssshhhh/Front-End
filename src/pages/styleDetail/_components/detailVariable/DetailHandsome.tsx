@@ -6,7 +6,7 @@ export default function DetailHandsome({ variable }: { variable: StyleDetailVari
 		<div className="mt-12">
 			<div className="flex-col mb-5 items-center">
 				<div className="text-sm text-gray-500">스타일 정보</div>
-				<div className="text-sm font-medium p-2">{variable.productInfo}</div>
+				<div className="text-sm font-medium p-2">{variable.styleInfo}</div>
 			</div>
 
 			<div className="flex-col mb-5 items-center">

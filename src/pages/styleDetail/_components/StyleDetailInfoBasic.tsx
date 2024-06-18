@@ -10,13 +10,17 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 
 	return (
 		<div className="p-12">
-			<h1 className="text-2xl font-bold mb-3">{basicDetail.mallType}</h1>
+			<h1 className="text-2xl font-bold mb-3">{basicDetail.mallTypeId}</h1>
 
 			<hr />
 			<h1 className="text-xl font-bold mb-7 mt-5">{basicDetail.brand}</h1>
 			<div className="mb-2">
-				<span className="text-sm text-gray-500 mr-20">상품 ID</span>
-				<span className="text-l font-medium">{basicDetail.productId}</span>
+				<span className="text-sm text-gray-500 mr-20">스타일 ID</span>
+				<span className="text-l font-medium">{basicDetail.styleId}</span>
+			</div>
+			<div className="mb-2">
+				<span className="text-sm text-gray-500 mr-20">스타일명</span>
+				<span className="text-l font-medium">{basicDetail.styleName}</span>
 			</div>
 			<div className="mb-2">
 				<span className="text-sm text-gray-500 mr-20">고정가</span>
@@ -61,13 +65,14 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 								<tbody className="bg-white">
 									{basicDetail.exposureIndexList.map((exposureIndex: ExposureIndex) => {
 										return (
-											<tr key={exposureIndex.productId}>
+											<tr key={exposureIndex.styleId}>
 												<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
 													{exposureIndex.category.name}
 												</td>
 
 												<td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-													{exposureIndex.exposureIndex} <span className="font-meduium text-gray-500">점</span>
+													{exposureIndex.exposureIndex.toFixed(2)}{' '}
+													<span className="font-meduium text-gray-500">점</span>
 												</td>
 											</tr>
 										);

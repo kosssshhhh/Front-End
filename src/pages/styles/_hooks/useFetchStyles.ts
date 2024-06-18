@@ -22,11 +22,12 @@ export const useFetchStyles = () => {
 		queryFn: () => httpInterface.getStyles(fetchQuery()),
 	});
 
-	useEffect(() => {
-		if (data?.data && Array.isArray(data.data)) {
-			setStyles(data.data);
-		}
-	}, [data]);
+	// useEffect(() => {
+	// 	if (data?.data && Array.isArray(data.data.content)) {
+	// 		setStyles(data.data.content);
+	// 	}
+	// 	console.log(data?.data.content);
+	// }, [data]);
 
-	return { styles, isLoading, isError };
+	return { data, isLoading, isError };
 };

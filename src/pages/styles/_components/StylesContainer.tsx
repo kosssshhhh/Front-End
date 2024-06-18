@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import FilterSidebar from '@/pages/Products/_components/SidebarFilter';
+import FilterSidebar from '@/pages/styles/_components/SidebarFilter';
 import { svgObj } from '@/assets/svg';
-import { useSidebarFilter } from '@/pages/Products/_hooks/useSidebarFilter';
-import { usePageNumber } from '@/pages/Products/_hooks/usePageNumber';
+import { useSidebarFilter } from '@/pages/styles/_hooks/useSidebarFilter';
+import { usePageNumber } from '@/pages/styles/_hooks/usePageNumber';
 
 export default function StylesContainer({ children }: { children: React.ReactNode }) {
 	const [isOpen, onClose, sidebarToggle] = useSidebarFilter();

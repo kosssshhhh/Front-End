@@ -1,76 +1,93 @@
 import { http, HttpResponse } from 'msw';
 
+// TODO: productId -> styleId 변경
+// 		 styleName 추가
+
 // 한섬 데이터
 // const styleDetailHandler = [
-// 	http.get('/style/detail/:mallType/:productId', () => {
+// 	http.get('/style/detail/:mallTypeId/:styleId', () => {
 // 		return HttpResponse.json({
 // 			variable: {
-// 				variableId: 128,
-// 				productInfo:
-// 					'무릎까지 오는 길이감과 여유롭게 떨어지는 실루엣으로 캐주얼한 매력이 돋보이는 버뮤다 스타일의 데님 쇼츠입니다. 밝은 컬러감과 섬세한 워싱이 눈길을 끌며, 허리 라인에 밴딩과 드로우스트링이 있어 편안한 착용감을 전해줍니다. 간결한 디자인으로 어디에나 두루 어울리며, 같은 소재로 제작한 데님 자켓과 함께 스타일링 하기에도 좋습니다.',
-// 				fittingInfo:
-// 					'[WIDE FIT] 힙에서부터 밑단까지 여유있는 트렌디한 실루엣으로 캐쥬얼한 라인187cm, 105 사이즈 모델이 86 사이즈 착용',
-// 				additionalInfo: '"100% 면 소재", "허리 라인에 밴딩과 드로우스트링", "양옆과 힙에 포켓"',
+// 				variableId: 69,
+// 				styleInfo:
+// 					'서로 다른 컬러를 믹스하여 포인트를 준 하프 슬리브 자켓입니다. 이탈리아 수입의 린넨과 면 혼방 소재를 사용해 한층 고급스럽게 완성했으며, 살짝 크롭한 기장감이 트렌디한 분위기를 자아냅니다. 가슴 양쪽에 패치 포켓을 디자인했으며, 소맷단과 뒷면 밑단 양옆에 슬릿을 더해 섬세하게 완성했습니다. 깔끔한 레귤러 실루엣으로 높은 활용도를 자랑합니다.',
+// 				fittingInfo: '174cm, 55 사이즈 모델이 82 사이즈 착용',
+// 				additionalInfo:
+// 					'"이탈리아 수입 원단", "린넨과 면 혼방 소재", "앞면에 버튼 클로징", "가슴 양쪽에 포켓", "소맷단과 뒷면 밑단 양옆에 슬릿"',
 // 			},
 // 			basicDetail: {
-// 				productId: 'TH2E3NPC588N',
-// 				mallType: 'HANDSOME',
-// 				brand: 'TIME HOMME',
-// 				discountedPrice: 295000,
-// 				fixedPrice: 295000,
+// 				styleId: 'MN2E5WJC483W',
+// 				mallTypeId: 'FHyETFQN',
+// 				brand: 'MINE',
+// 				discountedPrice: 595000,
+// 				fixedPrice: 595000,
+// 				styleName: null,
 // 				monetaryUnit: 'KRW',
-// 				crawledDate: '2024-06-02T15:00:00.000+00:00',
+// 				crawledDate: '2024-06-10',
 // 				imageList: [
 // 					{
-// 						imageId: 780,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+// 						imageId: 1,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/0.webp',
 // 						sequence: 0,
 // 					},
 // 					{
-// 						imageId: 781,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+// 						imageId: 2,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/1.webp',
 // 						sequence: 1,
 // 					},
 // 					{
-// 						imageId: 782,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+// 						imageId: 3,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/2.webp',
 // 						sequence: 2,
 // 					},
 // 					{
-// 						imageId: 783,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+// 						imageId: 4,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/3.webp',
 // 						sequence: 3,
 // 					},
 // 					{
-// 						imageId: 784,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+// 						imageId: 5,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/4.webp',
 // 						sequence: 4,
 // 					},
 // 					{
-// 						imageId: 785,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+// 						imageId: 6,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/5.webp',
 // 						sequence: 5,
 // 					},
 // 					{
-// 						imageId: 786,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+// 						imageId: 7,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/6.webp',
 // 						sequence: 6,
+// 					},
+// 					{
+// 						imageId: 8,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/7.webp',
+// 						sequence: 7,
+// 					},
+// 					{
+// 						imageId: 9,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/8.webp',
+// 						sequence: 8,
 // 					},
 // 				],
 // 				skuAttribute: {
-// 					sizes: '86',
-// 					colors: 'LIGHT BLUE',
+// 					sizes: '88',
+// 					colors: 'NEUTRAL',
 // 				},
 // 				exposureIndexList: [
 // 					{
-// 						productId: 'TH2E3NPC588N',
-// 						mallType: 'HANDSOME',
-// 						exposureIndex: 6.0,
+// 						styleId: 'MN2E5WJC483W',
+// 						mallTypeId: 'FHyETFQN',
+// 						exposureIndex: 3.0,
 // 						category: {
-// 							categoryId: 1199,
-// 							orgCategoryId: '5012',
-// 							mallType: 'HANDSOME',
-// 							name: '데님',
+// 							categoryId: 1129,
+// 							orgCategoryId: '388',
+// 							mallType: {
+// 								mallTypeId: 'FHyETFQN',
+// 								mallTypeName: 'HANDSOME',
+// 							},
+// 							name: '자켓',
 // 						},
 // 					},
 // 				],
@@ -80,153 +97,92 @@ import { http, HttpResponse } from 'msw';
 // ];
 
 // 무신사 데이터
-// const styleDetailHandler = [
-// 	http.get('/style/detail/:mallType/:productId', () => {
-// 		return HttpResponse.json({
-// 			variable: {
-// 				variableId: 228,
-// 				productNum: 'T4S-ORJP406',
-// 				malePercentage: 90,
-// 				femalePercentage: 10,
-// 				likes: 626,
-// 				cumulativeSales: 387,
-// 				ageUnder18: 3,
-// 				age19To23: 11,
-// 				age24To28: 25,
-// 				age29To33: 22,
-// 				age34To39: 16,
-// 				ageOver40: 23,
-// 			},
-// 			basicDetail: {
-// 				productId: '3827664',
-// 				mallType: 'MUSINSA',
-// 				brand: 'toffee',
-// 				discountedPrice: 19900,
-// 				fixedPrice: 109000,
-// 				monetaryUnit: 'KRW',
-// 				crawledDate: '2024-06-02T15:00:00.000+00:00',
-// 				imageList: [
-// 					{
-// 						imageId: 780,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
-// 						sequence: 0,
-// 					},
-// 					{
-// 						imageId: 781,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
-// 						sequence: 1,
-// 					},
-// 					{
-// 						imageId: 782,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
-// 						sequence: 2,
-// 					},
-// 					{
-// 						imageId: 783,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
-// 						sequence: 3,
-// 					},
-// 					{
-// 						imageId: 784,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
-// 						sequence: 4,
-// 					},
-// 					{
-// 						imageId: 785,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
-// 						sequence: 5,
-// 					},
-// 					{
-// 						imageId: 786,
-// 						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
-// 						sequence: 6,
-// 					},
-// 				],
-// 				skuAttribute: {},
-// 				exposureIndexList: [
-// 					{
-// 						productId: '3827664',
-// 						mallType: 'MUSINSA',
-// 						exposureIndex: 4.0,
-// 						category: {
-// 							categoryId: 1088,
-// 							orgCategoryId: '002001',
-// 							mallType: 'MUSINSA',
-// 							name: '블루종/MA-1',
-// 						},
-// 					},
-// 				],
-// 			},
-// 		});
-// 	}),
-// ];
-
-// W 컨셉 데이터
 const styleDetailHandler = [
-	http.get('/style/detail/:mallType/:productId', () => {
+	http.get('/style/detail/:mallTypeId/:styleId', () => {
 		return HttpResponse.json({
 			variable: {
-				variableId: 32,
-				productName: 'SIST9024 나일론 퍼티그 스커트_Charcoal',
-				likes: 669,
-				soldOut: true,
+				variableId: 315,
+				malePercentage: 70,
+				femalePercentage: 30,
+				likes: 25848,
+				cumulativeSales: 13809,
+				ageUnder18: 2,
+				age19To23: 26,
+				age24To28: 39,
+				age29To33: 21,
+				age34To39: 6,
+				ageOver40: 6,
 			},
 			basicDetail: {
-				productId: '302818012',
-				mallType: 'WCONCEPT',
-				brand: '시야쥬',
-				discountedPrice: 59840,
-				fixedPrice: 85000,
+				styleId: '3321836',
+				mallTypeId: 'JN1qnDZA',
+				brand: 'partimento',
+				discountedPrice: 37905,
+				fixedPrice: 49900,
+				styleName: '링클 체크 박시 오버핏 롤업 하프 셔츠 다크 네이비',
 				monetaryUnit: 'KRW',
-				crawledDate: '2024-06-02T15:00:00.000+00:00',
+				crawledDate: '2024-06-13',
 				imageList: [
 					{
-						imageId: 780,
-						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+						imageId: 1,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/0.webp',
 						sequence: 0,
 					},
 					{
-						imageId: 781,
-						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+						imageId: 2,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/1.webp',
 						sequence: 1,
 					},
 					{
-						imageId: 782,
-						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+						imageId: 3,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/2.webp',
 						sequence: 2,
 					},
 					{
-						imageId: 783,
-						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+						imageId: 4,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/3.webp',
 						sequence: 3,
 					},
 					{
-						imageId: 784,
-						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+						imageId: 5,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/4.webp',
 						sequence: 4,
 					},
 					{
-						imageId: 785,
-						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+						imageId: 6,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/5.webp',
 						sequence: 5,
 					},
 					{
-						imageId: 786,
-						url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2mzbMHg0UEH2WcUQkPcx4YATDMX_fWw-SOA&s',
+						imageId: 7,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/6.webp',
 						sequence: 6,
+					},
+					{
+						imageId: 8,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/7.webp',
+						sequence: 7,
+					},
+					{
+						imageId: 9,
+						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/8.webp',
+						sequence: 8,
 					},
 				],
 				skuAttribute: {},
 				exposureIndexList: [
 					{
-						productId: '302818012',
-						mallType: 'WCONCEPT',
-						exposureIndex: 5.0,
+						productId: '3321836',
+						mallType: 'JN1qnDZA',
+						exposureIndex: 3.0,
 						category: {
-							categoryId: 982,
-							orgCategoryId: '001007002W',
-							mallType: 'WCONCEPT',
-							name: '미디',
+							categoryId: 1080,
+							orgCategoryId: '001002',
+							mallType: {
+								mallTypeId: 'JN1qnDZA',
+								mallTypeName: 'MUSINSA',
+							},
+							name: '셔츠/블라우스',
 						},
 					},
 				],
@@ -234,5 +190,92 @@ const styleDetailHandler = [
 		});
 	}),
 ];
+
+// W 컨셉 데이터
+// const styleDetailHandler = [
+// 	http.get('/style/detail/:mallTypeId/:styleId', () => {
+// 		return HttpResponse.json({
+// 			variable: {
+// 				variableId: 157,
+// 				likes: 8,
+// 				soldOut: true,
+// 			},
+// 			basicDetail: {
+// 				styleId: '304057182',
+// 				mallTypeId: 'l8WAu4fP',
+// 				brand: '노스페이스',
+// 				discountedPrice: 201200,
+// 				fixedPrice: 289000,
+// 				styleName: null,
+// 				monetaryUnit: 'KRW',
+// 				crawledDate: '2024-06-07',
+// 				imageList: [
+// 					{
+// 						imageId: 1,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/0.webp',
+// 						sequence: 0,
+// 					},
+// 					{
+// 						imageId: 2,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/1.webp',
+// 						sequence: 1,
+// 					},
+// 					{
+// 						imageId: 3,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/2.webp',
+// 						sequence: 2,
+// 					},
+// 					{
+// 						imageId: 4,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/3.webp',
+// 						sequence: 3,
+// 					},
+// 					{
+// 						imageId: 5,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/4.webp',
+// 						sequence: 4,
+// 					},
+// 					{
+// 						imageId: 6,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/5.webp',
+// 						sequence: 5,
+// 					},
+// 					{
+// 						imageId: 7,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/6.webp',
+// 						sequence: 6,
+// 					},
+// 					{
+// 						imageId: 8,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/7.webp',
+// 						sequence: 7,
+// 					},
+// 					{
+// 						imageId: 9,
+// 						url: 'https://designovellocal.s3.ap-northeast-2.amazonaws.com/handsome/MN2E5WJC483W/8.webp',
+// 						sequence: 8,
+// 					},
+// 				],
+// 				skuAttribute: {},
+// 				exposureIndexList: [
+// 					{
+// 						styleId: '304057182',
+// 						mallTypeId: 'l8WAu4fP',
+// 						exposureIndex: 0.94736844,
+// 						category: {
+// 							categoryId: 1032,
+// 							orgCategoryId: '001001005M',
+// 							mallType: {
+// 								mallTypeId: 'l8WAu4fP',
+// 								mallTypeName: 'WCONCEPT',
+// 							},
+// 							name: '패딩',
+// 						},
+// 					},
+// 				],
+// 			},
+// 		});
+// 	}),
+// ];
 
 export default styleDetailHandler;

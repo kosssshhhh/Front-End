@@ -1,6 +1,6 @@
 export interface RawReviewCountData {
 	date: string;
-	count: number;
+	reviewCount: number;
 }
 
 export interface ReviewCountData {

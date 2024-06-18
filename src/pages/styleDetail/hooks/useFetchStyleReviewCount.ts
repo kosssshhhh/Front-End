@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 export const useFetchStyleReviewCount = () => {
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
-	const { styleId, mallType } = useParams();
+	const { styleId, mallTypeId } = useParams();
 
-	if (!styleId || !mallType) {
+	if (!styleId || !mallTypeId) {
 		return {
 			data: null,
 			isLoading: false,
@@ -17,7 +17,7 @@ export const useFetchStyleReviewCount = () => {
 
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['styleReviewCount'],
-		queryFn: () => httpInterface.getStyleReviewCount(mallType, styleId),
+		queryFn: () => httpInterface.getStyleReviewCount(mallTypeId, styleId),
 	});
 
 	return { data, isLoading, isError };

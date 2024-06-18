@@ -3,7 +3,7 @@ import ImageContainer from '@/pages/styleDetail/_components/ImageContainer';
 import StyleDetailInfoBasic from '@/pages/styleDetail/_components/StyleDetailInfoBasic';
 import StyledDetailInfoVariable from '@/pages/styleDetail/_components/StyleDetailInfoVariable';
 import StyleReviewContainer from '@/pages/styleDetail/_components/StyleReviewContainer';
-import ReviewCountGraphContainer from '@/pages/styleDetail/_components/review/ReaviewCountGraphContainer';
+import ReviewCountGraphContainer from '@/pages/styleDetail/_components/review/ReviewCountGraphContainer';
 
 import { useFetchStyleDetail } from '@/pages/styleDetail/hooks/useFetchStyleDetail';
 

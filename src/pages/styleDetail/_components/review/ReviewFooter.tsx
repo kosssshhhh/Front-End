@@ -1,7 +1,11 @@
 import { svgObj } from '@/assets/svg';
 import { useControlPageNumber } from '@/pages/styles/_hooks/usePageNumber';
 
-export default function ReviewFooter() {
+interface ReviewFooterProps {
+	toScroll: () => void;
+}
+
+export default function ReviewFooter({ toScroll }: ReviewFooterProps) {
 	const [increasePage, decreasePage] = useControlPageNumber();
 
 	return (
@@ -10,6 +14,7 @@ export default function ReviewFooter() {
 				<button
 					className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center"
 					onClick={() => {
+						toScroll();
 						decreasePage();
 					}}>
 					{svgObj.previous()}
@@ -17,6 +22,7 @@ export default function ReviewFooter() {
 				<button
 					className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center mr-2"
 					onClick={() => {
+						toScroll();
 						increasePage();
 					}}>
 					<svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -35,6 +41,7 @@ export default function ReviewFooter() {
 				<button
 					className="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center"
 					onClick={() => {
+						toScroll();
 						decreasePage();
 					}}>
 					<svg
@@ -52,6 +59,7 @@ export default function ReviewFooter() {
 				<button
 					className="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center"
 					onClick={() => {
+						toScroll();
 						increasePage();
 					}}>
 					Next

@@ -8,9 +8,16 @@ import { useSearchParams, useParams } from 'react-router-dom';
 import { Content } from '@/pages/styleDetail/_types/stylesReview.type';
 import StyleReviewSkeleton from '@/components/skeleton/StyleReviewSkeletion';
 import ReviewFilter from './review/ReviewFilter';
+import { useRef } from 'react';
 
 export default function StyleReviewContainer() {
 	usePageNumber();
+
+	const containerRef = useRef<HTMLDivElement>(null);
+
+	const toScroll = () => {
+		containerRef.current?.scrollIntoView({ behavior: 'smooth' });
+	};
 
 	const { data, isLoading, isError } = useFetchReview();
 
@@ -19,7 +26,9 @@ export default function StyleReviewContainer() {
 	}
 
 	return (
-		<div className="p-4 mt-10 bg-white block sm:flex items-center justify-between rounded-lg border-b border-gray-200">
+		<div
+			ref={containerRef}
+			className="p-4 mt-10 bg-white block sm:flex items-center justify-between rounded-lg border-b border-gray-200">
 			<div className="w-full grid grid-cols-1 xl:grid-cols-2 gap-4">
 				<div className="flex flex-col xl:col-span-2">
 					<div className="overflow-x-auto">
@@ -33,7 +42,7 @@ export default function StyleReviewContainer() {
 							</div>
 						</div>
 					</div>
-					<ReviewFooter />
+					<ReviewFooter toScroll={toScroll} />
 				</div>
 			</div>
 		</div>

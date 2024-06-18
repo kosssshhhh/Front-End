@@ -6,9 +6,11 @@ import StyleReviewContainer from '@/pages/styleDetail/_components/StyleReviewCon
 import ReviewCountGraphContainer from '@/pages/styleDetail/_components/review/ReviewCountGraphContainer';
 
 import { useFetchStyleDetail } from '@/pages/styleDetail/hooks/useFetchStyleDetail';
+import { useScrollTop } from '@/hooks/useScrollTop';
 
 function ProductDetail() {
 	const { data, isLoading, isError } = useFetchStyleDetail();
+	useScrollTop();
 
 	if (isLoading) {
 		return <div>로딩중</div>;

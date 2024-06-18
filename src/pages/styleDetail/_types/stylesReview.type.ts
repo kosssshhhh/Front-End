@@ -38,9 +38,9 @@ export interface Review {
 
 export interface Content {
 	reviewId: number;
-	productId: string;
+	styleId: string;
 	orgReviewId: string;
-	rating: number;
+	rate: number;
 	writtenDate: string;
 	userId: string;
 	body: string;

@@ -1,4 +1,4 @@
-import { CategoryType, FilterType } from '@/pages/Products/_types/sidebarFilter.type';
+import { CategoryType, FilterType } from '@/pages/styles/_types/sidebarFilter.type';
 
 export const handleChange = (
 	e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -8,6 +8,45 @@ export const handleChange = (
 	const { name, value } = e.target;
 	setFilters((prev) => ({
 		...prev,
+		[name]: value,
+	}));
+
+	// 날짜 옵션 변경 시 상태 업데이트
+	if (name === 'date' && value === 'select') {
+		setDateOption(true);
+	} else if (name === 'date') {
+		setDateOption(false);
+	}
+};
+
+export const handleMallTypeChange = (
+	e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
+	handleReset: () => void,
+) => {
+	const { name, value } = e.target;
+
+	// console.log(name, value);
+
+	handleReset();
+
+	setFilters((prev) => ({
+		...prev,
+		[name]: value,
+	}));
+};
+
+export const handleDateOptionChange = (
+	e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
+	setDateOption: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+	const { name, value } = e.target;
+
+	setFilters((prev) => ({
+		...prev,
+		startDate: '',
+		endDate: '',
 		[name]: value,
 	}));
 
@@ -68,15 +107,34 @@ export const handleBrandChange = (brand: string, setFilters: React.Dispatch<Reac
 	});
 };
 
+// export const handleDateChange = (
+// 	e: React.ChangeEvent<HTMLInputElement>,
+// 	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
+// ) => {
+// 	const { name, value } = e.target;
+// 	setFilters((prev) => ({
+// 		...prev,
+// 		[name]: value,
+// 	}));
+// };
+
 export const handleDateChange = (
 	e: React.ChangeEvent<HTMLInputElement>,
 	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
 ) => {
 	const { name, value } = e.target;
-	setFilters((prev) => ({
-		...prev,
-		[name]: value,
+
+	setFilters((prevFilters) => ({
+		...prevFilters,
+		[name]: '',
 	}));
+
+	setTimeout(() => {
+		setFilters((prevFilters) => ({
+			...prevFilters,
+			[name]: value,
+		}));
+	}, 0);
 };
 
 export const toggleCategory = (

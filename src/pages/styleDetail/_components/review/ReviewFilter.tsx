@@ -40,6 +40,8 @@ const ReviewFilter = ({ reviewCount }: ReviewFilterProps) => {
 
 	const handleDateFilterClick = (filterValue: string) => {
 		const params = new URLSearchParams(searchParams);
+		params.delete('page');
+		params.append('page', '1');
 		if (filterValue) {
 			params.set('startDate', filterValue);
 		} else {
@@ -51,6 +53,8 @@ const ReviewFilter = ({ reviewCount }: ReviewFilterProps) => {
 	const handleStarFilterClick = (rating: number) => {
 		const params = new URLSearchParams(searchParams);
 		const currentStars = params.getAll('rate').map(Number);
+		params.delete('page');
+		params.append('page', '1');
 		if (currentStars.includes(rating)) {
 			params.delete('rate');
 			currentStars.filter((star) => star !== rating).forEach((star) => params.append('rate', star.toString()));

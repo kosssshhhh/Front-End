@@ -11,7 +11,7 @@ export const useFetchStyleReviewCount = () => {
 		return {
 			data: null,
 			isLoading: false,
-			isError: false,
+			isError: true,
 		};
 	}
 

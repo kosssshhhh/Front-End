@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleDetailBasic, ExposureIndex } from '@/pages/styleDetail/_types/styles.type';
 
 interface StyleDetailInfoBasicProps {
@@ -11,35 +12,37 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 	return (
 		<div className="p-12">
 			<h1 className="text-2xl font-bold mb-3">{basicDetail.mallTypeId}</h1>
-
 			<hr />
 			<h1 className="text-xl font-bold mb-7 mt-5">{basicDetail.brand}</h1>
-			<div className="mb-2">
-				<span className="text-sm text-gray-500 mr-20">스타일 ID</span>
-				<span className="text-l font-medium">{basicDetail.styleId}</span>
-			</div>
-			<div className="mb-2">
-				<span className="text-sm text-gray-500 mr-20">스타일명</span>
-				<span className="text-l font-medium">{basicDetail.styleName}</span>
-			</div>
-			<div className="mb-2">
-				<span className="text-sm text-gray-500 mr-20">고정가</span>
-				<span className="text-l font-medium">
-					{basicDetail.fixedPrice} {basicDetail.monetaryUnit}
-				</span>
-			</div>
-			<div className="mb-2">
-				<span className="text-sm text-gray-500 mr-20">할인가</span>
-				<span className="text-l font-medium">{basicDetail.discountedPrice} </span>
-				<span>{basicDetail.monetaryUnit}</span>
-			</div>
 
-			<div className="mb-3">
-				<span className="text-sm text-gray-500 mr-20">날짜</span>
-				<span className="text-l font-medium">{basicDetail.crawledDate}</span>
-			</div>
-
-			{/* <hr className="mt-5 mb-5" /> */}
+			<table className="min-w-full divide-y divide-gray-200 mb-5">
+				<tbody className="bg-white">
+					<tr>
+						<td className="p-2 text-sm text-gray-500">스타일 ID</td>
+						<td className="p-2 text-l font-medium">{basicDetail.styleId}</td>
+					</tr>
+					<tr>
+						<td className="p-2 text-sm text-gray-500">스타일명</td>
+						<td className="p-2 text-l font-medium">{basicDetail.styleName}</td>
+					</tr>
+					<tr>
+						<td className="p-2 text-sm text-gray-500">고정가</td>
+						<td className="p-2 text-l font-medium">
+							{basicDetail.fixedPrice} {basicDetail.monetaryUnit}
+						</td>
+					</tr>
+					<tr>
+						<td className="p-2 text-sm text-gray-500">할인가</td>
+						<td className="p-2 text-l font-medium">
+							{basicDetail.discountedPrice} {basicDetail.monetaryUnit}
+						</td>
+					</tr>
+					<tr>
+						<td className="p-2 text-sm text-gray-500">날짜</td>
+						<td className="p-2 text-l font-medium">{basicDetail.crawledDate}</td>
+					</tr>
+				</tbody>
+			</table>
 
 			<div className="flex flex-col mt-8">
 				<h1 className="text-m font-medium mb-1 text-gray-500">중복 카테고리</h1>
@@ -54,7 +57,6 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 											className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
 											카테고리
 										</th>
-
 										<th
 											scope="col"
 											className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -63,20 +65,16 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 									</tr>
 								</thead>
 								<tbody className="bg-white">
-									{basicDetail.exposureIndexList.map((exposureIndex: ExposureIndex) => {
-										return (
-											<tr key={exposureIndex.styleId}>
-												<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-													{exposureIndex.category.name}
-												</td>
-
-												<td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-													{exposureIndex.exposureIndex.toFixed(2)}{' '}
-													<span className="font-meduium text-gray-500">점</span>
-												</td>
-											</tr>
-										);
-									})}
+									{basicDetail.exposureIndexList.map((exposureIndex: ExposureIndex) => (
+										<tr key={exposureIndex.styleId}>
+											<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+												{exposureIndex.category.name}
+											</td>
+											<td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+												{exposureIndex.exposureIndex.toFixed(2)} <span className="font-meduium text-gray-500">점</span>
+											</td>
+										</tr>
+									))}
 								</tbody>
 							</table>
 						</div>
@@ -84,7 +82,6 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 				</div>
 			</div>
 			<hr className="mt-5 mb-5 border-gray-300" />
-
 			{children}
 		</div>
 	);

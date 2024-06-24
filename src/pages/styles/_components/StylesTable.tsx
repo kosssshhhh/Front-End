@@ -6,6 +6,7 @@ import { StyleType } from '@/types/index';
 
 import { useFetchStyles } from '@/pages/styles/_hooks/useFetchStyles';
 import { calcPaging } from '@/utils/calcPaging';
+import ExceptionWord from '@/components/ExceptionWord';
 // import { useEffect } from 'react';
 
 export default function ProductsTable() {
@@ -17,6 +18,9 @@ export default function ProductsTable() {
 		data?.data.pageable?.pageSize,
 		data?.data.totalElements,
 	);
+
+	if (data?.data.content) {
+	}
 
 	return (
 		<>
@@ -55,10 +59,24 @@ export default function ProductsTable() {
 								</thead>
 								<tbody className="bg-white divide-y divide-gray-200">
 									{isLoading
-										? Array.from({ length: 10 }).map((_, index) => <StyleTableRowSkeleton key={index} />)
-										: data.data.content?.map((style: StyleType) => (
+										? Array.from({ length: 20 }).map((_, index) => <StyleTableRowSkeleton key={index} />)
+										: data?.data.content?.map((style: StyleType) => (
 												<StylesTableRow key={style.styleId} style={style} />
 										  ))}
+									{data?.data.content?.length === 0 && (
+										<tr>
+											<td colSpan={8}>
+												<ExceptionWord text="상품이 존재하지 않습니다." />
+											</td>
+										</tr>
+									)}
+									{isError && (
+										<tr>
+											<td colSpan={8} className="p-4 text-center text-xs font-medium text-red-500">
+												<ExceptionWord text="에러가 발생했습니다." />
+											</td>
+										</tr>
+									)}
 								</tbody>
 							</table>
 						</div>

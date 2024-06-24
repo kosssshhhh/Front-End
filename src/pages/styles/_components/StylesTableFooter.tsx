@@ -1,4 +1,5 @@
 import { svgObj } from '@/assets/svg';
+import { useCheckFirstPage, useCheckLastPage } from '@/hooks/useCheckPageRange';
 import { useControlPageNumber } from '@/pages/styles/_hooks/usePageNumber';
 
 interface StylesTableFooterProps {
@@ -10,14 +11,21 @@ interface StylesTableFooterProps {
 export default function StylesTableFooter({ start, end, total }: StylesTableFooterProps) {
 	const [increasePage, decreasePage] = useControlPageNumber();
 
+	const isLastPage = useCheckLastPage(end, total);
+	const isFirstPage = useCheckFirstPage(start);
+
 	const handleDecreasePage = () => {
-		decreasePage();
-		window.scrollTo({ top: 0, behavior: 'smooth' });
+		if (!isFirstPage) {
+			decreasePage();
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
 	};
 
 	const handleIncreasePage = () => {
-		increasePage();
-		window.scrollTo({ top: 0, behavior: 'smooth' });
+		if (!isLastPage) {
+			increasePage();
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		}
 	};
 
 	return (
@@ -25,12 +33,16 @@ export default function StylesTableFooter({ start, end, total }: StylesTableFoot
 			<div className="bg-white sm:flex items-center w-full sm:justify-between bottom-0 right-0 border-t border-gray-200 p-4">
 				<div className="flex items-center mb-4 sm:mb-0">
 					<button
-						className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center"
+						className={`text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center mr-2 ${
+							isFirstPage && 'cursor-not-allowed'
+						}`}
 						onClick={handleDecreasePage}>
 						{svgObj.previous()}
 					</button>
 					<button
-						className="text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center mr-2"
+						className={`text-gray-500 hover:text-gray-900 cursor-pointer p-1 hover:bg-gray-100 rounded inline-flex justify-center mr-2 ${
+							isLastPage && 'cursor-not-allowed'
+						}`}
 						onClick={handleIncreasePage}>
 						<svg className="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
 							<path
@@ -51,7 +63,10 @@ export default function StylesTableFooter({ start, end, total }: StylesTableFoot
 				</div>
 				<div className="flex items-center space-x-3">
 					<button
-						className="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center"
+						// className="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center"
+						className={`flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center ${
+							isFirstPage && 'cursor-not-allowed'
+						}`}
 						onClick={handleDecreasePage}>
 						<svg
 							className="-ml-1 mr-1 h-5 w-5"
@@ -66,7 +81,9 @@ export default function StylesTableFooter({ start, end, total }: StylesTableFoot
 						Previous
 					</button>
 					<button
-						className="flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center"
+						className={`flex-1 text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium inline-flex items-center justify-center rounded-lg text-sm px-3 py-2 text-center ${
+							isLastPage && 'cursor-not-allowed'
+						}`}
 						onClick={handleIncreasePage}>
 						Next
 						<svg

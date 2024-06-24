@@ -12,6 +12,7 @@ import { Content } from '@/pages/styleDetail/_types/stylesReview.type';
 import StyleReviewSkeleton from '@/components/skeleton/StyleReviewSkeletion';
 
 import { calcPaging } from '@/utils/calcPaging';
+import ExceptionWord from '@/components/ExceptionWord';
 
 export default function StyleReviewContainer() {
 	usePageNumber();
@@ -24,15 +25,19 @@ export default function StyleReviewContainer() {
 
 	const { data, isLoading, isError } = useFetchReview();
 
-	if (data) {
-		console.log(data.data);
-	}
+	// if (data) {
+	// 	console.log(data.data);
+	// }
 
 	const { start, end, total } = calcPaging(
 		data?.data.review.pageable.pageNumber,
 		data?.data.review.pageable.pageSize,
 		data?.data.review.totalElements,
 	);
+
+	// if (data?.data.review.content.length === 0) {
+	// 	return null;
+	// }
 
 	return (
 		<div
@@ -45,8 +50,9 @@ export default function StyleReviewContainer() {
 							<div className="shadow overflow-hidden">
 								{data && <ReviewFilter reviewCount={data?.data.count} />}
 								{isLoading && <StyleReviewSkeleton />}
+								{data?.data.review.content.length === 0 && <ExceptionWord text="리뷰가 존재하지 않습니다." />}
 								{data?.data.review.content.map((review: Content) => {
-									return <StyleReview review={review} />;
+									return <StyleReview review={review} key={review.orgReviewId} />;
 								})}
 							</div>
 						</div>

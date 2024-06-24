@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/routes';
 
 import MainLayout from '@/layout/MainLayout';
+import Loading from '@/components/Loading';
 
 const HomePage = lazy(async () => import('@/pages/home/page'));
 const ImageSearchPage = lazy(async () => import('@/pages/imageSearch/page'));
@@ -22,7 +23,7 @@ const mainRoutes = {
 		{
 			path: ROUTES.HOME,
 			element: (
-				<Suspense fallback="loading...">
+				<Suspense fallback={<Loading />}>
 					<HomePage />
 				</Suspense>
 			),
@@ -30,7 +31,7 @@ const mainRoutes = {
 		{
 			path: ROUTES.STYLES,
 			element: (
-				<Suspense fallback="loading...">
+				<Suspense fallback={<Loading />}>
 					<Styles />
 				</Suspense>
 			),
@@ -38,7 +39,7 @@ const mainRoutes = {
 		{
 			path: ROUTES.STYLE_DETAIL,
 			element: (
-				<Suspense fallback="loading...">
+				<Suspense fallback={<Loading />}>
 					<ProductDetail />
 				</Suspense>
 			),
@@ -46,7 +47,7 @@ const mainRoutes = {
 		{
 			path: ROUTES.IMAGE_SEARCH,
 			element: (
-				<Suspense fallback="loading...">
+				<Suspense fallback={<Loading />}>
 					<ImageSearchPage />
 				</Suspense>
 			),
@@ -54,7 +55,7 @@ const mainRoutes = {
 		{
 			path: '*',
 			element: (
-				<Suspense fallback="loading...">
+				<Suspense fallback={<Loading />}>
 					<NotFoundPage />
 				</Suspense>
 			),

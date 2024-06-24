@@ -10,7 +10,7 @@ export const useFetchReview = () => {
 	const startDate = searchParams.get('startDate') || ''; // 기본값 설정
 	const rate = searchParams.getAll('rate');
 
-	console.log(`mallTypeId: ${mallTypeId}, styleId: ${styleId}, page: ${page}, startDate: ${startDate}, rate: ${rate}`);
+	// console.log(`mallTypeId: ${mallTypeId}, styleId: ${styleId}, page: ${page}, startDate: ${startDate}, rate: ${rate}`);
 
 	const httpInterface = useNetwork((state) => state.httpInterface);
 

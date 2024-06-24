@@ -63,9 +63,9 @@ const ReviewFilter = ({ reviewCount }: ReviewFilterProps) => {
 	return (
 		<div className="mb-5">
 			<div className="flex flex-wrap md:flex-nowrap space-x-2 mb-4">
-				{filterOptions.map((filter, index) => (
+				{filterOptions.map((filter) => (
 					<div
-						key={index}
+						key={filter.value}
 						onClick={() => handleDateFilterClick(filter.value)}
 						className={`cursor-pointer p-2 text-sm ${
 							selectedDateFilter === filter.value ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
@@ -76,11 +76,11 @@ const ReviewFilter = ({ reviewCount }: ReviewFilterProps) => {
 			</div>
 			<div className="flex flex-wrap md:flex-nowrap space-x-2">
 				<div className="p-3 rounded bg-gray-200 mb-2 md:mb-0">{reviewCount.total} Review</div>
-				{[1, 2, 3, 4, 5].map((rating, index) => {
+				{[1, 2, 3, 4, 5].map((rating) => {
 					const key = `rate${rating}` as keyof Count;
 					return (
 						<div
-							key={index}
+							key={rating}
 							onClick={() => handleStarFilterClick(rating)}
 							className={`cursor-pointer p-3 rounded flex items-center justify-center mb-2 md:mb-0 ${
 								selectedStarFilters.includes(rating) ? 'bg-yellow-400 text-white' : 'bg-gray-200 text-gray-700'

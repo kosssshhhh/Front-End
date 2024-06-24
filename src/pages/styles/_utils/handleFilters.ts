@@ -58,6 +58,18 @@ export const handleDateOptionChange = (
 	}
 };
 
+export const handleSortChange = (
+	e: React.ChangeEvent<HTMLSelectElement>,
+	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
+) => {
+	const [sortBy, sortOrder] = e.target.value.split(',');
+	setFilters((prev) => ({
+		...prev,
+		sortBy,
+		sortOrder: sortOrder as 'asc' | 'desc',
+	}));
+};
+
 export const handleCategoryChange = (
 	category: CategoryType,
 	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,

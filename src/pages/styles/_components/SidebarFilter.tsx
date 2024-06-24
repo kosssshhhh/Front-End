@@ -12,7 +12,6 @@ import { convertDate } from '@/pages/styles/_utils/converDate';
 import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 
 import {
-	handleChange,
 	handleMallTypeChange,
 	handleDateOptionChange,
 	handleCategoryChange,
@@ -21,6 +20,7 @@ import {
 	handleDateChange,
 	toggleCategory,
 	handleSubSidebar,
+	handleSortChange,
 } from '@/pages/styles/_utils/handleFilters';
 
 function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
@@ -35,6 +35,8 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 		date: '',
 		category: [],
 		brand: [],
+		sortBy: '',
+		sortOrder: 'desc',
 	});
 
 	const [dateOption, setDateOption] = useState(false);
@@ -67,6 +69,8 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 			date: '',
 			category: [],
 			brand: [],
+			sortBy: '',
+			sortOrder: 'desc',
 		});
 		setDateOption(false);
 		setSubSidebarCategory([]);
@@ -90,6 +94,11 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 		filters.brand.forEach((brand) => {
 			params.append('brand', brand);
 		});
+
+		if (filters.sortBy) {
+			params.set('sortBy', filters.sortBy);
+			params.set('sortOrder', filters.sortOrder);
+		}
 
 		setSearchParams(params);
 		setSubSidebar('');
@@ -168,6 +177,24 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 								<option value={MALL_TYPE_ID.MUSINSA}>무신사</option>
 								<option value={MALL_TYPE_ID.WCONCEPT}>W 컨셉</option>
 								<option value={MALL_TYPE_ID.HANDSOME}>한섬</option>
+							</select>
+						</div>
+
+						<div className="mb-5">
+							<label className="text-lg font-semibold">정렬</label>
+							<select
+								className="w-full p-2 border rounded"
+								name="sort"
+								value={`${filters.sortBy},${filters.sortOrder}`}
+								onChange={(e) => handleSortChange(e, setFilters)}>
+								<option value="exposureIndex,desc">노출지수 높은 순</option>
+								<option value="exposureIndex,asc">노출지수 낮은 순</option>
+								<option value="fixedPrice,desc">고정가 높은 순</option>
+								<option value="fixedPrice,asc">고정가 낮은 순</option>
+								<option value="discountedPrice,desc">할인가 높은 순</option>
+								<option value="discountedPrice,asc">할인가 낮은 순</option>
+								<option value="brand,asc">브랜드 이름 순 (오름차순)</option>
+								<option value="brand,desc">브랜드 이름 순 (내림차순)</option>
 							</select>
 						</div>
 

@@ -50,7 +50,7 @@ export default function ProductsTable() {
 											카테고리
 										</th>
 										<th scope="col" className="p-4 text-center text-xs font-medium text-gray-500 uppercase">
-											현재가
+											고정가
 										</th>
 										<th scope="col" className="p-4 text-center text-xs font-medium text-gray-500 uppercase">
 											할인가

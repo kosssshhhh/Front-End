@@ -5,7 +5,7 @@ import StyledDetailInfoVariable from '@/pages/styleDetail/_components/StyleDetai
 import StyleReviewContainer from '@/pages/styleDetail/_components/StyleReviewContainer';
 import ReviewCountGraphContainer from '@/pages/styleDetail/_components/review/ReviewCountGraphContainer';
 
-import { useFetchStyleDetail } from '@/pages/styleDetail/hooks/useFetchStyleDetail';
+import { useFetchStyleDetail } from '@/pages/styleDetail/_hooks/useFetchStyleDetail';
 import { useScrollTop } from '@/hooks/useScrollTop';
 
 function ProductDetail() {

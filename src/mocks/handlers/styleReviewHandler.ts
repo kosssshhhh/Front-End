@@ -1,7 +1,7 @@
 import { http, HttpResponse, delay } from 'msw';
 
 const styleReviewHandler = [
-	http.get('/style/detail/review/:mallType', async () => {
+	http.get('/style/details/review/:mallType', async () => {
 		await delay(300);
 		return HttpResponse.json({
 			review: {

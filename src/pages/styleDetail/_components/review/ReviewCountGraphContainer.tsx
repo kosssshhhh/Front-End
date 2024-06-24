@@ -1,6 +1,6 @@
 import ReviewCountChart from '@/pages/styleDetail/_components/chart/ReviewCountChart';
 
-import { useFetchStyleReviewCount } from '../../hooks/useFetchStyleReviewCount';
+import { useFetchStyleReviewCount } from '@/pages/styleDetail/_hooks/useFetchStyleReviewCount';
 
 export default function ReviewCountGraphContainer() {
 	const { data, isLoading, isError } = useFetchStyleReviewCount();

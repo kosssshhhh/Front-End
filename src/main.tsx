@@ -8,23 +8,23 @@ import '@/index.css';
 import queryClient from '@/api/queryClient/queryClient';
 import { BrowserRouter } from 'react-router-dom';
 
-console.log(import.meta.env.DEV);
+// console.log(import.meta.env.DEV);
 
-async function enableMocking() {
-	if (!import.meta.env.DEV) return;
+// async function enableMocking() {
+// 	if (!import.meta.env.DEV) return;
 
-	const { worker } = await import('@/mocks/browser');
-	console.log('Enabling mocking');
-	return worker.start();
-}
+// 	const { worker } = await import('@/mocks/browser');
+// 	console.log('Enabling mocking');
+// 	return worker.start();
+// }
 
-enableMocking().then(() => {
-	ReactDOM.createRoot(document.getElementById('root')!).render(
-		<QueryClientProvider client={queryClient}>
-			<BrowserRouter basename="/">
-				<App />
-			</BrowserRouter>
-			<ReactQueryDevtools initialIsOpen={false} />
-		</QueryClientProvider>,
-	);
-});
+// enableMocking().then(() => {
+ReactDOM.createRoot(document.getElementById('root')!).render(
+	<QueryClientProvider client={queryClient}>
+		<BrowserRouter basename="/">
+			<App />
+		</BrowserRouter>
+		<ReactQueryDevtools initialIsOpen={false} />
+	</QueryClientProvider>,
+);
+// });

@@ -1,14 +1,16 @@
+import { useRef } from 'react';
+// import { useSearchParams, useParams } from 'react-router-dom';
+
 import StyleReview from '@/pages/styleDetail/_components/review/StyleReview';
 import ReviewFooter from '@/pages/styleDetail/_components/review/ReviewFooter';
+import ReviewFilter from '@/pages/styleDetail/_components/review/ReviewFilter';
 
 import { useControlPageNumber, usePageNumber } from '@/pages/styles/_hooks/usePageNumber';
+import { useFetchReview } from '@/pages/styleDetail/_hooks/useFetchReview';
 
-import { useFetchReview } from '@/pages/styleDetail/hooks/useFetchReview';
-import { useSearchParams, useParams } from 'react-router-dom';
 import { Content } from '@/pages/styleDetail/_types/stylesReview.type';
 import StyleReviewSkeleton from '@/components/skeleton/StyleReviewSkeletion';
-import ReviewFilter from './review/ReviewFilter';
-import { useRef } from 'react';
+
 import { calcPaging } from '@/utils/calcPaging';
 
 export default function StyleReviewContainer() {

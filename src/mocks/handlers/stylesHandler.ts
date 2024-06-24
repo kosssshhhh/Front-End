@@ -1,7 +1,7 @@
 import { http, delay, HttpResponse } from 'msw';
 
 const stylesHandler = [
-	http.get('/style', async () => {
+	http.get('/style/filter', async () => {
 		await delay(1000);
 		return HttpResponse.json({
 			content: [

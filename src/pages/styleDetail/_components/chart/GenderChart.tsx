@@ -6,8 +6,6 @@ interface GenderProps {
 }
 
 export default function GenderChart({ malePercentage, femalePercentage }: GenderProps) {
-	console.log(malePercentage, femalePercentage);
-
 	if (!malePercentage || !femalePercentage) {
 		return null;
 	}

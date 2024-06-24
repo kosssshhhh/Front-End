@@ -6,14 +6,12 @@ interface StyleReviewProps {
 }
 
 export default function StyleReview({ review }: StyleReviewProps) {
-	console.log(review);
-
 	return (
-		<div className="p-4 border-t mb-1">
+		<div className="p-4 border-t mb-1" key={review.orgReviewId}>
 			<div className="flex flex-col md:flex-row md:justify-between">
 				<div className="flex items-center mb-2 md:mb-0">
 					<span className="flex p-2 text-yellow-500">{renderStars(review.rate)}</span>
-					<span className="ml-2 text-lg font-semibold">{`Test`}</span>
+					{/* <span className="ml-2 text-lg font-semibold">{`Test`}</span> */}
 				</div>
 				<div className="flex items-center md:justify-end text-sm md:text-base">
 					<span className="order-2 md:order-1 text-gray-500 ">{review.userId}</span>

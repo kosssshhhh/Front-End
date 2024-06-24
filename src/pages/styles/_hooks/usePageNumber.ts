@@ -1,5 +1,6 @@
-import usePageStore from '@/stores/pageStore';
 import { useEffect } from 'react';
+
+import usePageStore from '@/stores/pageStore';
 import { useSearchParams } from 'react-router-dom';
 
 // TODO: 상위 hooks 디렉토리로 이동

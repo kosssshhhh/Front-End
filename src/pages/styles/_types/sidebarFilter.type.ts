@@ -15,4 +15,6 @@ export interface FilterType {
 	endDate: string;
 	category: CategoryType[];
 	brand: string[];
+	sortBy: string;
+	sortOrder: 'asc' | 'desc';
 }

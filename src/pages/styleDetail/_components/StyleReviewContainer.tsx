@@ -1,15 +1,18 @@
+import { useRef } from 'react';
+// import { useSearchParams, useParams } from 'react-router-dom';
+
 import StyleReview from '@/pages/styleDetail/_components/review/StyleReview';
 import ReviewFooter from '@/pages/styleDetail/_components/review/ReviewFooter';
+import ReviewFilter from '@/pages/styleDetail/_components/review/ReviewFilter';
 
 import { useControlPageNumber, usePageNumber } from '@/pages/styles/_hooks/usePageNumber';
+import { useFetchReview } from '@/pages/styleDetail/_hooks/useFetchReview';
 
-import { useFetchReview } from '@/pages/styleDetail/hooks/useFetchReview';
-import { useSearchParams, useParams } from 'react-router-dom';
 import { Content } from '@/pages/styleDetail/_types/stylesReview.type';
 import StyleReviewSkeleton from '@/components/skeleton/StyleReviewSkeletion';
-import ReviewFilter from './review/ReviewFilter';
-import { useRef } from 'react';
+
 import { calcPaging } from '@/utils/calcPaging';
+import ExceptionWord from '@/components/ExceptionWord';
 
 export default function StyleReviewContainer() {
 	usePageNumber();
@@ -22,15 +25,19 @@ export default function StyleReviewContainer() {
 
 	const { data, isLoading, isError } = useFetchReview();
 
-	if (data) {
-		console.log(data.data);
-	}
+	// if (data) {
+	// 	console.log(data.data);
+	// }
 
 	const { start, end, total } = calcPaging(
 		data?.data.review.pageable.pageNumber,
 		data?.data.review.pageable.pageSize,
 		data?.data.review.totalElements,
 	);
+
+	// if (data?.data.review.content.length === 0) {
+	// 	return null;
+	// }
 
 	return (
 		<div
@@ -43,8 +50,9 @@ export default function StyleReviewContainer() {
 							<div className="shadow overflow-hidden">
 								{data && <ReviewFilter reviewCount={data?.data.count} />}
 								{isLoading && <StyleReviewSkeleton />}
+								{data?.data.review.content.length === 0 && <ExceptionWord text="리뷰가 존재하지 않습니다." />}
 								{data?.data.review.content.map((review: Content) => {
-									return <StyleReview review={review} />;
+									return <StyleReview review={review} key={review.orgReviewId} />;
 								})}
 							</div>
 						</div>

@@ -12,13 +12,15 @@ import { convertDate } from '@/pages/styles/_utils/converDate';
 import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 
 import {
-	handleChange,
+	handleMallTypeChange,
+	handleDateOptionChange,
 	handleCategoryChange,
 	handleBrandChange,
 	handleRemoveCategory,
 	handleDateChange,
 	toggleCategory,
 	handleSubSidebar,
+	handleSortChange,
 } from '@/pages/styles/_utils/handleFilters';
 
 function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
@@ -33,6 +35,8 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 		date: '',
 		category: [],
 		brand: [],
+		sortBy: '',
+		sortOrder: 'desc',
 	});
 
 	const [dateOption, setDateOption] = useState(false);
@@ -65,9 +69,10 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 			date: '',
 			category: [],
 			brand: [],
+			sortBy: '',
+			sortOrder: 'desc',
 		});
 		setDateOption(false);
-		setSubSidebar('');
 		setSubSidebarCategory([]);
 		setSubSidebarBrand([]);
 		setExpandedCategories(new Set());
@@ -76,10 +81,11 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	const handleSubmit = () => {
 		const params = new URLSearchParams();
 
-		params.append('mallTypeId', filters.mallTypeId);
+		filters.mallTypeId === '' ? params.delete('mallTypeId') : params.set('mallTypeId', filters.mallTypeId);
 		params.set('page', '1');
-		params.set('startDate', filters.startDate);
-		params.set('endDate', filters.endDate);
+
+		filters.startDate === '' ? params.delete('startDate') : params.set('startDate', filters.startDate);
+		filters.endDate === '' ? params.delete('endDate') : params.set('endDate', filters.endDate);
 
 		filters.category.forEach((cat) => {
 			params.append('category', `${cat.categoryId}`);
@@ -89,7 +95,13 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 			params.append('brand', brand);
 		});
 
+		if (filters.sortBy) {
+			params.set('sortBy', filters.sortBy);
+			params.set('sortOrder', filters.sortOrder);
+		}
+
 		setSearchParams(params);
+		setSubSidebar('');
 
 		onClose();
 	};
@@ -156,7 +168,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							<label className="text-lg font-semibold">도메인</label>
 							<select
 								value={filters.mallTypeId}
-								onChange={(e) => handleChange(e, setFilters, setDateOption)}
+								onChange={(e) => handleMallTypeChange(e, setFilters, handleReset)}
 								className="w-full p-2 border rounded"
 								name="mallTypeId">
 								<option defaultChecked value="">
@@ -169,12 +181,30 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 						</div>
 
 						<div className="mb-5">
+							<label className="text-lg font-semibold">정렬</label>
+							<select
+								className="w-full p-2 border rounded"
+								name="sort"
+								value={`${filters.sortBy},${filters.sortOrder}`}
+								onChange={(e) => handleSortChange(e, setFilters)}>
+								<option value="exposureIndex,desc">노출지수 높은 순</option>
+								<option value="exposureIndex,asc">노출지수 낮은 순</option>
+								<option value="fixedPrice,desc">고정가 높은 순</option>
+								<option value="fixedPrice,asc">고정가 낮은 순</option>
+								<option value="discountedPrice,desc">할인가 높은 순</option>
+								<option value="discountedPrice,asc">할인가 낮은 순</option>
+								<option value="brand,asc">브랜드 이름 순 (오름차순)</option>
+								<option value="brand,desc">브랜드 이름 순 (내림차순)</option>
+							</select>
+						</div>
+
+						<div className="mb-5">
 							<label className="text-lg font-semibold">기간</label>
 							<select
 								className="w-full p-2 border rounded"
 								name="date"
 								value={filters.date}
-								onChange={(e) => handleChange(e, setFilters, setDateOption)}>
+								onChange={(e) => handleDateOptionChange(e, setFilters, setDateOption)}>
 								<option defaultChecked value="">
 									선택
 								</option>
@@ -186,7 +216,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							</select>
 						</div>
 
-						<div className={`mb-5 ${dateOption ? '' : 'hidden'} flex items-center justify-between`}>
+						{/* <div className={`mb-5 ${dateOption ? '' : 'hidden'} flex items-center justify-between`}>
 							<div className="flex flex-col w-1/2 p-2">
 								<label className="mb-2">시작</label>
 								<input
@@ -205,7 +235,30 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 									className="p-2 border rounded"
 								/>
 							</div>
-						</div>
+						</div> */}
+
+						{dateOption && (
+							<div className={`mb-5 flex items-center justify-between`}>
+								<div className="flex flex-col w-1/2 p-2">
+									<label className="mb-2">시작</label>
+									<input
+										type="date"
+										name="startDate"
+										onChange={(e) => handleDateChange(e, setFilters)}
+										className="p-2 border rounded"
+									/>
+								</div>
+								<div className="flex flex-col w-1/2 p-2">
+									<label className="block mb-2">끝</label>
+									<input
+										type="date"
+										name="endDate"
+										onChange={(e) => handleDateChange(e, setFilters)}
+										className="p-2 border rounded"
+									/>
+								</div>
+							</div>
+						)}
 
 						{filters.mallTypeId && filters.mallTypeId !== 'all' && (
 							<>
@@ -250,7 +303,12 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 					</div>
 
 					<div className="mt-6 flex justify-between">
-						<button onClick={handleReset} className="p-2 bg-gray-200 hover:bg-gray-300 rounded w-1/2">
+						<button
+							onClick={() => {
+								handleReset();
+								setSubSidebar('');
+							}}
+							className="p-2 bg-gray-200 hover:bg-gray-300 rounded w-1/2">
 							초기화
 						</button>
 						<button onClick={handleSubmit} className="p-2 bg-black text-white hover:bg-gray-800 rounded w-1/2 ml-2">

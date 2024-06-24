@@ -46,6 +46,7 @@ export class HttpInterface {
 			params.append('startDate', startDate);
 		}
 
+		// rate는 Array이기 때문에 params에 추가할 때 forEach로 추가
 		if (rate) {
 			rate.forEach((r) => params.append('rate', r));
 		}

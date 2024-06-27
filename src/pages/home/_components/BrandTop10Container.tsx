@@ -1,4 +1,5 @@
 import Card from '@/components/Card';
+import '@/styles/custom.css';
 
 const data = {
 	top10BrandList: [
@@ -91,7 +92,11 @@ export default function BrandTop10Container() {
 									</thead>
 									<tbody className="bg-white">
 										{data.top10BrandList.map((brand, index) => (
-											<tr key={index} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+											<tr
+												key={index}
+												className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} animate-fadeInUp custom-delay-${
+													10 - index
+												}`}>
 												<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">{brand.brand}</td>
 												<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
 													{brand.exposureIndexSum.toFixed(2)}

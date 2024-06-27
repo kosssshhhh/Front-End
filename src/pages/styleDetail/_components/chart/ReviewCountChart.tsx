@@ -17,11 +17,14 @@ export default function ReviewCountChart({ data }: ReviewCountChartProps) {
 			{
 				name: '리뷰 수',
 				data: transformData,
+				color: '#0694a2',
 			},
 		],
 		chart: {
 			type: 'area' as const,
 			stacked: false,
+			fontFamily: 'Inter, sans-serif',
+			foreColor: '#6B7280',
 			height: 350,
 			zoom: {
 				type: 'x' as const,
@@ -32,6 +35,7 @@ export default function ReviewCountChart({ data }: ReviewCountChartProps) {
 				autoSelected: 'zoom' as const,
 			},
 		},
+
 		dataLabels: {
 			enabled: false,
 		},
@@ -48,15 +52,16 @@ export default function ReviewCountChart({ data }: ReviewCountChartProps) {
 					return val.toFixed(0);
 				},
 			},
-			title: {
-				text: '리뷰 수',
-			},
 		},
 		xaxis: {
 			type: 'datetime' as const,
 		},
 		tooltip: {
 			shared: false,
+			style: {
+				fontSize: '14px',
+				fontFamily: 'Inter, sans-serif',
+			},
 			y: {
 				formatter: function (val: number) {
 					return val.toFixed(0);

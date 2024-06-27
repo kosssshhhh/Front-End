@@ -16,9 +16,11 @@ export default function AgeChart({ ageUnder18, age19To23, age24To28, age29To33, 
 
 	const seriesData = [ageUnder18, age19To23, age24To28, age29To33, age34To39, ageOver40];
 	const maxValue = Math.max(...seriesData);
-	const colors = seriesData.map((value) => (value === maxValue ? '#1E90FF' : '#C0C0C0')); // 최대값은 파란색, 나머지는 회색
+	const colors = seriesData.map((value) => (value === maxValue ? '#0694a2' : '#C0C0C0')); // 최대값은 파란색, 나머지는 회색
+	console.log(colors);
 
 	const options = {
+		// colors: '#0694a2',
 		chart: {
 			type: 'bar' as const,
 		},
@@ -37,6 +39,13 @@ export default function AgeChart({ ageUnder18, age19To23, age24To28, age29To33, 
 				endingShape: 'rounded',
 				dataLabels: {
 					position: 'top', // 값을 막대 위에 표시
+				},
+				colors: {
+					ranges: seriesData.map((value) => ({
+						from: value,
+						to: value,
+						color: value === maxValue ? '#0694a2' : '#C0C0C0',
+					})),
 				},
 			},
 		},
@@ -60,6 +69,8 @@ export default function AgeChart({ ageUnder18, age19To23, age24To28, age29To33, 
 			labels: {
 				style: {
 					colors: '#6B7280',
+					fontSize: '14px',
+					fontWeight: 500,
 				},
 			},
 		},
@@ -70,6 +81,8 @@ export default function AgeChart({ ageUnder18, age19To23, age24To28, age29To33, 
 				formatter: (val: number) => `${val}%`,
 				style: {
 					colors: '#6B7280',
+					fontSize: '14px',
+					fontWeight: 500,
 				},
 			},
 		},
@@ -85,23 +98,36 @@ export default function AgeChart({ ageUnder18, age19To23, age24To28, age29To33, 
 				},
 			},
 			style: {
-				fontSize: '12px',
-				colors: ['#6B7280'], // text-gray-500
+				fontSize: '14px',
+				fontFamily: 'Inter, sans-serif',
 			},
 		},
-		animations: {
-			enabled: true,
-			easing: 'easeinout',
-			speed: 800,
-			animateGradually: {
-				enabled: true,
-				delay: 150,
+
+		// animations: {
+		// 	enabled: true,
+		// 	easing: 'easeinout',
+		// 	speed: 800,
+		// 	animateGradually: {
+		// 		enabled: true,
+		// 		delay: 150,
+		// 	},
+		// 	dynamicAnimation: {
+		// 		enabled: true,
+		// 		speed: 350,
+		// 	},
+		// },
+		responsive: [
+			{
+				breakpoint: 1024,
+				options: {
+					xaxis: {
+						labels: {
+							show: false,
+						},
+					},
+				},
 			},
-			dynamicAnimation: {
-				enabled: true,
-				speed: 350,
-			},
-		},
+		],
 	};
 
 	const series = [

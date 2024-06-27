@@ -72,7 +72,9 @@ const ReviewFilter = ({ reviewCount }: ReviewFilterProps) => {
 						key={filter.value}
 						onClick={() => handleDateFilterClick(filter.value)}
 						className={`cursor-pointer p-2 text-sm ${
-							selectedDateFilter === filter.value ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
+							selectedDateFilter === filter.value
+								? 'bg-[#0694a2] text-white hover:bg-[#057f8b]'
+								: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
 						} rounded mb-2 md:mb-0`}>
 						{filter.label}
 					</div>
@@ -87,7 +89,9 @@ const ReviewFilter = ({ reviewCount }: ReviewFilterProps) => {
 							key={rating}
 							onClick={() => handleStarFilterClick(rating)}
 							className={`cursor-pointer p-3 rounded flex items-center justify-center mb-2 md:mb-0 ${
-								selectedStarFilters.includes(rating) ? 'bg-yellow-400 text-white' : 'bg-gray-200 text-gray-700'
+								selectedStarFilters.includes(rating)
+									? 'bg-yellow-400 text-white hover:bg-yellow-500'
+									: 'bg-gray-200 text-gray-700 hover:bg-gray-300'
 							}`}>
 							<div className="flex items-center">
 								{renderStars(rating)}

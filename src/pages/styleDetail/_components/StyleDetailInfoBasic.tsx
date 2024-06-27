@@ -28,13 +28,13 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 					<tr>
 						<td className="p-2 text-sm text-gray-500">고정가</td>
 						<td className="p-2 text-l font-medium">
-							{basicDetail.fixedPrice} {basicDetail.monetaryUnit}
+							{basicDetail.fixedPrice.toLocaleString()} {basicDetail.monetaryUnit}
 						</td>
 					</tr>
 					<tr>
 						<td className="p-2 text-sm text-gray-500">할인가</td>
 						<td className="p-2 text-l font-medium">
-							{basicDetail.discountedPrice} {basicDetail.monetaryUnit}
+							{basicDetail.discountedPrice.toLocaleString()} {basicDetail.monetaryUnit}
 						</td>
 					</tr>
 					<tr>
@@ -65,8 +65,8 @@ export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDet
 									</tr>
 								</thead>
 								<tbody className="bg-white">
-									{basicDetail.exposureIndexList.map((exposureIndex: ExposureIndex) => (
-										<tr key={exposureIndex.styleId}>
+									{basicDetail.exposureIndexList.map((exposureIndex: ExposureIndex, index) => (
+										<tr key={exposureIndex.styleId} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
 											<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
 												{exposureIndex.category.name}
 											</td>

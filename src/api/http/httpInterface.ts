@@ -57,4 +57,12 @@ export class HttpInterface {
 	async getStyleReviewCount(mallTypeId: string, styleId: string) {
 		return this.apiClient.get(`/style/detail/review/${mallTypeId}/trend`, { params: { styleId: styleId } });
 	}
+
+	async getPriceTrend(mallTypeId: string) {
+		return this.apiClient.get(`/home/price`, { params: { mallTypeId } });
+	}
+
+	async getTop10Brand(mallTypeId: string) {
+		return this.apiClient.get(`/home/brand`, { params: { mallTypeId } });
+	}
 }

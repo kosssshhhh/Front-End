@@ -42,7 +42,7 @@ export default function StyleReviewContainer() {
 	return (
 		<div
 			ref={containerRef}
-			className="p-4 mt-10 bg-white block sm:flex items-center justify-between rounded-lg border-b border-gray-200">
+			className="p-4 mt-10 shadow-lg bg-white block sm:flex items-center justify-between rounded-lg border-b border-gray-200 lg:p-6 xl:p-8">
 			<div className="w-full grid grid-cols-1 xl:grid-cols-2 gap-4">
 				<div className="flex flex-col xl:col-span-2">
 					<div className="overflow-x-auto">

@@ -1,7 +1,10 @@
 import Card from '@/components/Card';
-import PriceTrendChart from './charts/PriceTrendChart';
+import PriceTrendChart from '@/pages/home/_components/charts/PriceTrendChart';
+import { useFetchPriceTrend } from '@/pages/home/_hooks/useFetchPriceTrend.ts';
 
 export default function PriceTrendContainer() {
+	const { data, isLoading, isError } = useFetchPriceTrend();
+
 	return (
 		<div>
 			<Card className="col-span-1 xl:col-span-2 2xl:col-span-3">
@@ -21,7 +24,9 @@ export default function PriceTrendContainer() {
 						</svg>
 					</div> */}
 				</div>
-				<PriceTrendChart />
+				{isLoading && <div>Loading...</div>}
+				{isError && <div>Error...</div>}
+				{!isLoading && !isError && data && <PriceTrendChart data={data} />}
 			</Card>
 		</div>
 	);

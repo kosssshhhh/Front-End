@@ -1,5 +1,9 @@
 import Card from '@/components/Card';
 import '@/styles/custom.css';
+import Top10BrandChart from '@/pages/home/_components/charts/Top10BrandChart.tsx';
+import { useFetchTop10Brand } from '@/pages/home/_hooks/useFetchTop10Brand.ts';
+import Top10BrandChartSkeleton from '@/components/skeleton/Top10BrandChartSkeleton.tsx';
+import ErrorComponent from '@/components/ErrorComponent.tsx';
 
 const data = {
 	top10BrandList: [
@@ -57,6 +61,8 @@ const data = {
 };
 
 export default function BrandTop10Container() {
+	const { data, isLoading, isError } = useFetchTop10Brand();
+
 	return (
 		<div className="col-span-2 lg:col-span-1">
 			<Card>
@@ -66,50 +72,9 @@ export default function BrandTop10Container() {
 						<span className="text-base font-normal text-gray-500">Top 10 brand Chart</span>
 					</div>
 				</div>
-				<div className="flex flex-col mt-8">
-					<div className="overflow-x-auto rounded-lg">
-						<div className="align-middle inline-block min-w-full">
-							<div className="shadow overflow-hidden sm:rounded-lg">
-								<table className="min-w-full divide-y divide-gray-200">
-									<thead className="bg-gray-50">
-										<tr>
-											<th
-												scope="col"
-												className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-												브랜드
-											</th>
-											<th
-												scope="col"
-												className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-												노출 지수 합계
-											</th>
-											<th
-												scope="col"
-												className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-												쇼핑몰
-											</th>
-										</tr>
-									</thead>
-									<tbody className="bg-white">
-										{data.top10BrandList.map((brand, index) => (
-											<tr
-												key={index}
-												className={`${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'} animate-fadeInUp custom-delay-${
-													10 - index
-												}`}>
-												<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">{brand.brand}</td>
-												<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-													{brand.exposureIndexSum.toFixed(2)}
-												</td>
-												<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">{brand.mallTypeId}</td>
-											</tr>
-										))}
-									</tbody>
-								</table>
-							</div>
-						</div>
-					</div>
-				</div>
+				{isLoading && <Top10BrandChartSkeleton />}
+				{isError && <ErrorComponent />}
+				{!isLoading && !isError && data && <Top10BrandChart data={data} />}
 			</Card>
 		</div>
 	);

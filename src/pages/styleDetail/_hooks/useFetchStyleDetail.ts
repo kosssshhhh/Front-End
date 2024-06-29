@@ -1,27 +1,22 @@
 import useNetwork from '@/stores/networkStore';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const useFetchStyleDetail = () => {
 	const httpInterface = useNetwork((state) => state.httpInterface);
-
 	const { styleId, mallTypeId } = useParams();
 
-	if (!styleId || !mallTypeId) {
-		return {
-			data: null,
-			isLoading: false,
-			isError: false,
-		};
-	}
-
-	// const [styleDetail, setStyleDetail] = useState({});
-
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['styleDetail'],
-		queryFn: () => httpInterface.getStyleDetail(mallTypeId, styleId),
+		queryKey: ['styleDetail', mallTypeId, styleId],
+		queryFn: () => {
+			if (!mallTypeId || !styleId) {
+				return Promise.reject(new Error('Missing mallTypeId or styleId'));
+			}
+			return httpInterface.getStyleDetail(mallTypeId, styleId);
+		},
+		enabled: !!mallTypeId && !!styleId, // mallType과 styleId가 존재할 때만 쿼리 실행
 	});
+
 
 	return { data, isLoading, isError };
 };

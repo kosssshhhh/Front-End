@@ -1,5 +1,3 @@
-import Card from '@/components/Card';
-
 export default function HomeContainer({ children }: { children: React.ReactNode }) {
 	return (
 		<div className="pt-6 px-4">

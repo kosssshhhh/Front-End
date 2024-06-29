@@ -2,7 +2,7 @@ import StylesTableRow from '@/pages/styles/_components/StylesTableRow';
 import StyleTableRowSkeleton from '@/components/skeleton/StyleTableRowSkeleton';
 import StyleTableFooter from '@/pages/styles/_components/StylesTableFooter';
 
-import { StyleType } from '@/types/index';
+import { StyleType } from '@/types';
 
 import { useFetchStyles } from '@/pages/styles/_hooks/useFetchStyles';
 import { calcPaging } from '@/utils/calcPaging';

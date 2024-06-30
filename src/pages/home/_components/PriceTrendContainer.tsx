@@ -1,3 +1,5 @@
+import Skeleton from 'react-loading-skeleton';
+
 import Card from '@/components/Card';
 import PriceTrendChart from '@/pages/home/_components/charts/PriceTrendChart';
 import { useFetchPriceTrend } from '@/pages/home/_hooks/useFetchPriceTrend.ts';
@@ -24,7 +26,12 @@ export default function PriceTrendContainer() {
 						</svg>
 					</div> */}
 				</div>
-				{isLoading && <div>Loading...</div>}
+				{isLoading && (
+					<div className="flex felx-col space-y-4">
+						<Skeleton height={40} width={200} />
+						<Skeleton height={570} width="100%" />
+					</div>
+				)}
 				{isError && <div>Error...</div>}
 				{!isLoading && !isError && data && <PriceTrendChart data={data} />}
 			</Card>

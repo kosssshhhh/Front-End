@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Card from '@/components/Card';
 import FilterButton from '@/pages/home/_components/filter/FilterButton';
 import FilterTags from '@/pages/home/_components/filter/FilterTags.tsx';
+import { MALL_TYPE_ID } from '@/constants/mallTypeId';
+import { useSetSearchParams } from '@/pages/home/_hooks/useSetSearchParams';
 import '@/styles/custom.css';
 
 interface SelectedFilters {
-	mall: string | null;
+	mallTypeId: string | null;
 	category: string[];
 	period: string | null;
 	[key: string]: string | string[] | null;
@@ -14,17 +16,19 @@ interface SelectedFilters {
 export default function HomeFilter() {
 	const [activeFilter, setActiveFilter] = useState<string | null>(null);
 	const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
-		mall: null,
+		mallTypeId: null,
 		category: [],
 		period: null,
 	});
+
+	useSetSearchParams(selectedFilters);
 
 	const toggleDropdown = (filterName: string) => {
 		setActiveFilter((prev) => (prev === filterName ? null : filterName));
 	};
 
-	const applyFilter = (filterName: string, value: string) => {
-		if (filterName === 'category') {
+	const applyFilter = (filterKey: string, value: string) => {
+		if (filterKey === 'category') {
 			setSelectedFilters((prev) => {
 				const newCategories = (prev.category as string[]).includes(value)
 					? (prev.category as string[]).filter((category) => category !== value)
@@ -32,19 +36,19 @@ export default function HomeFilter() {
 				return { ...prev, category: newCategories };
 			});
 		} else {
-			setSelectedFilters((prev) => ({ ...prev, [filterName]: value }));
+			setSelectedFilters((prev) => ({ ...prev, [filterKey]: value }));
 		}
 		setActiveFilter(null); // Close the dropdown after applying filter
 	};
 
-	const removeFilter = (filterName: string, value?: string) => {
-		if (filterName === 'category' && value) {
+	const removeFilter = (filterKey: string, value?: string) => {
+		if (filterKey === 'category' && value) {
 			setSelectedFilters((prev) => ({
 				...prev,
 				category: (prev.category as string[]).filter((category) => category !== value),
 			}));
 		} else {
-			setSelectedFilters((prev) => ({ ...prev, [filterName]: null }));
+			setSelectedFilters((prev) => ({ ...prev, [filterKey]: null }));
 		}
 	};
 
@@ -52,31 +56,37 @@ export default function HomeFilter() {
 		<Card className="bg-white col-span-2 p-4 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
 			<div className="w-full md:w-auto flex items-center space-x-4">
 				<FilterButton
-					filterName="mall"
+					filterName="Mall"
+					filterKey="mallTypeId"
 					activeFilter={activeFilter}
 					toggleDropdown={toggleDropdown}
 					applyFilter={applyFilter}
-					options={['쇼핑몰1', '쇼핑몰2', '쇼핑몰3']}
+					options={Object.keys(MALL_TYPE_ID)}
 					isMultiSelect={false}
+					selectedFilters={selectedFilters}
 				/>
 				<FilterButton
-					filterName="category"
+					filterName="Category"
+					filterKey="category"
 					activeFilter={activeFilter}
 					toggleDropdown={toggleDropdown}
 					applyFilter={applyFilter}
 					options={['카테고리1', '카테고리2', '카테고리3']}
 					isMultiSelect={true}
+					selectedFilters={selectedFilters}
 				/>
-				<FilterButton
-					filterName="period"
-					activeFilter={activeFilter}
-					toggleDropdown={toggleDropdown}
-					applyFilter={applyFilter}
-					options={['기간1', '기간2', '기간3']}
-					isMultiSelect={false}
-				/>
+				{/* <FilterButton
+                    filterName="Period"
+                    filterKey="period"
+                    activeFilter={activeFilter}
+                    toggleDropdown={toggleDropdown}
+                    applyFilter={applyFilter}
+                    options={['기간1', '기간2', '기간3']}
+                    isMultiSelect={false}
+                    selectedFilters={selectedFilters}
+                /> */}
 			</div>
-			<FilterTags selectedFilters={selectedFilters} removeFilter={removeFilter} />
+			{/* <FilterTags selectedFilters={selectedFilters} removeFilter={removeFilter} /> */}
 		</Card>
 	);
 }

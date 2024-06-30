@@ -1,24 +1,27 @@
 import useNetwork from '@/stores/networkStore.ts';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { MALL_TYPE_ID } from '@/constants/mallTypeId.ts';
 
 export const useFetchTop10Brand = () => {
+	const [searchParams] = useSearchParams();
+
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
-	// const { mallTypeId } = useParams();
+	const mallTypeId = searchParams.get('mallTypeId');
 
-	const mallTypeId = '1';
+	const fetchQuery = () => {
+		const params = new URLSearchParams(searchParams);
+
+		console.log(params);
+
+		return params;
+	};
 
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['top10Brand'],
+		queryKey: ['top10Brand', fetchQuery().toString()],
 		queryFn: () => {
-			if (mallTypeId) {
-				// return httpInterface.getTop10Brand(mallTypeId);
-				return httpInterface.getTop10Brand(MALL_TYPE_ID.MUSINSA);
-			}
-
-			return Promise.reject('Required parameters are missing');
+			return httpInterface.getTop10Brand(fetchQuery());
 		},
 		enabled: !!mallTypeId,
 	});

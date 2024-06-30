@@ -23,7 +23,7 @@ export const useFetchStyles = () => {
 	};
 
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['styles', searchParams.toString()],
+		queryKey: ['styles', fetchQuery().toString()],
 		queryFn: () => httpInterface.getStyles(fetchQuery()),
 	});
 

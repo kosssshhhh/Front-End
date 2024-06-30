@@ -1,27 +1,30 @@
-import useNetwork from '@/stores/networkStore.ts';
+import useNetwork from '@/stores/networkStore';
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
-
-import { MALL_TYPE_ID } from '@/constants/mallTypeId.ts';
+import { useSearchParams } from 'react-router-dom';
+import { useEffect, useMemo } from 'react';
 
 export const useFetchPriceTrend = () => {
+	const [searchParams] = useSearchParams();
+
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
-	// const { mallTypeId } = useParams();
+	const mallTypeId = searchParams.get('mallTypeId');
 
-	const mallTypeId = '1';
+	const fetchQuery = () => {
+		const params = new URLSearchParams(searchParams);
+
+		console.log(params);
+
+		return params;
+	};
 
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['priceTrend'],
+		queryKey: ['priceTrend', fetchQuery().toString()],
 		queryFn: () => {
-			if (mallTypeId) {
-				// return httpInterface.getPriceTrend(mallTypeId);
-				return httpInterface.getPriceTrend(MALL_TYPE_ID.MUSINSA);
-			}
-
-			return Promise.reject('Required parameters are missing');
+			console.log(`Fetching price trend for mallTypeId: ${mallTypeId}`);
+			return httpInterface.getPriceTrend(fetchQuery());
 		},
-		enabled: !!mallTypeId,
+		// enabled: !!mallTypeId,
 	});
 
 	return { data, isLoading, isError };

@@ -28,6 +28,7 @@ const renderCategories = (
 	));
 };
 
+// TODO: Dropdow 카테고리 적용
 const CategoryDropdown: React.FC<CategoryDropdownProps> = ({ categories, applyFilter }) => {
 	return <div>{renderCategories(categories, applyFilter)}</div>;
 };

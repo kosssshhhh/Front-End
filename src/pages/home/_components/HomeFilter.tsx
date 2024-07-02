@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '@/components/Card';
 import FilterButton from '@/pages/home/_components/filter/FilterButton';
-import FilterTags from '@/pages/home/_components/filter/FilterTags.tsx';
 import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 import { useSetSearchParams } from '@/pages/home/_hooks/useSetSearchParams';
+import useNetwork from '@/stores/networkStore';
+
 import '@/styles/custom.css';
+import { useSyncQueryParams } from '../_hooks/useSyncQueryParams';
 
 interface SelectedFilters {
 	mallTypeId: string | null;
@@ -20,6 +22,11 @@ export default function HomeFilter() {
 		category: [],
 		period: null,
 	});
+	const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
+
+	const httpInterface = useNetwork((state) => state.httpInterface);
+
+	useSyncQueryParams(setSelectedFilters);
 
 	useSetSearchParams(selectedFilters);
 
@@ -30,9 +37,9 @@ export default function HomeFilter() {
 	const applyFilter = (filterKey: string, value: string) => {
 		if (filterKey === 'category') {
 			setSelectedFilters((prev) => {
-				const newCategories = (prev.category as string[]).includes(value)
+				const newCategories = (prev.category ?? []).includes(value)
 					? (prev.category as string[]).filter((category) => category !== value)
-					: [...(prev.category as string[]), value];
+					: [...(prev.category ?? []), value];
 				return { ...prev, category: newCategories };
 			});
 		} else {
@@ -45,12 +52,26 @@ export default function HomeFilter() {
 		if (filterKey === 'category' && value) {
 			setSelectedFilters((prev) => ({
 				...prev,
-				category: (prev.category as string[]).filter((category) => category !== value),
+				category: (prev.category ?? []).filter((category) => category !== value),
 			}));
 		} else {
 			setSelectedFilters((prev) => ({ ...prev, [filterKey]: null }));
 		}
 	};
+
+	useEffect(() => {
+		if (!selectedFilters.mallTypeId) return;
+
+		httpInterface
+			.getCategory(selectedFilters.mallTypeId)
+			.then((res) => {
+				setCategoryOptions(res.data);
+				console.log(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [selectedFilters.mallTypeId]);
 
 	return (
 		<Card className="bg-white col-span-2 p-4 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
@@ -71,20 +92,20 @@ export default function HomeFilter() {
 					activeFilter={activeFilter}
 					toggleDropdown={toggleDropdown}
 					applyFilter={applyFilter}
-					options={['카테고리1', '카테고리2', '카테고리3']}
+					options={categoryOptions}
 					isMultiSelect={true}
 					selectedFilters={selectedFilters}
 				/>
 				{/* <FilterButton
-                    filterName="Period"
-                    filterKey="period"
-                    activeFilter={activeFilter}
-                    toggleDropdown={toggleDropdown}
-                    applyFilter={applyFilter}
-                    options={['기간1', '기간2', '기간3']}
-                    isMultiSelect={false}
-                    selectedFilters={selectedFilters}
-                /> */}
+          filterName="Period"
+          filterKey="period"
+          activeFilter={activeFilter}
+          toggleDropdown={toggleDropdown}
+          applyFilter={applyFilter}
+          options={['기간1', '기간2', '기간3']}
+          isMultiSelect={false}
+          selectedFilters={selectedFilters}
+        /> */}
 			</div>
 			{/* <FilterTags selectedFilters={selectedFilters} removeFilter={removeFilter} /> */}
 		</Card>

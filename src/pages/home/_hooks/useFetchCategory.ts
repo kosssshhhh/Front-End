@@ -1,15 +1,21 @@
-import useNetwork from '@/stores/networkStore';
-import { useQuery } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
 
-export const useFetchCategory = (mallTypeId: string) => {
+import useNetwork from '@/stores/networkStore';
+
+export const useFetchCategory = (
+	mallTypeId: string,
+	setCategoryOptions: React.Dispatch<React.SetStateAction<string[]>>,
+) => {
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
-	const { data, isLoading, isError } = useQuery({
-		queryKey: ['category'],
-		queryFn: () => {
-			console.log('Fetching category');
-			return httpInterface.getCategory(mallTypeId);
-		},
-	});
-	return { data, isLoading, isError };
+	useEffect(() => {
+		httpInterface
+			.getCategory(mallTypeId)
+			.then((res) => {
+				setCategoryOptions(res.data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [mallTypeId]);
 };

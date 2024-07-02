@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 
 interface FilterButtonProps {
@@ -7,7 +7,7 @@ interface FilterButtonProps {
 	activeFilter: string | null;
 	toggleDropdown: (filterName: string) => void;
 	applyFilter: (filterKey: string, value: string) => void;
-	options: string[];
+	options: any[];
 	isMultiSelect: boolean;
 	selectedFilters: { [key: string]: string | string[] | null };
 }
@@ -23,14 +23,51 @@ const FilterButton: React.FC<FilterButtonProps> = ({
 	selectedFilters,
 }) => {
 	const selectedFilter = selectedFilters[filterKey];
+	const [expandedCategories, setExpandedCategories] = useState<Set<number>>(new Set());
 
-	useEffect(() => {
-		if (!selectedFilter && options.length > 0) {
-			const defaultOption = options[0];
-			const idValue = MALL_TYPE_ID[defaultOption as keyof typeof MALL_TYPE_ID] || defaultOption;
-			applyFilter(filterKey, idValue);
-		}
-	}, [selectedFilter, options, filterKey, applyFilter]);
+	const toggleCategory = (categoryId: number) => {
+		setExpandedCategories((prev) => {
+			const newSet = new Set(prev);
+			if (newSet.has(categoryId)) {
+				newSet.delete(categoryId);
+			} else {
+				newSet.add(categoryId);
+			}
+			return newSet;
+		});
+	};
+
+	const handleCategoryChange = (category: any) => {
+		const idValue = category.categoryId.toString();
+		applyFilter(filterKey, idValue);
+	};
+
+	const renderCategories = (categories: any[]) => {
+		return (
+			<ul className="pl-4">
+				{categories.map((category) => (
+					<li key={category.categoryId}>
+						<div className="flex items-center">
+							<input
+								type="checkbox"
+								checked={((selectedFilter as string[]) ?? []).includes(category.categoryId.toString())}
+								onChange={() => handleCategoryChange(category)}
+							/>
+							<span className="ml-2 cursor-pointer" onClick={() => toggleCategory(category.categoryId)}>
+								{category.name}
+							</span>
+							{category.children.length > 0 && (
+								<button onClick={() => toggleCategory(category.categoryId)}>
+									{expandedCategories.has(category.categoryId) ? '-' : '+'}
+								</button>
+							)}
+						</div>
+						{expandedCategories.has(category.categoryId) && renderCategories(category.children)}
+					</li>
+				))}
+			</ul>
+		);
+	};
 
 	const displayText = () => {
 		if (isMultiSelect && Array.isArray(selectedFilter) && selectedFilter.length > 0) {
@@ -71,14 +108,18 @@ const FilterButton: React.FC<FilterButtonProps> = ({
 			</button>
 			{activeFilter === filterName && (
 				<div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4 z-10 transition-opacity duration-300 opacity-100">
-					{options.map((option) => (
-						<p
-							key={option}
-							className={`text-gray-700 cursor-pointer hover:bg-gray-200 p-2 rounded ${isMultiSelect && 'hover:bg-gray-300'}`}
-							onClick={() => handleApplyFilter(filterKey, option)}>
-							{option}
-						</p>
-					))}
+					{filterName === 'Category'
+						? renderCategories(options)
+						: options.map((option) => (
+								<p
+									key={option}
+									className={`text-gray-700 cursor-pointer hover:bg-gray-200 p-2 rounded ${
+										isMultiSelect && 'hover:bg-gray-300'
+									}`}
+									onClick={() => handleApplyFilter(filterKey, option)}>
+									{option}
+								</p>
+							))}
 				</div>
 			)}
 		</div>

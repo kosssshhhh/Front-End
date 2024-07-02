@@ -17,7 +17,7 @@ export const usePageNumber = () => {
 		} else {
 			setPage(Number(searchParams.get('page')));
 		}
-		setSearchParams(searchParams);
+		setSearchParams(searchParams, { replace: true });
 	}, [searchParams.get('page')]);
 
 	useEffect(() => {

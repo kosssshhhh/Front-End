@@ -13,7 +13,6 @@ function SidebarList({ title, href, svgName, onToggleSidebar }: sidebarListType)
 		<li>
 			<div
 				onClick={handleClick}
-				// to={href}
 				className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group cursor-pointer {{ end }}">
 				{svgObj[svgName]()}
 				<span className="ml-3 flex-1 whitespace-nowrap">{title}</span>

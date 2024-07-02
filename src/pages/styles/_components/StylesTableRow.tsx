@@ -10,7 +10,7 @@ export default function ProductTableRow({ style }: ProductTableRowProps) {
 	const navigate = useNavigate();
 
 	const handleNavigate = () => {
-		navigate(`/style/detail/${style.mallTypeId}/${style.styleId}?page=1`);
+		navigate(`/style/detail/${style.mallTypeId}/${style.styleId}?page=1`, { preventScrollReset: true });
 	};
 
 	return (

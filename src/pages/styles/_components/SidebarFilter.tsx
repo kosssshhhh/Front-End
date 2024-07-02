@@ -119,10 +119,6 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 		}
 	}, [filters.date]);
 
-	useEffect(() => {
-		console.log(filters);
-	}, [filters]);
-
 	const renderCategories = (categories: any[]) => {
 		return (
 			<ul className="pl-4">

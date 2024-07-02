@@ -19,9 +19,6 @@ export default function ProductsTable() {
 		data?.data.totalElements,
 	);
 
-	if (data?.data.content) {
-	}
-
 	return (
 		<>
 			<div className="flex flex-col">
@@ -62,7 +59,7 @@ export default function ProductsTable() {
 										? Array.from({ length: 20 }).map((_, index) => <StyleTableRowSkeleton key={index} />)
 										: data?.data.content?.map((style: StyleType) => (
 												<StylesTableRow key={style.styleId} style={style} />
-										  ))}
+											))}
 									{data?.data.content?.length === 0 && (
 										<tr>
 											<td colSpan={8}>

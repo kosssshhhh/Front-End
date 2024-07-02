@@ -13,8 +13,6 @@ export const useFetchTop10Brand = () => {
 	const fetchQuery = () => {
 		const params = new URLSearchParams(searchParams);
 
-		console.log(params);
-
 		return params;
 	};
 

@@ -7,6 +7,8 @@ export const useSetSearchParams = (selectedFilters: { [key: string]: string | st
 	useEffect(() => {
 		const newSearchParams = new URLSearchParams();
 
+		newSearchParams.delete('category');
+
 		Object.keys(selectedFilters).forEach((key) => {
 			const value = selectedFilters[key];
 			if (Array.isArray(value)) {
@@ -19,5 +21,5 @@ export const useSetSearchParams = (selectedFilters: { [key: string]: string | st
 		});
 
 		setSearchParams(newSearchParams);
-	}, [selectedFilters, setSearchParams]);
+	}, [selectedFilters]);
 };

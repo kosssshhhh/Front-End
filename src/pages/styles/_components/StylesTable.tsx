@@ -2,7 +2,7 @@ import StylesTableRow from '@/pages/styles/_components/StylesTableRow';
 import StyleTableRowSkeleton from '@/components/skeleton/StyleTableRowSkeleton';
 import StyleTableFooter from '@/pages/styles/_components/StylesTableFooter';
 
-import { StyleType } from '@/types/index';
+import { StyleType } from '@/types';
 
 import { useFetchStyles } from '@/pages/styles/_hooks/useFetchStyles';
 import { calcPaging } from '@/utils/calcPaging';
@@ -18,9 +18,6 @@ export default function ProductsTable() {
 		data?.data.pageable?.pageSize,
 		data?.data.totalElements,
 	);
-
-	if (data?.data.content) {
-	}
 
 	return (
 		<>
@@ -62,7 +59,7 @@ export default function ProductsTable() {
 										? Array.from({ length: 20 }).map((_, index) => <StyleTableRowSkeleton key={index} />)
 										: data?.data.content?.map((style: StyleType) => (
 												<StylesTableRow key={style.styleId} style={style} />
-										  ))}
+											))}
 									{data?.data.content?.length === 0 && (
 										<tr>
 											<td colSpan={8}>

@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+// import Card from '@/components/Card';
 import HomeContainer from '@/pages/home/_components/HomeContainer';
 import PriceTrendContainer from '@/pages/home/_components/PriceTrendContainer';
 import BrandTop10Container from '@/pages/home/_components/BrandTop10Container';

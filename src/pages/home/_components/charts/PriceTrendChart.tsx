@@ -1,35 +1,17 @@
 import Chart from 'react-apexcharts';
+import { formatPriceRange } from '@/pages/home/_utils/formatPriceRange.ts';
+import { PriceTrendDataType } from '@/pages/home/_types/priceTrendData.type.ts';
 
-type PriceData = {
-	[priceRange: string]: number;
-};
+interface PriceTrendChartProps {
+	data: PriceTrendDataType;
+}
 
-const data: PriceData = {
-	'8500-223500': 3157,
-	'223500-438500': 153,
-	'438500-653500': 23,
-	'653500-868500': 4,
-	'868500-1083500': 4,
-	'1083500-1298500': 0,
-	'1298500-1513500': 0,
-	'1513500-1728500': 0,
-	'1728500-1943500': 0,
-	'1943500-2158500': 1,
-};
-
-// Helper function to format the price range strings
-const formatPriceRange = (range: string) => {
-	const [min, max] = range.split('-').map((num) => parseInt(num, 10).toLocaleString());
-	return `${min}~${max}`;
-};
-
-const formattedCategories = Object.keys(data).map(formatPriceRange);
-
-export default function PriceTrendChart() {
+export default function PriceTrendChart({ data }: PriceTrendChartProps) {
+	const formattedCategories = Object.keys(data.data).map(formatPriceRange);
 	const series = [
 		{
 			name: 'Style Count',
-			data: Object.values(data),
+			data: Object.values(data.data),
 			color: '#0694a2',
 		},
 	];

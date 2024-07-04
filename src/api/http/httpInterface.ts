@@ -58,11 +58,12 @@ export class HttpInterface {
 		return this.apiClient.get(`/style/detail/review/${mallTypeId}/trend`, { params: { styleId: styleId } });
 	}
 
-	async getPriceTrend(mallTypeId: string) {
-		return this.apiClient.get(`/home/price`, { params: { mallTypeId } });
+	async getPriceTrend(params: any) {
+		// console.log(`API call to /home/price with mallTypeId: ${mallTypeId}`);
+		return this.apiClient.get(`/home/price?${params}`);
 	}
 
-	async getTop10Brand(mallTypeId: string) {
-		return this.apiClient.get(`/home/brand`, { params: { mallTypeId } });
+	async getTop10Brand(params: any) {
+		return this.apiClient.get(`/home/brand?${params}`);
 	}
 }

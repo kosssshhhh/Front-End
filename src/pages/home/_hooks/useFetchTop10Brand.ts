@@ -1,9 +1,9 @@
-import useNetwork from '@/stores/networkStore';
+import useNetwork from '@/stores/networkStore.ts';
 import { useQuery } from '@tanstack/react-query';
-import { useSearchParams } from 'react-router-dom';
-import { useEffect, useMemo } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
+import { MALL_TYPE_ID } from '@/constants/mallTypeId.ts';
 
-export const useFetchPriceTrend = () => {
+export const useFetchTop10Brand = () => {
 	const [searchParams] = useSearchParams();
 
 	const httpInterface = useNetwork((state) => state.httpInterface);
@@ -17,12 +17,11 @@ export const useFetchPriceTrend = () => {
 	};
 
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['priceTrend', fetchQuery().toString()],
+		queryKey: ['top10Brand', fetchQuery().toString()],
 		queryFn: () => {
-			console.log(`Fetching price trend for mallTypeId: ${mallTypeId}`);
-			return httpInterface.getPriceTrend(fetchQuery());
+			return httpInterface.getTop10Brand(fetchQuery());
 		},
-		// enabled: !!mallTypeId,
+		enabled: !!mallTypeId,
 	});
 
 	return { data, isLoading, isError };

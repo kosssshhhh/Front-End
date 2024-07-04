@@ -66,4 +66,8 @@ export class HttpInterface {
 	async getTop10Brand(params: any) {
 		return this.apiClient.get(`/home/brand?${params}`);
 	}
+
+	async postUserInputImage(formData: FormData | null) {
+		return this.apiClient.post('/image/search', formData);
+	}
 }

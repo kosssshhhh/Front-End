@@ -1,7 +1,10 @@
+import ImageSearchContainer from '@/pages/imageSearch/_components/ImageSearchContainer';
+import UserInputImage from '@/pages/imageSearch/_components/UserImage';
+
 export default function ImageSearch() {
 	return (
-		<div className="p-4">
-			<h1>Image Search</h1>
-		</div>
+		<ImageSearchContainer>
+			<UserInputImage />
+		</ImageSearchContainer>
 	);
 }

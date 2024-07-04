@@ -9,6 +9,7 @@ import { useFetchStyleDetail } from '@/pages/styleDetail/_hooks/useFetchStyleDet
 import { useScrollTop } from '@/hooks/useScrollTop';
 import Loading from '@/components/Loading';
 import ExceptionWord from '@/components/ExceptionWord';
+import Card from '@/components/Card';
 
 function ProductDetail() {
 	const { data, isLoading, isError } = useFetchStyleDetail();

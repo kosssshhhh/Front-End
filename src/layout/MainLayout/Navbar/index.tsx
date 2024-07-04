@@ -30,7 +30,7 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }: Props) {
 							<img src={logo} className="w-10 h-10 mr-2 " alt="400cc Logo" />
 							<span className="self-center whitespace-nowrap">400cc</span>
 						</Link>
-						<form action="#" method="GET" className="hidden lg:block lg:pl-32">
+						{/* <form action="#" method="GET" className="hidden lg:block lg:pl-32">
 							<label className="sr-only">Search</label>
 							<div className="mt-1 relative lg:w-64">
 								<div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -53,10 +53,10 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }: Props) {
 									placeholder="Search"
 								/>
 							</div>
-						</form>
+						</form> */}
 					</div>
 					<div className="flex items-center">
-						<button
+						{/* <button
 							id="toggleSidebarMobileSearch"
 							type="button"
 							className="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg">
@@ -68,7 +68,7 @@ export default function Navbar({ onToggleSidebar, isSidebarOpen }: Props) {
 									d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
 									clipRule="evenodd"></path>
 							</svg>
-						</button>
+						</button> */}
 						<div className="hidden lg:flex items-center">
 							{/* <span className="text-base font-normal text-gray-500 mr-5">Open source ❤️</span>
 							<div className="-mb-1">

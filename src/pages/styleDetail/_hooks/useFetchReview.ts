@@ -1,6 +1,6 @@
 import useNetwork from '@/stores/networkStore';
 import { useQuery } from '@tanstack/react-query';
-import { useSearchParams, useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 export const useFetchReview = () => {
 	const [searchParams] = useSearchParams();
@@ -18,9 +18,7 @@ export const useFetchReview = () => {
 		queryKey: ['styleReview', mallTypeId, styleId, page, startDate, rate],
 		queryFn: () => {
 			if (mallTypeId && styleId) {
-				const response = httpInterface.getStyleReview(mallTypeId, styleId, page, startDate, rate);
-				console.log('API reponse: ', response);
-				return response;
+				return httpInterface.getStyleReview(mallTypeId, styleId, page, startDate, rate);
 			}
 			return Promise.reject('Required parameters are missing');
 		},

@@ -10,7 +10,7 @@ export default function ProductTableRow({ style }: ProductTableRowProps) {
 	const navigate = useNavigate();
 
 	const handleNavigate = () => {
-		navigate(`/style/detail/${style.mallTypeId}/${style.styleId}?page=1`);
+		navigate(`/style/detail/${style.mallTypeId}/${style.styleId}?page=1`, { preventScrollReset: true });
 	};
 
 	return (
@@ -29,9 +29,7 @@ export default function ProductTableRow({ style }: ProductTableRowProps) {
 				)}
 			</td>
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900">
-				{/* <div className="overflow-hidden text-ellipsis whitespace-nowrap max-w-[150px]"> */}
 				{style.styleName?.length > 25 ? `${style.styleName?.slice(0, 25)}...` : style.styleName}
-				{/* </div> */}
 			</td>
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900">
 				{style.category?.mallType.mallTypeName}
@@ -40,12 +38,12 @@ export default function ProductTableRow({ style }: ProductTableRowProps) {
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900"> {style.exposureIndex.toFixed(2)}</td>
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900">{style.category.name}</td>
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900">
-				{style.fixedPrice}
+				{style.fixedPrice.toLocaleString()}
 				<br />
 				{style.monetaryUnit}
 			</td>
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900">
-				{style.discountedPrice}
+				{style.discountedPrice.toLocaleString()}
 				<br />
 				{style.monetaryUnit}
 			</td>

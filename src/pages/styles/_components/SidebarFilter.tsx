@@ -119,10 +119,6 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 		}
 	}, [filters.date]);
 
-	useEffect(() => {
-		console.log(filters);
-	}, [filters]);
-
 	const renderCategories = (categories: any[]) => {
 		return (
 			<ul className="pl-4">
@@ -165,7 +161,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 					<h2 className="text-xl font-bold mb-4">필터</h2>
 					<div className="space-y-4">
 						<div className="border-t border-gray-200 pt-4">
-							<label className="text-lg font-semibold">도메인</label>
+							<label className="text-lg font-semibold">쇼핑몰</label>
 							<select
 								value={filters.mallTypeId}
 								onChange={(e) => handleMallTypeChange(e, setFilters, handleReset)}

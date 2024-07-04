@@ -12,12 +12,11 @@ export const useFetchStyles = () => {
 
 		// page 파라미터를 1 빼서 설정
 		const page = params.get('page');
+
 		if (page) {
 			const adjustedPage = (parseInt(page, 10) - 1).toString();
 			params.set('page', adjustedPage);
 		}
-
-		console.log(params);
 
 		return params;
 	};

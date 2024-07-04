@@ -74,6 +74,9 @@ const FilterButton: React.FC<FilterButtonProps> = ({
 			return selectedFilter.join(', ');
 		}
 		if (!isMultiSelect && selectedFilter) {
+			if (filterKey === 'startDate' || filterKey === 'endDate') {
+				return (selectedFilter as string).split('T')[0]; // Display date in YYYY-MM-DD format
+			}
 			return (
 				options.find((option) => MALL_TYPE_ID[option as keyof typeof MALL_TYPE_ID] === selectedFilter) || filterName
 			);
@@ -108,18 +111,25 @@ const FilterButton: React.FC<FilterButtonProps> = ({
 			</button>
 			{activeFilter === filterName && (
 				<div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4 z-10 transition-opacity duration-300 opacity-100">
-					{filterName === 'Category'
-						? renderCategories(options)
-						: options.map((option) => (
-								<p
-									key={option}
-									className={`text-gray-700 cursor-pointer hover:bg-gray-200 p-2 rounded ${
-										isMultiSelect && 'hover:bg-gray-300'
-									}`}
-									onClick={() => handleApplyFilter(filterKey, option)}>
-									{option}
-								</p>
-							))}
+					{filterName === 'Category' ? (
+						renderCategories(options)
+					) : filterKey === 'startDate' || filterKey === 'endDate' ? (
+						<input
+							type="date"
+							className="w-full border rounded p-2"
+							value={selectedFilter as string}
+							onChange={(e) => handleApplyFilter(filterKey, e.target.value)}
+						/>
+					) : (
+						options.map((option) => (
+							<p
+								key={option}
+								className={`text-gray-700 cursor-pointer hover:bg-gray-200 p-2 rounded ${isMultiSelect && 'hover:bg-gray-300'}`}
+								onClick={() => handleApplyFilter(filterKey, option)}>
+								{option}
+							</p>
+						))
+					)}
 				</div>
 			)}
 		</div>

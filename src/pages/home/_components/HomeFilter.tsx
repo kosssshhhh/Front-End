@@ -4,14 +4,14 @@ import FilterButton from '@/pages/home/_components/filter/FilterButton';
 import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 import { useSetSearchParams } from '@/pages/home/_hooks/useSetSearchParams';
 import useNetwork from '@/stores/networkStore';
-
 import '@/styles/custom.css';
 import { useSyncQueryParams } from '../_hooks/useSyncQueryParams';
 
 interface SelectedFilters {
 	mallTypeId: string | null;
 	category: string[];
-	period: string | null;
+	startDate: string | null;
+	endDate: string | null;
 	[key: string]: string | string[] | null;
 }
 
@@ -20,14 +20,14 @@ export default function HomeFilter() {
 	const [selectedFilters, setSelectedFilters] = useState<SelectedFilters>({
 		mallTypeId: null,
 		category: [],
-		period: null,
+		startDate: null,
+		endDate: null,
 	});
 	const [categoryOptions, setCategoryOptions] = useState<string[]>([]);
 
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
 	useSyncQueryParams(setSelectedFilters);
-
 	useSetSearchParams(selectedFilters);
 
 	const toggleDropdown = (filterName: string) => {
@@ -96,16 +96,26 @@ export default function HomeFilter() {
 					isMultiSelect={true}
 					selectedFilters={selectedFilters}
 				/>
-				{/* <FilterButton
-          filterName="Period"
-          filterKey="period"
-          activeFilter={activeFilter}
-          toggleDropdown={toggleDropdown}
-          applyFilter={applyFilter}
-          options={['기간1', '기간2', '기간3']}
-          isMultiSelect={false}
-          selectedFilters={selectedFilters}
-        /> */}
+				<FilterButton
+					filterName="Start Date"
+					filterKey="startDate"
+					activeFilter={activeFilter}
+					toggleDropdown={toggleDropdown}
+					applyFilter={applyFilter}
+					options={[]}
+					isMultiSelect={false}
+					selectedFilters={selectedFilters}
+				/>
+				<FilterButton
+					filterName="End Date"
+					filterKey="endDate"
+					activeFilter={activeFilter}
+					toggleDropdown={toggleDropdown}
+					applyFilter={applyFilter}
+					options={[]}
+					isMultiSelect={false}
+					selectedFilters={selectedFilters}
+				/>
 			</div>
 			{/* <FilterTags selectedFilters={selectedFilters} removeFilter={removeFilter} /> */}
 		</Card>

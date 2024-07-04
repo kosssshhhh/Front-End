@@ -10,19 +10,17 @@ export const usePageNumber = () => {
 	const setPage = usePageStore((state) => state.setPageNumber);
 	const page = usePageStore((state) => state.page);
 
+	const pageParams = searchParams.get('page');
+
 	useEffect(() => {
-		if (searchParams.get('page') == null) {
+		if (pageParams === null) {
 			searchParams.set('page', '1');
 			setPage(1);
 		} else {
-			setPage(Number(searchParams.get('page')));
+			setPage(Number(pageParams));
 		}
 		setSearchParams(searchParams, { replace: true });
-	}, [searchParams.get('page')]);
-
-	useEffect(() => {
-		console.log(`page`, page);
-	}, [page]);
+	}, [pageParams]);
 };
 
 export const useControlPageNumber = () => {

@@ -110,7 +110,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({
 				</svg>
 			</button>
 			{activeFilter === filterName && (
-				<div className="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg p-4 z-10 transition-opacity duration-300 opacity-100">
+				<div className="absolute left-0 mt-2 w-48 max-h-96 overflow-y-scroll bg-white shadow-lg rounded-lg p-4 z-10 transition-opacity duration-300 opacity-100">
 					{filterName === 'Category' ? (
 						renderCategories(options)
 					) : filterKey === 'startDate' || filterKey === 'endDate' ? (

@@ -5,11 +5,11 @@ export const useFetchSimilarImage = (formData: FormData | null, shouldFetch: boo
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['similarImage', FormData],
+		queryKey: ['similarImage', formData],
 		queryFn: () => {
 			return httpInterface.postUserInputImage(formData);
 		},
-		enabled: !!shouldFetch,
+		enabled: shouldFetch,
 	});
 
 	return { data, isLoading, isError };

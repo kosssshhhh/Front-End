@@ -4,6 +4,8 @@ import { useQuery } from '@tanstack/react-query';
 export const useFetchSimilarImage = (formData: FormData | null, shouldFetch: boolean) => {
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
+	console.log(formData);
+
 	const { data, isLoading, isError } = useQuery({
 		queryKey: ['similarImage', formData],
 		queryFn: () => {

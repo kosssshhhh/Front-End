@@ -25,9 +25,6 @@ export default function StyleTableRowSkeleton() {
 			<td className="p-4 whitespace-nowrap text-center">
 				<div className="bg-gray-300 h-6 w-24 mx-auto rounded"></div>
 			</td>
-			<td className="p-4 whitespace-nowrap text-center">
-				<div className="bg-gray-300 h-6 w-16 mx-auto rounded"></div>
-			</td>
 		</tr>
 	);
 }

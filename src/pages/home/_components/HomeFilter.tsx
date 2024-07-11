@@ -42,6 +42,8 @@ export default function HomeFilter() {
 					: [...(prev.category ?? []), value];
 				return { ...prev, category: newCategories };
 			});
+		} else if (filterKey === 'mallTypeId') {
+			setSelectedFilters((prev) => ({ ...prev, [filterKey]: value, category: [] }));
 		} else {
 			setSelectedFilters((prev) => ({ ...prev, [filterKey]: value }));
 		}
@@ -66,6 +68,7 @@ export default function HomeFilter() {
 			.getCategory(selectedFilters.mallTypeId)
 			.then((res) => {
 				setCategoryOptions(res.data);
+				selectedFilters.category = [];
 				console.log(res.data);
 			})
 			.catch((err) => {

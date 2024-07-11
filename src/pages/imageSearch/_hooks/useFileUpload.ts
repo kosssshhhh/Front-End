@@ -22,6 +22,7 @@ export const useFileUpload = () => {
 	return {
 		formData,
 		preview,
+		setPreview,
 		setFormData,
 		onDrop,
 	};

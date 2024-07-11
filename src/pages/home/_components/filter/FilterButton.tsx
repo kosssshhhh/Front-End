@@ -57,7 +57,9 @@ const FilterButton: React.FC<FilterButtonProps> = ({
 								{category.name}
 							</span>
 							{category.children.length > 0 && (
-								<button onClick={() => toggleCategory(category.categoryId)}>
+								<button
+									className="ml-2 text-sm text-gray-600 hover:text-gray-800 focus:outline-none"
+									onClick={() => toggleCategory(category.categoryId)}>
 									{expandedCategories.has(category.categoryId) ? '-' : '+'}
 								</button>
 							)}

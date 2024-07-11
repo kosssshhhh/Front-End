@@ -4,7 +4,7 @@ export interface SidebarFilterProps {
 }
 
 export interface CategoryType {
-	categoryId: number;
+	categoryId: string;
 	name: string;
 }
 

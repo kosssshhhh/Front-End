@@ -3,17 +3,20 @@ import { useImageSearch } from '@/pages/imageSearch/_hooks/useImageSearch';
 import ImageUpload from './ImageUpload';
 import ImageFilters from '@/pages/imageSearch/_components/ImageFilters';
 import ImageSearchResults from '@/pages/imageSearch/_components/ImageSearchResults';
+import ErrorComponent from '@/components/ErrorComponent';
 import ImageSearchResultsSkeleton from '@/components/skeleton/ImageSearchResultSkeleton';
 
 export default function ImageSearchForm() {
 	const {
 		preview,
+		mallType,
 		category,
 		offset,
 		data,
 		isLoading,
 		isError,
 		onDrop,
+		handleMallTypeChange,
 		handleCategoryChange,
 		handleOffsetChange,
 		handleSubmit,
@@ -28,8 +31,10 @@ export default function ImageSearchForm() {
 				<div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
 					<ImageUpload onDrop={onDrop} preview={preview} />
 					<ImageFilters
+						mallType={mallType}
 						category={category}
 						offset={offset}
+						handleMallTypeChange={handleMallTypeChange}
 						handleCategoryChange={handleCategoryChange}
 						handleOffsetChange={handleOffsetChange}
 					/>
@@ -44,8 +49,12 @@ export default function ImageSearchForm() {
 					</div>
 				</div>
 			</Card>
-			{isLoading && <ImageSearchResultsSkeleton />}
-			{isError && <p>Error loading data</p>}
+			{isLoading && <ImageSearchResultsSkeleton offset={offset} />}
+			{isError && (
+				<Card>
+					<ErrorComponent />
+				</Card>
+			)}
 			{!isLoading && data?.data && <ImageSearchResults data={data.data} />}
 		</>
 	);

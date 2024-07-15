@@ -5,16 +5,17 @@ import { useFetchSimilarImage } from './useFetchSimilarImage';
 
 export const useImageSearch = () => {
 	const { formData, preview, setPreview, setFormData, onDrop } = useFileUpload();
-	const { mallType, category, offset, handleMallTypeChange, handleCategoryChange, handleOffsetChange } = useFilters();
+	const { mallType, categoryList, offset, handleMallTypeChange, handleCategoryChange, handleOffsetChange } =
+		useFilters();
 	const [shouldFetch, setShouldFetch] = useState(false);
 	const { data, isLoading, isError } = useFetchSimilarImage(formData, shouldFetch, setShouldFetch);
 
 	useEffect(() => {
 		if (formData) {
-			formData.set('category', category.categoryId.toString());
+			formData.set('category', JSON.stringify(categoryList));
 			formData.set('offset', offset);
 		}
-	}, [category, offset, formData]);
+	}, [categoryList, offset, formData]);
 
 	const handleSubmit = () => {
 		if (formData) {
@@ -40,7 +41,7 @@ export const useImageSearch = () => {
 	return {
 		preview,
 		mallType,
-		category,
+		categoryList,
 		offset,
 		data,
 		isLoading,

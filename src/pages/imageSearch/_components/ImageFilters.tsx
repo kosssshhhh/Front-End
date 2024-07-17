@@ -5,7 +5,7 @@ import { CategoryType } from '@/pages/styles/_types/sidebarFilter.type';
 
 interface ImageFiltersProps {
 	mallType: string;
-	category: CategoryType;
+	categoryList: CategoryType[];
 	offset: string;
 	handleMallTypeChange: (mallType: string) => void;
 	handleCategoryChange: (categoryId: string, name: string) => void;
@@ -20,7 +20,7 @@ interface Category {
 
 export default function ImageFilters({
 	mallType,
-	category,
+	categoryList,
 	offset,
 	handleMallTypeChange,
 	handleCategoryChange,
@@ -39,11 +39,10 @@ export default function ImageFilters({
 	};
 
 	useEffect(() => {
-		// if (!mallType) return;
-
 		handleCategoryChange('', '');
 		setActiveFilter(null);
 
+		if (!mallType) return;
 		httpInterface
 			.getCategory(mallType)
 			.then((res) => {
@@ -62,6 +61,10 @@ export default function ImageFilters({
 		}));
 	};
 
+	useEffect(() => {
+		console.log('categoryList.length', categoryList);
+	}, [categoryList]);
+
 	const CategoryTreeView = (categoryOptions: Category[]) => {
 		return (
 			<ul className="pl-4">
@@ -70,7 +73,9 @@ export default function ImageFilters({
 						<div className="flex items-center">
 							<input
 								type="checkbox"
-								checked={cat.categoryId === category?.categoryId}
+								checked={
+									cat.categoryId === categoryList.find((category) => category.categoryId === cat.categoryId)?.categoryId
+								}
 								onChange={() => {
 									handleCategoryChange(cat.categoryId, cat.name);
 									setActiveFilter(null);
@@ -107,7 +112,7 @@ export default function ImageFilters({
 						}}>
 						{mallType ? Object.keys(MALL_TYPE_ID).find((key) => MALL_TYPE_ID[key] === mallType) : '전체'}
 						<svg
-							className={`ml-2 w-5 h-5 transition-transform ${activeFilter === 'mallType' ? 'transform rotate-180' : ''}`}
+							className={`ml-2 w-5 h-5 pointer-events-none transition-transform ${activeFilter === 'mallType' ? 'transform rotate-180' : ''}`}
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 20 20"
 							fill="currentColor">
@@ -154,9 +159,10 @@ export default function ImageFilters({
 							if (mallType === '') return;
 							handleFilterButton(e);
 						}}>
-						{!(category.categoryId === '') ? category.name : '전체'}
+						{categoryList.length > 0 ? categoryList.map((category) => category.name).join(', ') : '전체'}
+						{/* {!(category.categoryId === '') ? category.name : '전체'} */}
 						<svg
-							className={`ml-2 w-5 h-5 transition-transform ${activeFilter === 'category' ? 'transform rotate-180' : ''}`}
+							className={`ml-2 w-5 h-5 transition-transform pointer-events-none ${activeFilter === 'category' ? 'transform rotate-180' : ''}`}
 							xmlns="http://www.w3.org/2000/svg"
 							viewBox="0 0 20 20"
 							fill="currentColor">

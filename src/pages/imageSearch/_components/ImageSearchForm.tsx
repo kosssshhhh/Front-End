@@ -10,7 +10,7 @@ export default function ImageSearchForm() {
 	const {
 		preview,
 		mallType,
-		category,
+		categoryList,
 		offset,
 		data,
 		isLoading,
@@ -32,7 +32,7 @@ export default function ImageSearchForm() {
 					<ImageUpload onDrop={onDrop} preview={preview} />
 					<ImageFilters
 						mallType={mallType}
-						category={category}
+						categoryList={categoryList}
 						offset={offset}
 						handleMallTypeChange={handleMallTypeChange}
 						handleCategoryChange={handleCategoryChange}

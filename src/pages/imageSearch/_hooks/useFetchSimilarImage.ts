@@ -10,7 +10,7 @@ export const useFetchSimilarImage = (
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
 	console.log(formData);
-	console.log("formData?.get('category')", formData?.get('category'));
+	console.log("formData?.get('categoryList')", formData?.get('categoryList'));
 	console.log("formData?.get('offset')", formData?.get('offset'));
 	console.log("formData?.get('image')", formData?.get('image'));
 

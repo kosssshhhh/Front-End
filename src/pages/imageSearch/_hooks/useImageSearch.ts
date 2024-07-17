@@ -12,10 +12,11 @@ export const useImageSearch = () => {
 
 	useEffect(() => {
 		if (formData) {
-			formData.set('category', JSON.stringify(categoryList));
+			formData.set('mallTypeId', mallType);
+			formData.set('categoryList', JSON.stringify(categoryList.map((item) => item.categoryId)));
 			formData.set('offset', offset);
 		}
-	}, [categoryList, offset, formData]);
+	}, [mallType, categoryList, offset, formData]);
 
 	const handleSubmit = () => {
 		if (formData) {

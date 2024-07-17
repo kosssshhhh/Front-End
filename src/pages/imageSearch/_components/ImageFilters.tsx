@@ -160,7 +160,7 @@ export default function ImageFilters({
 							handleFilterButton(e);
 						}}>
 						{categoryList.length > 0 ? categoryList.map((category) => category.name).join(', ') : '전체'}
-						{/* {!(category.categoryId === '') ? category.name : '전체'} */}
+
 						<svg
 							className={`ml-2 w-5 h-5 transition-transform pointer-events-none ${activeFilter === 'category' ? 'transform rotate-180' : ''}`}
 							xmlns="http://www.w3.org/2000/svg"

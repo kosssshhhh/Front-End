@@ -9,13 +9,19 @@ export const useFetchSimilarImage = (
 ) => {
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
-	console.log(formData);
+	console.log("formData?.get('mallTypeId')", formData?.get('mallTypeId'));
 	console.log("formData?.get('categoryList')", formData?.get('categoryList'));
 	console.log("formData?.get('offset')", formData?.get('offset'));
 	console.log("formData?.get('image')", formData?.get('image'));
 
 	const { data, isLoading, isError } = useQuery({
-		queryKey: ['similarImage', formData?.get('category'), formData?.get('offset'), formData?.get('image')],
+		queryKey: [
+			'similarImage',
+			formData?.get('mallType'),
+			formData?.get('categoryList'),
+			formData?.get('offset'),
+			formData?.get('image'),
+		],
 		queryFn: () => {
 			return httpInterface.postUserInputImage(formData);
 		},

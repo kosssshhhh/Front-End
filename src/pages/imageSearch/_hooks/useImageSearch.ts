@@ -13,7 +13,14 @@ export const useImageSearch = () => {
 	useEffect(() => {
 		if (formData) {
 			formData.set('mallTypeId', mallType);
-			formData.set('categoryList', JSON.stringify(categoryList.map((item) => item.categoryId)));
+			if (categoryList.length === 0) {
+				formData.set('categoryList', '');
+			} else {
+				formData.set('categoryList', JSON.stringify(categoryList.map((item) => item.categoryId)));
+			}
+			// console.log('categoryList', JSON.stringify(categoryList.map((item) => item.categoryId)));
+
+			// formData.set('categoryList', JSON.stringify(categoryList.map((item) => item.categoryId)));
 			formData.set('offset', offset);
 		}
 	}, [mallType, categoryList, offset, formData]);

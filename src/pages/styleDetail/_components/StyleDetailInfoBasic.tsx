@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleDetailBasic, ExposureIndex } from '@/pages/styleDetail/_types/styles.type';
+import { MALL_TYPE_ID } from '@/constants/mallTypeId';
+import { getKeyByValue } from '@/utils/getKeyByValue';
 
 interface StyleDetailInfoBasicProps {
 	basicDetail: StyleDetailBasic;
@@ -9,9 +11,11 @@ interface StyleDetailInfoBasicProps {
 export default function StyleDetailInfoBasic({ basicDetail, children }: StyleDetailInfoBasicProps) {
 	console.log(basicDetail);
 
+	const mallType = getKeyByValue(MALL_TYPE_ID, basicDetail.mallTypeId);
+
 	return (
 		<div className="p-12">
-			<h1 className="text-2xl font-bold mb-3">{basicDetail.mallTypeId}</h1>
+			<h1 className="text-2xl font-bold mb-3">{mallType}</h1>
 			<hr />
 			<h1 className="text-xl font-bold mb-7 mt-5">{basicDetail.brand}</h1>
 

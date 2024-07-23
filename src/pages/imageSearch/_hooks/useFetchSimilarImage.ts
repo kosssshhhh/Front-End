@@ -23,6 +23,9 @@ export const useFetchSimilarImage = (
 			formData?.get('image'),
 		],
 		queryFn: () => {
+			// if (formData.get('categroyList') === 0) {
+			// 	formData.set('categoryList', null);
+			// }
 			return httpInterface.postUserInputImage(formData);
 		},
 		enabled: shouldFetch,

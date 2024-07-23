@@ -2,7 +2,9 @@ import { Top10BrandDataType } from '@/pages/home/_types/priceTrendData.type.ts';
 
 interface Top10BrandChartProps {
 	data: {
-		top10BrandList: Top10BrandDataType[];
+		data: {
+			top10BrandList: Top10BrandDataType[];
+		};
 	};
 }
 

@@ -4,7 +4,7 @@ import { CategoryType } from '@/pages/styles/_types/sidebarFilter.type';
 export const useFilters = () => {
 	const [mallType, setMallType] = useState<string>('');
 	const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
-	const [offset, setOffset] = useState<string>('5');
+	const [offset, setOffset] = useState<string>('9');
 
 	const handleCategoryChange = (categoryId: string, name: string) => {
 		if (categoryId === '' && name === '') {

@@ -19,6 +19,7 @@ export class HttpInterface {
 	// }
 
 	async getStyles(params: any) {
+		this.defaultOptions.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 		return this.apiClient.get('/style/filter', { params: params });
 	}
 

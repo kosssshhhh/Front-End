@@ -182,7 +182,7 @@ export default function ImageFilters({
 				</div>
 			</div>
 			<div className="mt-5">
-				<label className="block mb-2 text-md font-medium text-gray-700">제공받을 이미지 개수 (최대 10개)</label>
+				<label className="block mb-2 text-md font-medium text-gray-700">제공받을 이미지 개수</label>
 				<input
 					type="number"
 					placeholder="제공받고 싶은 이미지 개수를 입력해주세요. (최대 10개)"

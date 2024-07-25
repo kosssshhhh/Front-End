@@ -1,12 +1,12 @@
 import { svgObj } from '@/assets/svg';
 import { sidebarListType } from '@/layout/_types/type';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function SidebarList({ title, href, svgName, onToggleSidebar }: sidebarListType) {
+function SidebarList({ title, href, svgName }: sidebarListType) {
 	const navigate = useNavigate();
 	const handleClick = () => {
 		navigate(href);
-		onToggleSidebar();
+		// onToggleSidebar();
 	};
 
 	return (

@@ -1,8 +1,13 @@
 import { Top10BrandDataType } from '@/pages/home/_types/priceTrendData.type.ts';
+import { getKeyByValue } from '@/utils/getKeyByValue.ts';
+
+import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 
 interface Top10BrandChartProps {
 	data: {
-		top10BrandList: Top10BrandDataType[];
+		data: {
+			top10BrandList: Top10BrandDataType[];
+		};
 	};
 }
 
@@ -38,7 +43,9 @@ export default function Top10BrandChart({ data }: Top10BrandChartProps) {
 										<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
 											{brand.exposureIndexSum.toFixed(2)}
 										</td>
-										<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">{brand.mallTypeId}</td>
+										<td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+											{getKeyByValue(MALL_TYPE_ID, brand.mallTypeId)}
+										</td>
 									</tr>
 								))}
 							</tbody>

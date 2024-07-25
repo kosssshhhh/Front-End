@@ -17,7 +17,7 @@ export const useFetchSimilarImage = (
 	const { data, isLoading, isError } = useQuery({
 		queryKey: [
 			'similarImage',
-			formData?.get('mallType'),
+			formData?.get('mallTypeId'),
 			formData?.get('categoryList'),
 			formData?.get('offset'),
 			formData?.get('image'),

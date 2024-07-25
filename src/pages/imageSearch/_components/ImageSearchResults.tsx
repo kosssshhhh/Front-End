@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 interface ImageSearchResults {
 	data: {
 		original_image: string;
+		segmented_condaimage: string;
 		similar_images: {
 			style_id: string;
 			mall_type_id: string;
@@ -54,6 +55,7 @@ export default function ImageSearchResults(data: ImageSearchResults) {
 							</div>
 						))}
 					</div>
+					<img src={`data:image/png;base64,${data.data.segmented_condaimage}`} alt="" />
 				</div>
 			</Card>
 		</>

@@ -1,3 +1,5 @@
+import { ExposureIndex } from "@/pages/styleDetail/_types/styles.type";
+
 // TODO: 백엔드와 협의 후 변경
 export interface StyleType {
 	styleId: string;
@@ -10,7 +12,7 @@ export interface StyleType {
 	monetaryUnit: string;
 	image: ImageType;
 	category: CategoryType;
-	dupeExposureIndexList: [];
+	dupeExposureIndexList: DupeExposureIndexType[];
 }
 
 export interface ImageType {
@@ -27,4 +29,11 @@ export interface CategoryType {
 		mallTypeName: string;
 	};
 	name: string;
+}
+
+export interface DupeExposureIndexType {
+	category: CategoryType;
+	ExposureIndex: number;
+	mallTypeId: string;
+	styleId: string;
 }

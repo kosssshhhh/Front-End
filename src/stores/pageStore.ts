@@ -17,7 +17,7 @@ const usePageStore = create<PageParams>()(
 				set({ page });
 			},
 		}),
-		{ name: 'fiterParams' },
+		{ name: 'filterParams' },
 
 		// ),
 	),

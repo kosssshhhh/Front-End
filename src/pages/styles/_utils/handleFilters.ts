@@ -1,15 +1,16 @@
 import { CategoryType, FilterType } from '@/pages/styles/_types/sidebarFilter.type';
+import useFilterStore from '@/stores/useFilterStore';
 
 export const handleChange = (
 	e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
 	setDateOption: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
 	const { name, value } = e.target;
-	setFilters((prev) => ({
-		...prev,
+	const { setFilters } = useFilterStore.getState();
+
+	setFilters({
 		[name]: value,
-	}));
+	});
 
 	// 날짜 옵션 변경 시 상태 업데이트
 	if (name === 'date' && value === 'select') {
@@ -21,34 +22,30 @@ export const handleChange = (
 
 export const handleMallTypeChange = (
 	e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
 	handleReset: () => void,
 ) => {
 	const { name, value } = e.target;
-
-	// console.log(name, value);
+	const { setFilters } = useFilterStore.getState();
 
 	handleReset();
 
-	setFilters((prev) => ({
-		...prev,
+	setFilters({
 		[name]: value,
-	}));
+	});
 };
 
 export const handleDateOptionChange = (
 	e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
 	setDateOption: React.Dispatch<React.SetStateAction<boolean>>,
 ) => {
 	const { name, value } = e.target;
+	const { setFilters } = useFilterStore.getState();
 
-	setFilters((prev) => ({
-		...prev,
+	setFilters({
 		startDate: '',
 		endDate: '',
 		[name]: value,
-	}));
+	});
 
 	// 날짜 옵션 변경 시 상태 업데이트
 	if (name === 'date' && value === 'select') {
@@ -58,94 +55,49 @@ export const handleDateOptionChange = (
 	}
 };
 
-export const handleSortChange = (
-	e: React.ChangeEvent<HTMLSelectElement>,
-	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
-) => {
+export const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 	const [sortBy, sortOrder] = e.target.value.split(',');
-	setFilters((prev) => ({
-		...prev,
+	const { setFilters } = useFilterStore.getState();
+
+	setFilters({
 		sortBy,
 		sortOrder: sortOrder as 'asc' | 'desc',
-	}));
-};
-
-export const handleCategoryChange = (
-	category: CategoryType,
-	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
-) => {
-	setFilters((prev) => {
-		const existingCategoryIndex = prev.category.findIndex((cat) => cat.categoryId === category.categoryId);
-		if (existingCategoryIndex >= 0) {
-			return {
-				...prev,
-				category: prev.category.filter((cat) => cat.categoryId !== category.categoryId),
-			};
-		} else {
-			return {
-				...prev,
-				category: [...prev.category, { categoryId: category.categoryId, name: category.name }],
-			};
-		}
 	});
 };
 
-export const handleRemoveCategory = (
-	category: CategoryType,
-	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
-) => {
-	setFilters((prev) => ({
-		...prev,
-		category: prev.category.filter((cat) => cat.categoryId !== category.categoryId),
-	}));
+export const handleCategoryChange = (category: CategoryType) => {
+	const { handleCategoryChange } = useFilterStore.getState();
+	handleCategoryChange(category);
 };
 
-export const handleBrandChange = (brand: string, setFilters: React.Dispatch<React.SetStateAction<FilterType>>) => {
-	if (typeof brand !== 'string') return;
+export const handleRemoveCategory = (category: CategoryType) => {
+	const { setFilters, filters } = useFilterStore.getState();
 
-	setFilters((prev) => {
-		const existingBrandIndex = prev.brand.findIndex((b) => b === brand);
-		if (existingBrandIndex >= 0) {
-			return {
-				...prev,
-				brand: prev.brand.filter((b) => b !== brand),
-			};
-		} else {
-			return {
-				...prev,
-				brand: [...prev.brand, brand],
-			};
-		}
+	setFilters({
+		category: filters.category.filter((cat) => cat.categoryId !== category.categoryId),
 	});
 };
 
-// export const handleDateChange = (
-// 	e: React.ChangeEvent<HTMLInputElement>,
-// 	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
-// ) => {
-// 	const { name, value } = e.target;
-// 	setFilters((prev) => ({
-// 		...prev,
-// 		[name]: value,
-// 	}));
-// };
+export const handleBrandChange = (brand: string) => {
+	const { filters, setFilters } = useFilterStore.getState();
 
-export const handleDateChange = (
-	e: React.ChangeEvent<HTMLInputElement>,
-	setFilters: React.Dispatch<React.SetStateAction<FilterType>>,
-) => {
+	const updatedBrands = filters.brand.includes(brand)
+		? filters.brand.filter((b) => b !== brand)
+		: [...filters.brand, brand];
+
+	setFilters({ brand: updatedBrands });
+};
+
+export const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 	const { name, value } = e.target;
+	const { setFilters } = useFilterStore.getState();
 
-	setFilters((prevFilters) => ({
-		...prevFilters,
-		[name]: '',
-	}));
+	// Clear the date field first
+	setFilters({ [name]: '' } as Partial<FilterType>);
 
+	// Set the date field after a brief delay
 	setTimeout(() => {
-		setFilters((prevFilters) => ({
-			...prevFilters,
-			[name]: value,
-		}));
+		setFilters({ [name]: value } as Partial<FilterType>);
 	}, 0);
 };
 

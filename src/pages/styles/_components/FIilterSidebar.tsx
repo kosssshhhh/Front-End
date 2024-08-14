@@ -5,39 +5,30 @@ import { svgObj } from '@/assets/svg';
 import useNetwork from '@/stores/networkStore';
 
 import { SidebarFilterProps } from '@/pages/styles/_types/sidebarFilter.type';
-import { CategoryType, FilterType } from '@/pages/styles/_types/sidebarFilter.type';
+import { CategoryType } from '@/pages/styles/_types/sidebarFilter.type';
 
-import { convertDate } from '@/pages/styles/_utils/converDate';
+import { convertDate } from '@/pages/styles/_utils/convertDate';
 
 import { MALL_TYPE_ID } from '@/constants/mallTypeId';
 
 import {
 	handleMallTypeChange,
 	handleDateOptionChange,
-	handleCategoryChange,
-	handleBrandChange,
 	handleRemoveCategory,
 	handleDateChange,
 	toggleCategory,
 	handleSubSidebar,
-	handleSortChange,
 } from '@/pages/styles/_utils/handleFilters';
+
+import useFilterStore from '@/stores/useFilterStore';
 
 function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	const httpInterface = useNetwork((state) => state.httpInterface);
 
 	const [_, setSearchParams] = useSearchParams();
 
-	const [filters, setFilters] = useState<FilterType>({
-		mallTypeId: '',
-		startDate: '',
-		endDate: '',
-		date: '',
-		category: [],
-		brand: [],
-		sortBy: '',
-		sortOrder: 'desc',
-	});
+	const { filters, setFilters, resetFilters, handleSortChange, handleCategoryChange, handleBrandChange } =
+		useFilterStore();
 
 	const [dateOption, setDateOption] = useState(false);
 	const [subSidebar, setSubSidebar] = useState<string>('');
@@ -62,16 +53,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 	}, [subSidebar]);
 
 	const handleReset = () => {
-		setFilters({
-			mallTypeId: '',
-			startDate: '',
-			endDate: '',
-			date: '',
-			category: [],
-			brand: [],
-			sortBy: '',
-			sortOrder: 'desc',
-		});
+		resetFilters(); // Zustand에서 제공하는 resetFilters 함수 호출
 		setDateOption(false);
 		setSubSidebarCategory([]);
 		setSubSidebarBrand([]);
@@ -112,10 +94,8 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 		const startDate = convertDate(filters.date);
 
 		if (startDate) {
-			setFilters((prev) => ({
-				...prev,
-				startDate: startDate,
-			}));
+			// 여기서 prev를 사용하지 않고, 새로운 상태를 직접 전달
+			setFilters({ startDate });
 		}
 	}, [filters.date]);
 
@@ -128,7 +108,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							<input
 								type="checkbox"
 								checked={filters.category.some((cat) => cat.categoryId === category.categoryId)}
-								onChange={() => handleCategoryChange(category, setFilters)}
+								onChange={() => handleCategoryChange(category)} // 수정된 부분
 							/>
 							<span
 								className="ml-2 cursor-pointer"
@@ -164,7 +144,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							<label className="text-lg font-semibold">쇼핑몰</label>
 							<select
 								value={filters.mallTypeId}
-								onChange={(e) => handleMallTypeChange(e, setFilters, handleReset)}
+								onChange={(e) => handleMallTypeChange(e, handleReset)}
 								className="w-full p-2 border rounded"
 								name="mallTypeId">
 								<option defaultChecked value="">
@@ -177,30 +157,12 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 						</div>
 
 						<div className="mb-5">
-							<label className="text-lg font-semibold">정렬</label>
-							<select
-								className="w-full p-2 border rounded"
-								name="sort"
-								value={`${filters.sortBy},${filters.sortOrder}`}
-								onChange={(e) => handleSortChange(e, setFilters)}>
-								<option value="exposureIndex,desc">노출지수 높은 순</option>
-								<option value="exposureIndex,asc">노출지수 낮은 순</option>
-								<option value="fixedPrice,desc">고정가 높은 순</option>
-								<option value="fixedPrice,asc">고정가 낮은 순</option>
-								<option value="discountedPrice,desc">할인가 높은 순</option>
-								<option value="discountedPrice,asc">할인가 낮은 순</option>
-								<option value="brand,asc">브랜드 이름 순 (오름차순)</option>
-								<option value="brand,desc">브랜드 이름 순 (내림차순)</option>
-							</select>
-						</div>
-
-						<div className="mb-5">
 							<label className="text-lg font-semibold">기간</label>
 							<select
 								className="w-full p-2 border rounded"
 								name="date"
 								value={filters.date}
-								onChange={(e) => handleDateOptionChange(e, setFilters, setDateOption)}>
+								onChange={(e) => handleDateOptionChange(e, setDateOption)}>
 								<option defaultChecked value="">
 									선택
 								</option>
@@ -212,27 +174,6 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 							</select>
 						</div>
 
-						{/* <div className={`mb-5 ${dateOption ? '' : 'hidden'} flex items-center justify-between`}>
-							<div className="flex flex-col w-1/2 p-2">
-								<label className="mb-2">시작</label>
-								<input
-									type="date"
-									name="startDate"
-									onChange={(e) => handleDateChange(e, setFilters)}
-									className="p-2 border rounded"
-								/>
-							</div>
-							<div className="flex flex-col w-1/2 p-2">
-								<label className="block mb-2">끝</label>
-								<input
-									type="date"
-									name="endDate"
-									onChange={(e) => handleDateChange(e, setFilters)}
-									className="p-2 border rounded"
-								/>
-							</div>
-						</div> */}
-
 						{dateOption && (
 							<div className={`mb-5 flex items-center justify-between`}>
 								<div className="flex flex-col w-1/2 p-2">
@@ -240,7 +181,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 									<input
 										type="date"
 										name="startDate"
-										onChange={(e) => handleDateChange(e, setFilters)}
+										onChange={(e) => handleDateChange(e)}
 										className="p-2 border rounded"
 									/>
 								</div>
@@ -249,7 +190,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 									<input
 										type="date"
 										name="endDate"
-										onChange={(e) => handleDateChange(e, setFilters)}
+										onChange={(e) => handleDateChange(e)}
 										className="p-2 border rounded"
 									/>
 								</div>
@@ -266,7 +207,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 											<span>{cat.name}</span>
 											<button
 												className="ml-2 bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-200 text-white rounded-full w-5 h-5 flex items-center justify-center"
-												onClick={() => handleRemoveCategory(cat, setFilters)}>
+												onClick={() => handleRemoveCategory(cat)}>
 												&times;
 											</button>
 										</div>
@@ -276,7 +217,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 											<span>{brand}</span>
 											<button
 												className="ml-2 bg-cyan-700 hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-200 text-white rounded-full w-5 h-5 flex items-center justify-center"
-												onClick={() => handleBrandChange(brand, setFilters)}>
+												onClick={() => handleBrandChange(brand)}>
 												&times;
 											</button>
 										</div>
@@ -313,7 +254,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 					</div>
 				</div>
 			</div>
-			{isOpen && subSidebar === 'category' && filters.mallTypeId != 'all' && (
+			{isOpen && subSidebar === 'category' && filters.mallTypeId !== 'all' && (
 				<div className={`fixed z-50 inset-y-0 left-[33%] w-[33%] bg-white shadow-lg overflow-auto`}>
 					<div className="p-4 relative">
 						<h2 className="text-xl font-bold mb-4">카테고리 선택</h2>
@@ -321,7 +262,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 					</div>
 				</div>
 			)}
-			{isOpen && subSidebar === 'brand' && filters.mallTypeId != 'all' && (
+			{isOpen && subSidebar === 'brand' && filters.mallTypeId !== 'all' && (
 				<div className={`fixed z-50 inset-y-0 left-[33%] w-[33%] bg-white shadow-lg overflow-auto`}>
 					<div className="p-4 relative">
 						<h2 className="text-xl font-bold mb-4">브랜드 선택</h2>
@@ -332,7 +273,7 @@ function FilterSidebar({ isOpen, onClose }: SidebarFilterProps) {
 										<input
 											type="checkbox"
 											checked={filters.brand.includes(brand)}
-											onChange={() => handleBrandChange(brand, setFilters)}
+											onChange={() => handleBrandChange(brand)}
 										/>
 										<span className="ml-2">{brand}</span>
 									</li>

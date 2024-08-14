@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import FilterSidebar from '@/pages/styles/_components/SidebarFilter';
+import FilterSidebar from '@/pages/styles/_components/FIilterSidebar';
 import { svgObj } from '@/assets/svg';
 import { useSidebarFilter } from '@/pages/styles/_hooks/useSidebarFilter';
 import { usePageNumber } from '@/pages/styles/_hooks/usePageNumber';

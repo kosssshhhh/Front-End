@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  client:
+    build:
+      context: ./client
+    image: my-vite-app
+    container_name: client_build
+    command: ["yarn", "build"]
+    volumes:
+      - ./client/dist:/app/dist
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./client/dist:/usr/share/nginx/html

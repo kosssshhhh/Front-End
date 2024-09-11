@@ -15,8 +15,9 @@ export class Http implements ICommunication {
 
 	constructor() {
 		const axiosConfig = {
-			baseURL: import.meta.env.VITE_BASE_URL,
-			withCredentials: true,
+			// baseURL: import.meta.env.VITE_BASE_URL,
+			baseURL: 'http://localhost:8080',
+			withCredentials: false,
 		};
 		this.httpClient = axios.create(axiosConfig);
 	}

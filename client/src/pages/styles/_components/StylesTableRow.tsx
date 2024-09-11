@@ -27,8 +27,9 @@ export default function ProductTableRow({ style }: ProductTableRowProps) {
 					/>
 				)}
 			</td>
-			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900 min-w-[150px] max-w-[150px]">
-				{style.styleName?.length > 25 ? `${style.styleName?.slice(0, 25)}...` : style.styleName}
+			<td className="p-6 whitespace-normal text-center font-medium text-gray-900 min-w-[150px] max-w-[150px]">
+				{/* {style.styleName?.length > 25 ? `${style.styleName?.slice(0, 25)}...` : style.styleName} */}
+				{style.styleName}
 			</td>
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900 min-w-[100px] max-w-[100px]">
 				{style.category?.mallType.mallTypeName}
@@ -36,7 +37,7 @@ export default function ProductTableRow({ style }: ProductTableRowProps) {
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900 min-w-[120px] max-w-[120px]">
 				{style.category.name}
 			</td>
-			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900 min-w-[100px] max-w-[100px]">
+			<td className="p-4 whitespace-normal text-center font-medium text-gray-900 min-w-[100px] max-w-[100px]">
 				{style.brand}
 			</td>
 			<td className="p-4 whitespace-nowrap text-center font-medium text-gray-900 min-w-[100px] max-w-[100px]">

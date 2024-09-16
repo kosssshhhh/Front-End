@@ -77,7 +77,7 @@ export default function HomeFilter() {
 	}, [selectedFilters.mallTypeId]);
 
 	return (
-		<Card className="bg-white col-span-2 xl:col-span-2 2xl:col-span-3  p-4 flex flex-wrap items-center justify-between space-y-2 md:space-y-0">
+		<Card className="bg-white col-span-2 xl:col-span-2 2xl:col-span-3  p-4 flex items-center justify-between space-y-2 md:space-y-0">
 			<div className="w-full md:w-auto flex items-center space-x-4">
 				<FilterButton
 					filterName="Mall"
